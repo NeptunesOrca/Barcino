@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://2pe8174bmrbr"]
+[gd_scene load_steps=2 format=3 uid="uid://bo3q75epmq7ul"]
+
+[ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -13,3 +15,4 @@ grow_vertical = 2
 [node name="ControlMenu" type="TabContainer" parent="MenuCanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_em4c8")
