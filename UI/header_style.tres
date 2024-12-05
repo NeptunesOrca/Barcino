@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bm85tv3m4cytm"]
+
+[ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="1_bywms"]
+
+[resource]
+Label/font_sizes/font_size = 20
+Label/fonts/font = ExtResource("1_bywms")
