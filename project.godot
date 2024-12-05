@@ -6,20 +6,280 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=5
+config_version=4
+
+_global_script_classes=[ {
+"base": "Control",
+"class": "ChangeLayerTestDraggableObject",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/ChangeLayerTestDraggableObject.gd"
+}, {
+"base": "Property",
+"class": "CheckToggleProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/CheckToggleProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "CheckTogglePropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/CheckTogglePropertyField.gd"
+}, {
+"base": "Property",
+"class": "ColourPickerProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/ColourPickerProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "ColourPickerPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/ColourPickerPropertyField.gd"
+}, {
+"base": "AcceptDialog",
+"class": "CustomError",
+"language": "GDScript",
+"path": "res://Tests/Repopulating by menu parent/Error.gd"
+}, {
+"base": "Property",
+"class": "DisplayColourProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/DisplayColourProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "DisplayColourPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/DisplayColourPropertyField.gd"
+}, {
+"base": "Property",
+"class": "DisplayTextProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/DisplayTextProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "DisplayTextPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/DisplayTextPropertyField.gd"
+}, {
+"base": "Control",
+"class": "DraggableObject",
+"language": "GDScript",
+"path": "res://Tests/OOPandDraggableClasses/DraggableObject.gd"
+}, {
+"base": "Property",
+"class": "DropdownProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/DropdownProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "DropdownPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/DropdownPropertyField.gd"
+}, {
+"base": "Control",
+"class": "ErrorHandler",
+"language": "GDScript",
+"path": "res://Tests/Repopulating by menu parent/ErrorHandler.gd"
+}, {
+"base": "FileDialog",
+"class": "FileAccessor",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/FileAccessor.gd"
+}, {
+"base": "Object",
+"class": "FileDetailsReturn",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/FileDetailsReturn.gd"
+}, {
+"base": "Property",
+"class": "HeaderProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/HeaderProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "HeaderPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/HeaderPropertyField.gd"
+}, {
+"base": "DraggableObject",
+"class": "InheritedDraggableObject",
+"language": "GDScript",
+"path": "res://Tests/OOPandDraggableClasses/InheritedDraggableObject.gd"
+}, {
+"base": "TabContainer",
+"class": "Menu",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/Menu.gd"
+}, {
+"base": "Control",
+"class": "MenuTestDraggableObject",
+"language": "GDScript",
+"path": "res://Tests/Repopulating by menu parent/MenuTestDraggableObject.gd"
+}, {
+"base": "Property",
+"class": "NumericFieldProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/NumericFieldProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "NumericFieldPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/NumericFieldPropertyField.gd"
+}, {
+"base": "Property",
+"class": "ParagraphFieldProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/ParagraphFieldProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "ParagraphFieldPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/ParagraphFieldPropertyField.gd"
+}, {
+"base": "Control",
+"class": "ParentDraggableObject",
+"language": "GDScript",
+"path": "res://Tests/OOPandDraggableClassesApproach2/ParentDraggableObject.gd"
+}, {
+"base": "Object",
+"class": "Property",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/Property.gd"
+}, {
+"base": "HBoxContainer",
+"class": "PropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/PropertyField.gd"
+}, {
+"base": "Object",
+"class": "PropertyGenerator",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyGenerator.gd"
+}, {
+"base": "DraggableObject",
+"class": "SelectableObject",
+"language": "GDScript",
+"path": "res://Tests/SelectingDraggableObject/SelectableObject.gd"
+}, {
+"base": "Property",
+"class": "SeperatorProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/SeperatorProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "SeperatorPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/SeperatorPropertyField.gd"
+}, {
+"base": "Property",
+"class": "SliderFieldProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/SliderFieldProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "SliderFieldPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/SliderFieldPropertyField.gd"
+}, {
+"base": "Control",
+"class": "TestDraggableObject",
+"language": "GDScript",
+"path": "res://Tests/Adding to Layout/TestDraggableObject.gd"
+}, {
+"base": "Property",
+"class": "TextFieldProperty",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/Property Objects/TextFieldProperty.gd"
+}, {
+"base": "PropertyField",
+"class": "TextFieldPropertyField",
+"language": "GDScript",
+"path": "res://Tests/SelectionPropertyGeneration/PropertyField Objects/TextFieldPropertyField.gd"
+}, {
+"base": "CanvasLayer",
+"class": "Venue",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/Venue.gd"
+}, {
+"base": "ItemList",
+"class": "VenueSelector",
+"language": "GDScript",
+"path": "res://Tests/Change Venues/VenueSelector.gd"
+} ]
+_global_script_class_icons={
+"ChangeLayerTestDraggableObject": "",
+"CheckToggleProperty": "",
+"CheckTogglePropertyField": "",
+"ColourPickerProperty": "",
+"ColourPickerPropertyField": "",
+"CustomError": "",
+"DisplayColourProperty": "",
+"DisplayColourPropertyField": "",
+"DisplayTextProperty": "",
+"DisplayTextPropertyField": "",
+"DraggableObject": "",
+"DropdownProperty": "",
+"DropdownPropertyField": "",
+"ErrorHandler": "",
+"FileAccessor": "",
+"FileDetailsReturn": "",
+"HeaderProperty": "",
+"HeaderPropertyField": "",
+"InheritedDraggableObject": "",
+"Menu": "",
+"MenuTestDraggableObject": "",
+"NumericFieldProperty": "",
+"NumericFieldPropertyField": "",
+"ParagraphFieldProperty": "",
+"ParagraphFieldPropertyField": "",
+"ParentDraggableObject": "",
+"Property": "",
+"PropertyField": "",
+"PropertyGenerator": "",
+"SelectableObject": "",
+"SeperatorProperty": "",
+"SeperatorPropertyField": "",
+"SliderFieldProperty": "",
+"SliderFieldPropertyField": "",
+"TestDraggableObject": "",
+"TextFieldProperty": "",
+"TextFieldPropertyField": "",
+"Venue": "",
+"VenueSelector": ""
+}
 
 [application]
 
-config/name="Barcino"
-config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+config/name="Drag And Drop Testing"
+run/main_scene="res://TopMenu.tscn"
+config/icon="res://icon.png"
 
-[editor]
+[gui]
 
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
+common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+LClick={
+"deadzone": 0.0,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+RClick={
+"deadzone": 0.0,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"
