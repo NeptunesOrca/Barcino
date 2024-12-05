@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqf7m"]
 content_margin_left = 12.0
 content_margin_top = 8.0
-content_margin_right = 8.0
+content_margin_right = 12.0
 content_margin_bottom = 8.0
 bg_color = Color(0.180392, 0.180392, 0.180392, 1)
 border_width_top = 2
@@ -19,6 +19,7 @@ corner_detail = 16
 expand_margin_top = 1.0
 
 [resource]
+HSeparator/constants/separation = 3
 TabContainer/constants/side_margin = 8
 TabContainer/font_sizes/font_size = 18
 TabContainer/fonts/font = ExtResource("1_rblmr")

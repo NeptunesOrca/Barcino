@@ -40,11 +40,28 @@ metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Venues"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+[node name="Venue Options Header" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_oipcn")
 text = "Venue Options"
+
+[node name="HSeparator3" type="HSeparator" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+text = "Venue Selection"
+
+[node name="VenueController" type="ItemList" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+auto_height = true
+
+[node name="HSeparator2" type="HSeparator" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
 
 [node name="Objects" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
 visible = false
