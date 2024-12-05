@@ -1,2 +1,2 @@
-# Barcino
-A weddings and events layout planner created for University of Alberta Botanic Gardens
+# Old Tests
+These are read only records of the original tests (Drag&DropTesting) that should not be used for anything except as a reference
