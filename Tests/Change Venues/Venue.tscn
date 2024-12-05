@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Tests/Change Venues/Venue.gd" type="Script" id=2]
+
+[node name="Venue" type="CanvasLayer" groups=["Layout"]]
+layer = 0
+visible = false
+script = ExtResource( 2 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+visible = false
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Background"]
+process_priority = -1
+margin_right = 1024.0
+margin_bottom = 600.0
+border_color = Color( 0, 0, 0, 1 )
+border_width = 2.0
+editor_only = false
+
+[node name="VenueImage" type="TextureRect" parent="Background"]
+
+[connection signal="visibility_changed" from="." to="." method="_on_Venue_visibility_changed"]

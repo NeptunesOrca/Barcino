@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Tests/ObjectCreationTestApproach2/TestObjApproach2.gd" type="Script" id=1]
+[ext_resource path="res://Test.png" type="Texture" id=2]
+
+[node name="TestObjApproach2" type="TextureRect"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 90.0
+margin_bottom = 87.0
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[connection signal="gui_input" from="." to="." method="_on_TestObjApproach2_gui_input"]

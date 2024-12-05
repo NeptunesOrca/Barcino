@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Tests/OOPandDraggableClassesApproach2/ParentDraggableObject.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tests/OOPandDraggableClassesApproach2/ChildDraggableObject.gd" type="Script" id=2]
+
+[node name="ParentDraggableObject" instance=ExtResource( 1 )]
+color = Color( 0.92549, 0, 0, 1 )
+script = ExtResource( 2 )
+defaultMenuX = 50
+defaultMenuY = 50

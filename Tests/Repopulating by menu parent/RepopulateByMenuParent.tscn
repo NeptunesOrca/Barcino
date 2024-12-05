@@ -1,0 +1,220 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://TestMenu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tests/Repopulating by menu parent/MenuTestDraggableObject.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Tests/Adding to Layout/LayoutChangingSettings.gd" type="Script" id=3]
+[ext_resource path="res://Tests/Repopulating by menu parent/default_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Tests/Repopulating by menu parent/ErrorHandler.gd" type="Script" id=5]
+
+[node name="AddToLayouts" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Layout" type="CanvasLayer" parent="." groups=["ActiveLayout"]]
+layer = 0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Layout"]
+process_priority = -1
+margin_right = 1024.0
+margin_bottom = 600.0
+border_width = 2.0
+editor_only = false
+
+[node name="Background" type="CanvasLayer" parent="Layout"]
+layer = -1
+
+[node name="Venue Image Simulation" type="ColorRect" parent="Layout/Background"]
+margin_right = 2000.0
+margin_bottom = 2000.0
+color = Color( 0.168627, 0.533333, 0, 1 )
+
+[node name="MenuCanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="TestMenu" parent="MenuCanvasLayer" instance=ExtResource( 1 )]
+margin_bottom = 450.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/TestMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="MenuObjects" type="GridContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer"]
+margin_right = 250.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 250, 300 )
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects"]
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+theme = ExtResource( 4 )
+
+[node name="TestDraggableObject" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects/MarginContainer" instance=ExtResource( 2 )]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects"]
+margin_left = 64.0
+margin_right = 124.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 50, 50 )
+theme = ExtResource( 4 )
+
+[node name="TestDraggableObject" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects/MarginContainer2" instance=ExtResource( 2 )]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="MarginContainer3" type="MarginContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects"]
+margin_top = 64.0
+margin_right = 60.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 50, 50 )
+theme = ExtResource( 4 )
+
+[node name="TestDraggableObject" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects/MarginContainer3" instance=ExtResource( 2 )]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
+color = Color( 0, 1, 0.298039, 1 )
+
+[node name="MarginContainer4" type="MarginContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 124.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 60, 60 )
+theme = ExtResource( 4 )
+
+[node name="TestDraggableObject" parent="MenuCanvasLayer/TestMenu/VBoxContainer/MenuObjects/MarginContainer4" instance=ExtResource( 2 )]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
+color = Color( 0, 0.368627, 1, 1 )
+
+[node name="LayoutModifiers" type="Panel" parent="MenuCanvasLayer/TestMenu/VBoxContainer"]
+margin_top = 304.0
+margin_right = 250.0
+margin_bottom = 304.0
+script = ExtResource( 3 )
+
+[node name="GridContainer" type="GridContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers"]
+margin_right = 250.0
+margin_bottom = 100.0
+custom_constants/vseparation = 20
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer"]
+margin_right = 250.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="x Scale" type="HSlider" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer"]
+margin_right = 150.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 150, 0 )
+min_value = 0.25
+max_value = 3.0
+step = 0.25
+value = 1.0
+allow_greater = true
+allow_lesser = true
+tick_count = 12
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer"]
+margin_left = 154.0
+margin_top = 1.0
+margin_right = 198.0
+margin_bottom = 15.0
+text = "x scale"
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer"]
+margin_top = 36.0
+margin_right = 250.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="y Scale" type="HSlider" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer2"]
+margin_right = 150.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 150, 0 )
+min_value = 0.25
+max_value = 3.0
+step = 0.25
+value = 1.0
+allow_greater = true
+allow_lesser = true
+tick_count = 12
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer2"]
+margin_left = 154.0
+margin_top = 1.0
+margin_right = 198.0
+margin_bottom = 15.0
+text = "y scale"
+
+[node name="HFlowContainer3" type="HFlowContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer"]
+margin_top = 72.0
+margin_right = 250.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="x Offset" type="HSlider" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer3"]
+margin_right = 150.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 300.0
+step = 25.0
+allow_greater = true
+allow_lesser = true
+tick_count = 12
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer3"]
+margin_left = 154.0
+margin_top = 1.0
+margin_right = 201.0
+margin_bottom = 15.0
+text = "x offset"
+
+[node name="HFlowContainer4" type="HFlowContainer" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer"]
+margin_top = 108.0
+margin_right = 250.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="y Offset" type="HSlider" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer4"]
+margin_right = 150.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 300.0
+step = 25.0
+allow_greater = true
+allow_lesser = true
+tick_count = 12
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer4"]
+margin_left = 154.0
+margin_top = 1.0
+margin_right = 201.0
+margin_bottom = 15.0
+text = "y offset"
+
+[node name="Error handler" type="Control" parent="." groups=["ErrorHandler"]]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
+
+[connection signal="value_changed" from="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer/x Scale" to="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers" method="_on_x_Scale_value_changed"]
+[connection signal="value_changed" from="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer2/y Scale" to="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers" method="_on_y_Scale_value_changed"]
+[connection signal="value_changed" from="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer3/x Offset" to="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers" method="_on_x_Offset_value_changed"]
+[connection signal="value_changed" from="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers/GridContainer/HFlowContainer4/y Offset" to="MenuCanvasLayer/TestMenu/VBoxContainer/LayoutModifiers" method="_on_y_Offset_value_changed"]

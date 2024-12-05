@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Tests/OOPandDraggableClassesApproach2/ParentDraggableObject.gd" type="Script" id=1]
+
+[node name="ParentDraggableObject" type="ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+script = ExtResource( 1 )
+defaultMenuX = 40
+defaultMenuY = 40
+
+[connection signal="gui_input" from="." to="." method="_on_ParentDraggableObject_gui_input"]
