@@ -41,7 +41,7 @@ func addLayoutsToItemList():
 		venue = layoutsList[venueNum]
 		if (venue is Venue):
 			add_item(venue.getName())
-			venue.hide()
+			venue.deactivate()
 			venueNum += 1
 		else:
 			var error_msg = "The node " + str(venue) + " is not a venue, but is inappropriately tagged in the group 'Layouts'"
@@ -59,7 +59,7 @@ func _on_venue_selection(index):
 func pickActiveLayout(layoutIndex):
 	#hide previous activeLayout, if it exists
 	if (activeLayout != null):
-		activeLayout.hide()
+		activeLayout.deactivate()
 	
 	#set the new active layout and activate it
 	activeLayout = layoutsList[layoutIndex]
