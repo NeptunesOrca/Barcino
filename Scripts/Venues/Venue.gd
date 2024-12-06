@@ -46,7 +46,8 @@ const backgroundName = "Background"
 	set(value):
 		defaultZoom = value
 		venueZoom = defaultZoom
-		updateZoom()
+		if (background != null):
+			updateZoom()
 
 ## The zoom factor for the venue and layout. Given as a factor not a percentage. Defaults to the [member defaultZoom].
 var venueZoom : float = defaultZoom
@@ -60,7 +61,9 @@ var venueZoom : float = defaultZoom
 		return defaultPan
 	set(value):
 		defaultPan = value
-		panTo(defaultPan.x, defaultPan.y)
+		venuePan = defaultPan
+		if (background != null):
+			updatePan()
 
 ## The amount the venue is panned in the horizontal and vertical directions measured in pixels compared ot the reference frame of the [member venueImage]
 ## Defaults to [member defaultPan].
@@ -76,6 +79,9 @@ var venuePan : Vector2 = defaultPan
 ## [br] - Connects the visiblity_changed signal to [method _on_Venue_visibility_changed] so that when the visibility of the [Venue] changes, it is properly reflected by the [member background]
 ## [br] - Ensures the venue is deactivated by default so that [VenueController] will show only the selected Venue
 func _ready() -> void:
+	#Add this to the correct group
+	add_to_group(Venue.layoutGroupName)
+	
 	#Setup the background canvas and add the image for the venue to it
 	#In the structure of:
 	# Venue
@@ -86,9 +92,6 @@ func _ready() -> void:
 	imageTextRect.name = imageDisplayName
 	self.add_child(background)
 	background.add_child(imageTextRect)
-	
-	#Add this to the correct group
-	add_to_group(Venue.layoutGroupName)
 	
 	#Connect any visibility changes for the background to the 
 	#updateImage(venueImage) #this should be handled by the setter for the image

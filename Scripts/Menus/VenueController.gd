@@ -31,6 +31,7 @@ var activeLayout : Venue
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.item_selected.connect(_on_venue_selection)
 	addLayoutsToItemList()
 
 ## Finds everything tagged as a layout, and adds all valid ones to the list of layouts
@@ -45,8 +46,11 @@ func addLayoutsToItemList():
 			venueNum += 1
 		else:
 			var error_msg = "The node " + str(venue) + " is not a venue, but is inappropriately tagged in the group 'Layouts'"
+			print(error_msg)
 			layoutsList.remove(venueNum)
 			#TODO: Add error handling here when that's ready to go
+	print("Venues added")
+	print(layoutsList)
 #endregion
 
 #region Venue Selection
@@ -89,7 +93,7 @@ func _on_zoom_change(percent_value):
 
 ## This is triggered by a signal from a GUI element ([member hztl_pan_controller]) to change the how the layout pans in the horizontal direction.
 ## [br]See [method Venue.panToPercent] for more details.
-func _on_hztle_pan_change(percent_value):
+func _on_hztl_pan_change(percent_value):
 	if (layoutLocked()):
 		return
 	activeLayout.panToPercent(percent_value,activeLayout.getPanPercent().y)
@@ -144,8 +148,8 @@ class clearConfirmPopup extends ConfirmationDialog:
 		venueSelector.add_child(self)
 	func _ready(): # pops up when created
 		self.popup_centered()
-		get_cancel_button().pressed.connect(self._on_decided())
-		self.confirmed.connect(self._on_confirmed())
+		get_cancel_button().pressed.connect(self._on_decided)
+		self.confirmed.connect(self._on_confirmed)
 	func _on_confirmed():
 		self.venueSelector.proceedWithClear() #if confirmed, will clear everything, otherwise does nothing
 		self._on_decided()

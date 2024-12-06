@@ -1,15 +1,53 @@
-[gd_scene load_steps=8 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=16 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 [ext_resource type="Texture2D" uid="uid://dc8pagglb8bhl" path="res://UI/TestUI.png" id="1_k66pc"]
 [ext_resource type="Theme" uid="uid://barsihq1ywsyr" path="res://UI/menu_style.tres" id="2_yg8xr"]
 [ext_resource type="Theme" uid="uid://bm85tv3m4cytm" path="res://UI/header_style.tres" id="4_oipcn"]
+[ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="4_ryxm2"]
 [ext_resource type="Script" path="res://Scripts/Venues/Venue.gd" id="5_eydxy"]
+[ext_resource type="StyleBox" uid="uid://hvkt51jyhd2s" path="res://UI/half_scroll_slider_stylebox.tres" id="5_h7lkv"]
+[ext_resource type="Script" path="res://Scripts/Menus/VenueController.gd" id="5_ux6w8"]
+[ext_resource type="StyleBox" uid="uid://di7wmucyyi4og" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
 [ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7u0o"]
 texture = ExtResource("1_k66pc")
 region_rect = Rect2(10, 10, 16, 16)
+
+[sub_resource type="GDScript" id="GDScript_ibgdb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xy0w"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+corner_detail = 1
+script = SubResource("GDScript_ibgdb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqf7m"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+border_width_top = 2
+border_color = Color(0.243137, 0.243137, 0.243137, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+expand_margin_top = 1.0
+
+[sub_resource type="Theme" id="Theme_vaia0"]
+HSeparator/constants/separation = 3
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_7xy0w")
+TabContainer/constants/side_margin = 8
+TabContainer/font_sizes/font_size = 18
+TabContainer/fonts/font = ExtResource("4_ryxm2")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_sqf7m")
+VScrollBar/styles/grabber = ExtResource("5_h7lkv")
+VScrollBar/styles/scroll = ExtResource("6_10yw5")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -36,13 +74,15 @@ current_tab = 0
 script = ExtResource("1_em4c8")
 
 [node name="Venues" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
+layout_direction = 2
 layout_mode = 2
-theme = ExtResource("2_yg8xr")
+theme = SubResource("Theme_vaia0")
 metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Venues"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("2_yg8xr")
 
 [node name="Venue Options Header" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
 layout_mode = 2
@@ -56,13 +96,85 @@ layout_mode = 2
 layout_mode = 2
 text = "Venue Selection"
 
-[node name="VenueController" type="ItemList" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+[node name="VenueControllerNode" type="ItemList" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 allow_reselect = true
 auto_height = true
+script = ExtResource("5_ux6w8")
 
 [node name="HSeparator2" type="HSeparator" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+
+[node name="Layout Reset Header" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_oipcn")
+text = "Layout Resets
+"
+
+[node name="Reset Button" type="Button" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+text = "Reset Layout"
+
+[node name="Clear Button" type="Button" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+text = "Clear Layout"
+
+[node name="HSeparator4" type="HSeparator" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+
+[node name="Zoom and Pan Testing" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer"]
+layout_mode = 2
+
+[node name="View Test Header" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+theme = ExtResource("4_oipcn")
+text = "View Adjustments"
+clip_text = true
+
+[node name="Zoom" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+text = "Zoom"
+
+[node name="ZoomSpin" type="SpinBox" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+min_value = 25.0
+max_value = 500.0
+step = 25.0
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "%"
+
+[node name="HZTL" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+text = "Horizontal Pan
+"
+
+[node name="HztlSpin" type="SpinBox" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+min_value = -100.0
+step = 25.0
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "%"
+
+[node name="Vert" type="Label" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+text = "Vertical Pan
+"
+
+[node name="VertSpin" type="SpinBox" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
+layout_mode = 2
+min_value = -100.0
+step = 25.0
+value = 100.0
+allow_greater = true
+allow_lesser = true
+suffix = "%"
+
+[node name="HSeparator5" type="HSeparator" parent="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing"]
 layout_mode = 2
 
 [node name="Objects" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
@@ -75,8 +187,15 @@ metadata/_tab_index = 1
 layout_mode = 2
 
 [node name="Venue" type="CanvasLayer" parent="."]
+visible = false
 scale = Vector2(5, 5)
 transform = Transform2D(5, 0, 0, 5, 0, 0)
 script = ExtResource("5_eydxy")
 venueImage = ExtResource("6_ukox7")
 defaultZoom = 5.0
+
+[connection signal="pressed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Reset Button" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_reset_view"]
+[connection signal="pressed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Clear Button" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_clear_layout"]
+[connection signal="value_changed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing/ZoomSpin" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_zoom_change"]
+[connection signal="value_changed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing/HztlSpin" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_hztl_pan_change"]
+[connection signal="value_changed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Zoom and Pan Testing/VertSpin" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_vert_pan_change"]
