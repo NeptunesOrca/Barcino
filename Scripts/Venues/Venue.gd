@@ -92,10 +92,13 @@ func _ready() -> void:
 	imageTextRect.name = imageDisplayName
 	self.add_child(background)
 	background.add_child(imageTextRect)
+	updateImage()
 	
 	#Connect any visibility changes for the background to the 
-	#updateImage(venueImage) #this should be handled by the setter for the image
 	self.visibility_changed.connect(_on_Venue_visibility_changed)
+	
+	resetView()
+	
 	deactivate()
 #endregion
 
@@ -135,6 +138,7 @@ func activate():
 ## [br]Triggered by the [signal visibility_changed] signal from the [Venue]
 func _on_Venue_visibility_changed():
 	background.set_visible(is_visible())
+	print(background.is_visible())
 #endregion
 
 #region Reset
@@ -156,11 +160,13 @@ func updateZoom():
 	self.set_scale(Vector2(venueZoom,venueZoom))
 	background.set_scale(Vector2(venueZoom, venueZoom))
 
+# TASK: TEST
 ## Changes the zoom of the [Venue] to the value [param scaleFactor] as a factor, then calls [method updateZoom]
 func zoom(scaleFactor : float):
 	venueZoom = scaleFactor
 	updateZoom()
 
+# TASK: TEST
 ## Syntactic sugar for [method zoom] that takes the value [param percent] as a percentage instead of as a factor.
 func zoomByPercent(percent):
 	zoom(percent/100.0)
@@ -171,6 +177,7 @@ func zoomByPercent(percent):
 func getPan() -> Vector2:
 	return venuePan
 
+#TASK:TEST
 ## Returns the current value of [member venuePan] as a relative percentage of the [member venueImage] size
 func getPanPercent() -> Vector2:
 	return Vector2((venuePan.x / venueImage.get_width())*100, (venuePan.y / venueImage.get_height())*100)
@@ -180,11 +187,13 @@ func updatePan():
 	self.set_offset(venuePan)
 	background.set_offset(venuePan)
 
+#TASK:TEST
 ## Increments the value of [member venuePan] and adjusts the [Venue]'s pan value by [param hztl_val] pixels in the horizontal direction and [param vert_val] pixels in the vertical direction
 func panBy(hztl_val, vert_val):
 	venuePan += Vector2(hztl_val, vert_val)
 	updatePan()
 
+#TASK:TEST
 ## Increments the [Venue]'s pan value, similar to [method panBy], but changing the image by a relative proportion to the size of the [member venueImage].
 ## [br][param lr_percent] is the percentage of the [member venueImage]'s width to shift the layout by in the horizontal direction
 ## [br][param ud_percent] is the percentage of the [member venueImage]'s height to shift the layout by in the vertical direction
@@ -198,6 +207,7 @@ func panTo(hztlPan := venuePan.x, vertPan := venuePan.y):
 	venuePan = Vector2(hztlPan, vertPan)
 	updatePan()
 
+#TASK:TEST
 ## Set the [Venue]'s pan value, similar to [method panTo], but changing the image by a relative proportion to the size of the [member venueImage].
 ## [br][param lr_percent] is the percentage of the [member venueImage]'s width to set the layout to in the horizontal direction
 ## [br][param ud_percent] is the percentage of the [member venueImage]'s height to set the layout to in the vertical direction

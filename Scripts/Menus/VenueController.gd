@@ -9,7 +9,8 @@ class_name VenueController
 #region Member Variables
 #region Layout Variables
 ## The list of available layouts/venues that a user can select
-@onready var layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
+var layoutsList
+#@onready var layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
 ## Should only be true if a layout has been selected, that is, if [member activeLayout] is not [b]null[/b]
 var layoutSelected : bool = false
 ## The currently active layout that the user is able to add and remove objects from, which is visible to the user.
@@ -19,10 +20,10 @@ var activeLayout : Venue
 #region Zoom & Pan controllers
 ## Used if there is a UI element for controlling zoom
 @export var zoom_controller : Range
-## Used if there is a UI element for controlling vertical pan
-@export var vert_pan_controller : Range
 ## Used if there is a UI element for controlling horizontal pan
 @export var hztl_pan_controller : Range
+## Used if there is a UI element for controlling vertical pan
+@export var vert_pan_controller : Range
 #endregion
 
 #var changingVenue = false # originally used because set_value_no_signal() didn't work on SpinBoxes until Godot 4.1
@@ -31,32 +32,43 @@ var activeLayout : Venue
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#Connect self
 	self.item_selected.connect(_on_venue_selection)
-	addLayoutsToItemList()
+	#Connect subcontrollers
+	if (zoom_controller != null):
+		zoom_controller.value_changed.connect(_on_zoom_change)
+	if (vert_pan_controller != null):
+		vert_pan_controller.value_changed.connect(_on_vert_pan_change)
+	if (hztl_pan_controller != null):
+		hztl_pan_controller.value_changed.connect(_on_hztl_pan_change)
+	# We call addLayoutsToItemList deferred to ensure that all the layouts have the chance to add themselves to the layoutlist
+	call_deferred("addLayoutsToItemList")
 
 ## Finds everything tagged as a layout, and adds all valid ones to the list of layouts
 func addLayoutsToItemList():
+	# Gets everything tagged with the layout group
+	layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
+	
+	# 
 	var venueNum = 0
 	var venue
 	while (venueNum < layoutsList.size()): # we only include things that are actually venues
 		venue = layoutsList[venueNum]
 		if (venue is Venue):
-			add_item(venue.getName())
+			add_item(venue.name)
 			venue.deactivate()
 			venueNum += 1
 		else:
 			var error_msg = "The node " + str(venue) + " is not a venue, but is inappropriately tagged in the group 'Layouts'"
 			print(error_msg)
-			layoutsList.remove(venueNum)
+			layoutsList.remove_at(venueNum)
 			#TODO: Add error handling here when that's ready to go
-	print("Venues added")
-	print(layoutsList)
 #endregion
 
 #region Venue Selection
 ## This is triggered by a signal from the ItemList of this object when a venue is selected.
 ## [br]Right now, it's essentially an alias for [member pickActiveLayout] which is split into a seperate function as a syntactic sugar so other things can more intuitively call the code
-func _on_venue_selection(index): 
+func _on_venue_selection(index):
 	pickActiveLayout(index)
 
 ## Switches to the [param layoutIndex] element within the [member layoutsList]
@@ -88,12 +100,14 @@ func _on_reset_view():
 func _on_zoom_change(percent_value):
 	if (layoutLocked()):
 		return
+	print("Zooming to ", percent_value)
 	var scalefactor = percent_value/100
 	activeLayout.zoom(scalefactor)
 
 ## This is triggered by a signal from a GUI element ([member hztl_pan_controller]) to change the how the layout pans in the horizontal direction.
 ## [br]See [method Venue.panToPercent] for more details.
 func _on_hztl_pan_change(percent_value):
+	print("Panning to ", percent_value)
 	if (layoutLocked()):
 		return
 	activeLayout.panToPercent(percent_value,activeLayout.getPanPercent().y)
@@ -101,6 +115,7 @@ func _on_hztl_pan_change(percent_value):
 ## This is triggered by a signal from a GUI element ([member vert_pan_controller]) to change the how the layout pans in the vertical direction.
 ## [br]See [method Venue.panToPercent] for more details.
 func _on_vert_pan_change(percent_value):
+	print("Panning to ", percent_value)
 	if (layoutLocked()):
 		return
 	activeLayout.panToPercent(activeLayout.getPanPercent().x,-percent_value)
@@ -140,7 +155,7 @@ class clearConfirmPopup extends ConfirmationDialog:
 	var venueSelector : VenueController
 	func _init(attachingNode : VenueController):
 		# Properties
-		self.window_title = "Are you sure?"
+		self.title = "Are you sure?"
 		self.dialog_text = "Clearing the layout will remove ALL objects from the venue layout, and cannot be undone. Are you sure you want to clear the layout?"
 		self.exclusive = true
 		# Add to tree under whatever node it is supposed to attach to, temporarily
@@ -169,7 +184,7 @@ func hasLayoutSelected() -> bool:
 ## This was used in the old tests when changingVenue was used, but it looks like that's no longer needed thanks to Godot 4.1 fixing spinboxes and setting values without sending signals
 ## [br]Mostly an alias for [method hasLayoutSelected], but adds on a check to see if [member activeLayout] actually exists, rather than just relying on [member layoutSelected]
 func layoutLocked() -> bool:
-	return hasLayoutSelected() && (activeLayout != null) #right now this can just be an alias for clarity
+	return (not hasLayoutSelected()) || (activeLayout == null) #right now this can just be an alias for clarity
 #	#return (activeLayout == null) || changingVenue
 #	# if there is not an active layout selected, don't do anything with the layout that doesn't exist
 #endregion
