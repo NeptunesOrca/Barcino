@@ -7,6 +7,8 @@ class_name Venue
 
 #region Member Variables
 #region Venue Properties
+## The group that applies to all layouts
+const layoutGroupName = "Layouts"
 ## The name of the Venue (e.g. Diwan, Welcome Centre, etc.)
 @export var venueName : String:
 	get:
@@ -16,31 +18,34 @@ class_name Venue
 #endregion
 
 #region Venue Image
-## The node that displays the the [member venueImage] in the background for the layout
-@onready var imageTextRect = $Background/VenueImage
+## The node that displays the the [member venueImage] in the background for the layout.
+## [br]Short for [b]Image Text[/b]ure [b]Rect[/b]angle.
+@onready var imageTextRect = TextureRect.new()
+## The name for the [member imageTextRect] as used in the code
+const imageDisplayName = "VenueImageDisplay"
 ## The image displayed as the venue background
 @export var venueImage : Texture:
 	get:
 		return venueImage
 	set(newtexture):
-		imageTextRect = $Background/VenueImage
-		if (imageTextRect != null):
-			venueImage = newtexture
-			imageTextRect.texture = venueImage
-		else:
-			var error_msg = "The imageTextRect (the Texture Rectangle for the venue image) of  " + str(self) + " is null "
-			#TODO: Error handling
-			#ErrorHandler.newError(self, error_msg)
+		venueImage = newtexture
+		updateImage()
+
+## The background canvaslayer, which the [member imageTextRect] is on.
+@onready var background = CanvasLayer.new()
+## The name for the [member background] as used in the code
+const backgroundName = "Background"
 #endregion
 
 #region Venue View Variables
 #region Zoom
 ## The default zoom value for the venue and layout. Given as a factor, not a percentage. Defaults to 1 (equivalent to 100%), but can be set for each venue.
-@export var defaultZoom = 1.0:
+@export var defaultZoom : float = 1.0:
 	get:
 		return defaultZoom
 	set(value):
 		defaultZoom = value
+		venueZoom = defaultZoom
 		updateZoom()
 
 ## The zoom factor for the venue and layout. Given as a factor not a percentage. Defaults to the [member defaultZoom].
@@ -55,7 +60,7 @@ var venueZoom : float = defaultZoom
 		return defaultPan
 	set(value):
 		defaultPan = value
-		panBy(defaultPan.x, defaultPan.y)
+		panTo(defaultPan.x, defaultPan.y)
 
 ## The amount the venue is panned in the horizontal and vertical directions measured in pixels compared ot the reference frame of the [member venueImage]
 ## Defaults to [member defaultPan].
@@ -66,8 +71,26 @@ var venuePan : Vector2 = defaultPan
 
 #region Startup
 ## Called when the node enters the scene tree for the first time.
-## [br]Connects the visiblity_changed signal to [method _on_Venue_visibility_changed], and ensures the venue is deactivated by default
+## [br] - Sets up the [member background] and [member imageTextRect] with the correct name and structure
+## [br] - Adds itself to the [member layoutGroupName] group so it can be found by the [VenueController]
+## [br] - Connects the visiblity_changed signal to [method _on_Venue_visibility_changed] so that when the visibility of the [Venue] changes, it is properly reflected by the [member background]
+## [br] - Ensures the venue is deactivated by default so that [VenueController] will show only the selected Venue
 func _ready() -> void:
+	#Setup the background canvas and add the image for the venue to it
+	#In the structure of:
+	# Venue
+	#	↳ Background (a CanvasLayer)
+	#		↳ imageTextRect
+	background.name = backgroundName
+	background.layer = ProjectConstants.mainGUILayer - 1 # The background must appear behind everything else
+	imageTextRect.name = imageDisplayName
+	self.add_child(background)
+	background.add_child(imageTextRect)
+	
+	#Add this to the correct group
+	add_to_group(Venue.layoutGroupName)
+	
+	#Connect any visibility changes for the background to the 
 	#updateImage(venueImage) #this should be handled by the setter for the image
 	self.visibility_changed.connect(_on_Venue_visibility_changed)
 	deactivate()
@@ -79,13 +102,23 @@ func clearObjects():
 	var children = self.get_children()
 	
 	for obj in children:
-		if obj == $Background :
+		if obj == background :
 			# Do not delete the background
 			continue
 		obj.queue_free()
 #endregion
 
 #region View Changing
+#region Image
+func updateImage():
+	if (imageTextRect != null):
+		imageTextRect.texture = venueImage
+	else:
+		var error_msg = "The imageTextRect (the Texture Rectangle for the venue image) of  " + str(self) + " is null "
+		#TODO: Error handling
+		#ErrorHandler.newError(self, error_msg)
+#endregion
+
 #region Visibility
 ## Hides and deactivates the layout. Visibility of the [member imageTextRect] is controlled via [method _on_Venue_visibility_changed]
 func deactivate():
@@ -98,7 +131,7 @@ func activate():
 ## Automatically changes the visibility of the background and with it the [member imageTextRect] to match the visibility of the layout as a whole.
 ## [br]Triggered by the [signal visibility_changed] signal from the [Venue]
 func _on_Venue_visibility_changed():
-	$Background.set_visible(is_visible())
+	background.set_visible(is_visible())
 #endregion
 
 #region Reset
@@ -118,7 +151,7 @@ func getZoom() -> float:
 ## Makes the changes to the [Venue] and [member imageTextRect] for the venue background and layout to match the value in [member venueZoom]
 func updateZoom():
 	self.set_scale(Vector2(venueZoom,venueZoom))
-	$Background.set_scale(Vector2(venueZoom, venueZoom))
+	background.set_scale(Vector2(venueZoom, venueZoom))
 
 ## Changes the zoom of the [Venue] to the value [param scaleFactor] as a factor, then calls [method updateZoom]
 func zoom(scaleFactor : float):
@@ -142,7 +175,7 @@ func getPanPercent() -> Vector2:
 ## Makes the changes to the [Venue] and [member imageTextRect] for the venue background and layout to match the value in [member venuePan]
 func updatePan():
 	self.set_offset(venuePan)
-	$Background.set_offset(venuePan)
+	background.set_offset(venuePan)
 
 ## Increments the value of [member venuePan] and adjusts the [Venue]'s pan value by [param hztl_val] pixels in the horizontal direction and [param vert_val] pixels in the vertical direction
 func panBy(hztl_val, vert_val):

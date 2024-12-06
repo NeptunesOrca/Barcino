@@ -9,7 +9,7 @@ class_name VenueController
 #region Member Variables
 #region Layout Variables
 ## The list of available layouts/venues that a user can select
-@onready var layoutsList = get_tree().get_nodes_in_group(ProjectConstants.layoutGroupName)
+@onready var layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
 ## Should only be true if a layout has been selected, that is, if [member activeLayout] is not [b]null[/b]
 var layoutSelected : bool = false
 ## The currently active layout that the user is able to add and remove objects from, which is visible to the user.

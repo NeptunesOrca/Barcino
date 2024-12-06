@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=8 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 [ext_resource type="Texture2D" uid="uid://dc8pagglb8bhl" path="res://UI/TestUI.png" id="1_k66pc"]
 [ext_resource type="Theme" uid="uid://barsihq1ywsyr" path="res://UI/menu_style.tres" id="2_yg8xr"]
 [ext_resource type="Theme" uid="uid://bm85tv3m4cytm" path="res://UI/header_style.tres" id="4_oipcn"]
+[ext_resource type="Script" path="res://Scripts/Venues/Venue.gd" id="5_eydxy"]
+[ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7u0o"]
 texture = ExtResource("1_k66pc")
@@ -71,3 +73,10 @@ metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Objects"]
 layout_mode = 2
+
+[node name="Venue" type="CanvasLayer" parent="."]
+scale = Vector2(5, 5)
+transform = Transform2D(5, 0, 0, 5, 0, 0)
+script = ExtResource("5_eydxy")
+venueImage = ExtResource("6_ukox7")
+defaultZoom = 5.0
