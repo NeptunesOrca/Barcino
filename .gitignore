@@ -1,3 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+UI/TestUI.png
+UI/TestUI.png.import
+UI/TestUI.xcf
+Documentation/DocumentationGenerationSteps.txt
