@@ -160,7 +160,6 @@ func updateZoom():
 	self.set_scale(Vector2(venueZoom,venueZoom))
 	background.set_scale(Vector2(venueZoom, venueZoom))
 
-# TASK: TEST
 ## Changes the zoom of the [Venue] to the value [param scaleFactor] as a factor, then calls [method updateZoom]
 func zoom(scaleFactor : float):
 	venueZoom = scaleFactor
@@ -177,7 +176,6 @@ func zoomByPercent(percent):
 func getPan() -> Vector2:
 	return venuePan
 
-#TASK:TEST
 ## Returns the current value of [member venuePan] as a relative percentage of the [member venueImage] size
 func getPanPercent() -> Vector2:
 	return Vector2((venuePan.x / venueImage.get_width())*100, (venuePan.y / venueImage.get_height())*100)
