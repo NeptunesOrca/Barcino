@@ -2,7 +2,10 @@ extends Control
 class_name DraggableObject
 ## The base class for any object that can be dragged around a layout. Extended by things such as tables, chairs, etc.
 ##
-## 
+## This is the base class for objects that are draggable, such as tables, chairs, speakers, etc.
+## NOTE: for this system to work, the layout layer has to be the same or greater than the menu layer. Otherwise, won't be able to pick up objects from the layout
+## [br]NOTE: for this system to work, the menu layer has to be the same or greater as the layout layer. Otherwise, won't be able to pick up objects from the menu
+## i.e. The menu and layout have to have the same layer value
 
 # needed groupnames
 #menuGroupName -> ControlMenu.objectMenuGroupName
@@ -36,7 +39,7 @@ var menuOffset : Vector2
 
 #region Layout Properties
 ## The current layout, i.e. [Venue] that the object will be added to
-var layout
+var layout : Venue
 ## An enumeration for clarity within the code
 enum LayoutExists {FALSE, TRUE}
 #endregion
@@ -168,7 +171,10 @@ func _on_gui_input(event):
 		# Reparent object to the menu, so that the ScrollContainer for the Object Menu won't clip it during the drag
 		# Ensure that the menuParent is not changed during this
 		if startedInMenu:
-			objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
+			adjustScaleToMatchLayout()
+			calculateMenuOffsets()
+			print("Dragging node: ",self)
+			#objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
 	#endregion
 
 ## Built-in function that is called every time there is an input for this object
@@ -183,7 +189,12 @@ func handleDragEndLogic():
 	
 	# For objects that have been pulled from the menu
 	if startedInMenu:
-		pass
+		#objectMenuScrollContainer.clip_contents = true #this is also super janky, I'd like to come up with something better but that can wait
+		if (menuParentNode == null):
+			findMenuParent()
+		revertScaleFromLayout()
+		putInLayout()
+		repopulateMenu()
 	
 	# Delete objects that end their drag in invalid locations
 	if (endedInDeletionArea()):
@@ -214,29 +225,57 @@ func endedInDeletionArea() -> bool:
 #region Adjustments for when starting within a menu
 #region Pre-Drag Adjustments
 func adjustScaleToMatchLayout():
-	pass
+	return
+	self.size *= layout.get_scale()
 
 func calculateMenuOffsets():
-	pass
+	return
+	var mouse_pos = get_viewport().get_mouse_position()
+	menuOffset = mouse_pos - self.get_local_mouse_position()
+	#NOTE: This may need some rejiggering later
+	
 #endregion
 
 #region Post-Drag Adjustments
+func revertScaleFromLayout():
+	return
+	self.size /= layout.get_scale()
+
 func putInLayout():
 	changeOwnerToLayout()
 	adjustTransformLocationForLayout()
 
 func changeOwnerToLayout():
-	#deparent the object so that is can be added as a  child to something else
+	#deparent the object so that is can be added as a child to something else
+	#we could use menuParentNode, but this is more reliable, as it will work no matter what structure we have, whether it's the same or not
 	self.get_parent().remove_child(self)
 	# make the object a child of the layout
 	layout.add_child(self)
 
+func repopulateMenu():
+	checkLayout()
+	
+	#recreate @ start location in menu
+	var copiedNode : DraggableObject = self.duplicate()
+	menuParentNode.add_child(copiedNode)
+	copiedNode.findMenuParent()
+	print("These nodes: ",self,copiedNode)
+	print("Parents nodes: ",menuParentNode.get_children())
+
 func adjustTransformLocationForLayout():
+	return
 	var layoutOffset = layout.get_offset()
 	var layoutScale = layout.get_scale()
 	
-	#account for the position the object was pull from in the menu
-	self.position
+	#account for the position the object was pulled from in the menu
+	self.position.x += menuOffset.x
+	self.position.y += menuOffset.y
+	#account for layout offset from the mouse position
+	self.position.x -= layoutOffset.x
+	self.position.y -= layoutOffset.y
+	#account for layout scale
+	self.position.x /= layoutScale.x
+	self.position.y /= layoutScale.y
 #endregion
 #endregion
 #endregion
