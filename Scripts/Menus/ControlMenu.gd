@@ -6,6 +6,11 @@ class_name ControlMenu
 ## [br]See [VenueController] for details about the Venues tab. The Objects tab does not currently use a script
 
 #region Member Variables
+#region Group Names
+## The group name for [ControlMenu] so that it can easily be found
+const objectMenuGroupName = "ObjectMenu"
+#endregion
+
 enum TabNumber {VENUES_TAB, OBJECTS_TAB}
 
 ## This is currently unusued, but may be used for printing

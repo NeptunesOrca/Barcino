@@ -1,19 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=14 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
-[ext_resource type="Texture2D" uid="uid://dc8pagglb8bhl" path="res://UI/TestUI.png" id="1_k66pc"]
-[ext_resource type="Theme" uid="uid://barsihq1ywsyr" path="res://UI/menu_style.tres" id="2_yg8xr"]
-[ext_resource type="Theme" uid="uid://bm85tv3m4cytm" path="res://UI/header_style.tres" id="4_oipcn"]
+[ext_resource type="Theme" uid="uid://dqckf2al7eibk" path="res://UI/menu_style.tres" id="2_yg8xr"]
+[ext_resource type="Theme" path="res://UI/header_style.tres" id="4_oipcn"]
 [ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="4_ryxm2"]
 [ext_resource type="Script" path="res://Scripts/Venues/Venue.gd" id="5_eydxy"]
-[ext_resource type="StyleBox" uid="uid://hvkt51jyhd2s" path="res://UI/half_scroll_slider_stylebox.tres" id="5_h7lkv"]
+[ext_resource type="StyleBox" path="res://UI/half_scroll_slider_stylebox.tres" id="5_h7lkv"]
 [ext_resource type="Script" path="res://Scripts/Menus/VenueController.gd" id="5_ux6w8"]
-[ext_resource type="StyleBox" uid="uid://di7wmucyyi4og" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
+[ext_resource type="StyleBox" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
 [ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7u0o"]
-texture = ExtResource("1_k66pc")
-region_rect = Rect2(10, 10, 16, 16)
 
 [sub_resource type="GDScript" id="GDScript_ibgdb"]
 
@@ -64,7 +59,6 @@ visible = false
 custom_minimum_size = Vector2(200, 30)
 offset_right = 200.0
 offset_bottom = 31.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_n7u0o")
 
 [node name="ControlMenu" type="TabContainer" parent="MenuCanvasLayer"]
 offset_right = 200.0
@@ -188,6 +182,7 @@ metadata/_tab_index = 1
 layout_mode = 2
 
 [node name="Venue" type="CanvasLayer" parent="."]
+visible = false
 offset = Vector2(500, 200)
 transform = Transform2D(1, 0, 0, 1, 500, 200)
 script = ExtResource("5_eydxy")

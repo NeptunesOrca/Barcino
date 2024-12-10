@@ -1,12 +1,17 @@
 extends ItemList
 class_name VenueController
-## This class is used to select which Venue a layout is being made for, as well as control modifications to the venue/layout as a whole, such as zoom, pan, and resetting the layout
+## This class is used to select which [Venue] a layout is being made for, as well as control modifications to the venue/layout as a whole, such as zoom, pan, and resetting the layout
 ##
-## 
-##
-## @experimental
+## May be interchangably described in documentation as both the Layout Handler and Venue Controller.
+## [br]Used by the user to pick which [Venue] they are modifying
+## [br]Also contains interface options for GUI control of the selected [Venue], such as zoom, pan, and reset options for a given [Venue]
 
 #region Member Variables
+#region Group Names
+## The group name for [VenueController] so that it can easily be found
+const layoutHandlerGroupName = "LayoutHandler"
+#endregion
+
 #region Layout Variables
 ## The list of available layouts/venues that a user can select
 var layoutsList
@@ -32,6 +37,8 @@ var activeLayout : Venue
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#Add to the layoutHandlerGroupName so other objects can easily find this
+	self.add_to_group(layoutHandlerGroupName)
 	#Connect self
 	self.item_selected.connect(_on_venue_selection)
 	#Connect subcontrollers
