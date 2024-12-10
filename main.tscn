@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=15 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 [ext_resource type="Theme" uid="uid://dqckf2al7eibk" path="res://UI/menu_style.tres" id="2_yg8xr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Menus/VenueController.gd" id="5_ux6w8"]
 [ext_resource type="StyleBox" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
 [ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
+[ext_resource type="Script" path="res://Scripts/Objects/DraggableObject.gd" id="8_44xfp"]
 
 [sub_resource type="GDScript" id="GDScript_ibgdb"]
 
@@ -64,10 +65,11 @@ offset_bottom = 31.0
 offset_right = 200.0
 offset_bottom = 428.0
 theme = ExtResource("2_yg8xr")
-current_tab = 0
+current_tab = 1
 script = ExtResource("1_em4c8")
 
 [node name="Venues" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
+visible = false
 layout_direction = 2
 layout_mode = 2
 theme = SubResource("Theme_vaia0")
@@ -173,7 +175,6 @@ suffix = "%"
 layout_mode = 2
 
 [node name="Objects" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_yg8xr")
 metadata/_tab_index = 1
@@ -181,8 +182,21 @@ metadata/_tab_index = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Objects"]
 layout_mode = 2
 
+[node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer" node_paths=PackedStringArray("objectMenuScrollContainer")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("8_44xfp")
+objectMenuScrollContainer = NodePath("../..")
+
+[node name="ColorRect2" type="ColorRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer" node_paths=PackedStringArray("objectMenuScrollContainer")]
+clip_contents = true
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+script = ExtResource("8_44xfp")
+objectMenuScrollContainer = NodePath("../..")
+
 [node name="Venue" type="CanvasLayer" parent="."]
-visible = false
 offset = Vector2(500, 200)
 transform = Transform2D(1, 0, 0, 1, 500, 200)
 script = ExtResource("5_eydxy")

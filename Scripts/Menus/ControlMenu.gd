@@ -17,7 +17,12 @@ enum TabNumber {VENUES_TAB, OBJECTS_TAB}
 var availableFileTypes = [".png"]
 #endregion
 
-#region
+#region Startup
+func _ready():
+	add_to_group(objectMenuGroupName)
+#endregion
+
+#region Tab Control
 ## Switches which tab is active in the menu, specified by [param tabnum] which belongs to [enum TabNumber]
 func switchMenuTab(tabnum : TabNumber):
 	set_current_tab(tabnum) #recall that Menu extends TabContainer, so set_current_tab is from TabContainer

@@ -141,7 +141,6 @@ func activate():
 ## [br]Triggered by the [signal visibility_changed] signal from the [Venue]
 func _on_Venue_visibility_changed():
 	background.set_visible(is_visible())
-	print(background.is_visible())
 #endregion
 
 #region Reset
