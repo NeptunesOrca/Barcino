@@ -6,13 +6,23 @@ class_name ControlMenu
 ## [br]See [VenueController] for details about the Venues tab. The Objects tab does not currently use a script
 
 #region Member Variables
+#region Group Names
+## The group name for [ControlMenu] so that it can easily be found
+const objectMenuGroupName = "ObjectMenu"
+#endregion
+
 enum TabNumber {VENUES_TAB, OBJECTS_TAB}
 
 ## This is currently unusued, but may be used for printing
 var availableFileTypes = [".png"]
 #endregion
 
-#region
+#region Startup
+func _ready():
+	add_to_group(objectMenuGroupName)
+#endregion
+
+#region Tab Control
 ## Switches which tab is active in the menu, specified by [param tabnum] which belongs to [enum TabNumber]
 func switchMenuTab(tabnum : TabNumber):
 	set_current_tab(tabnum) #recall that Menu extends TabContainer, so set_current_tab is from TabContainer

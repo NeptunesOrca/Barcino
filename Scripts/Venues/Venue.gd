@@ -3,7 +3,10 @@ extends CanvasLayer
 class_name Venue
 ## Controls images of the various UABG Venues, as well as what objects are included in the layout for that venue.
 ##
-##
+## May be interchangably described in documentation as both a layout and a venue.
+## [br]Technically, the [Venue] is the class that contains and encompasses both the layout and the venue.
+## [br]The layout can be considered the collection of [DraggableObjects] and their properties (such as relative positions)
+## [br]The venue can be considered the physical space that the layout goes inside of.
 
 #region Member Variables
 #region Venue Properties
@@ -138,7 +141,6 @@ func activate():
 ## [br]Triggered by the [signal visibility_changed] signal from the [Venue]
 func _on_Venue_visibility_changed():
 	background.set_visible(is_visible())
-	print(background.is_visible())
 #endregion
 
 #region Reset
