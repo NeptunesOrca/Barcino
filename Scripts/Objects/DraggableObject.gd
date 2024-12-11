@@ -18,8 +18,6 @@ class_name DraggableObject
 var menu : ControlMenu
 ## The [VenueController]
 var layoutHandler : VenueController
-## The [ScrollContainer] for the Objects Menu of of [menu]
-@export var objectMenuScrollContainer : ScrollContainer
 #endregion
 
 #region Binary Properties
