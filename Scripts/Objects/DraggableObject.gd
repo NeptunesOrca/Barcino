@@ -16,10 +16,13 @@ class_name DraggableObject
 #region Key Nodes
 ## The [ControlMenu]
 var menu : ControlMenu
+## The [Container] within the object menu tab that this [DraggableObject] is held within.
+## [br]This [Container] determines the position within the object menu of the [DraggableObject] for the user to drag it onto a [Venue]
+var menuParentNode : Container
 ## The [VenueController]
 var layoutHandler : VenueController
-## The [ScrollContainer] for the Objects Menu of of [menu]
-@export var objectMenuScrollContainer : ScrollContainer
+## The current layout, i.e. [Venue] that the object will be added to
+var layout : Venue
 #endregion
 
 #region Binary Properties
@@ -32,16 +35,11 @@ var dragStarted : bool = false
 #endregion
 
 #region Menu Properties
-## The [Container] within the object menu tab that this [DraggableObject] is held within.
-## [br]This [Container] determines the position within the object menu of the [DraggableObject] for the user to drag it onto a [Venue]
-var menuParentNode : Container
 ## Used when a [DraggableObject] is dragged out of the menu, to adjust where the object is finally placed on the [Venue]
 var menuOffset : Vector2
 #endregion
 
 #region Layout Properties
-## The current layout, i.e. [Venue] that the object will be added to
-var layout : Venue
 ## An enumeration for clarity within the code
 enum LayoutExists {FALSE, TRUE}
 #endregion
@@ -51,13 +49,18 @@ enum LayoutExists {FALSE, TRUE}
 ## Called when the node enters the scene tree for the first time.
 ## [br]Runs all the required finder functions to prepare the [DraggableObject] for use.
 func _ready() -> void:
+	call_deferred("findAllKeyNodes") #Deferred until after first frame to ensure that all of the Key Nodes have a chance to get themselves in the right groups
+	self.gui_input.connect(_on_gui_input)
+
+#region Finder Functions
+## Function that collects all the finders together for when we want to do all of them at once
+## When called in [method _ready], to be deferred until after first frame, to ensure that all of the Key Nodes have a chance to add themselves to the appropriate groups before this occurs
+func findAllKeyNodes():
 	findMenu()
 	findLayoutHandler()
 	findLayout()
 	findMenuParent()
-	self.gui_input.connect(_on_gui_input)
 
-#region Finder Functions
 ## Generic function that returns a specific [Node] from the tree, using the specified [param groupName].
 func finder(groupName : String):
 	return get_tree().get_first_node_in_group(groupName)
@@ -77,6 +80,7 @@ func findLayout():
 		return LayoutExists.TRUE
 		#early return, no more work to do
 	
+	noLayoutFound()
 	return LayoutExists.FALSE
 
 ## An internal class that simply tells the user that they must select a [Venue] before they can start modifying or using [DraggableObjects].
@@ -95,9 +99,15 @@ class noLayoutPopup extends AcceptDialog:
 	func _on_confirmed():
 		self.queue_free
 
-## A function that determines what to do if no layout has been found for the [DraggableObject] to use
-## Helps the user find where to select a [Venue], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects]
+## A function that determines what to do if no layout has been found for the [DraggableObject] to use.
+## Helps the user find where to select a [Venue], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects].
+## If the [DraggableObject] is currently invisible, does nothing, as the user is clearly not trying to interact with it.
 func noLayoutFound():
+	# If the object is not visible, does nothing. The user clearly isn't trying to interact with it if it's invisible.
+	# The second half of this is a little bit janky, but it'll get the job done
+	if ((not visible) || (menu.current_tab != ControlMenu.TabNumber.OBJECTS_TAB)):
+		return
+	
 	if (menu == null):
 		findMenu()
 	
@@ -127,7 +137,7 @@ func findMenuParent():
 #endregion
 #endregion
 
-#region
+#region Checks
 ## Checks if the [Venue] selected is valid, and returns the result as a bool
 func checkLayout() -> bool:
 	var validLayout = false
@@ -174,7 +184,6 @@ func _on_gui_input(event):
 				# Ensure that the menuParent is not changed during this for duplication at the end of the drag
 				putInLayout()
 			dragStarted = true
-			#objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
 	#endregion
 
 ## Built-in function that is called every time there is an input for this object
@@ -191,25 +200,22 @@ func handleDragEndLogic():
 	
 	# For objects that have been pulled from the menu
 	if startedInMenu:
-		#objectMenuScrollContainer.clip_contents = true #this is also super janky, I'd like to come up with something better but that can wait
 		if (menuParentNode == null):
 			findMenuParent()
-		revertScaleFromLayout()
-		#putInLayout()
 		repopulateMenu()
 	
 	# Delete objects that end their drag in invalid locations
-	if (endedInDeletionArea()):
+	if (inDeletionArea()):
 		queue_free()
 		return
 	
-	#The drag is over
+	#The drag is over, make sure we return the invarient to such a state that it is ready for next time
 	dragging = false
 	dragStarted = false
 #endregion
 
 #region Deletion Areas
-func endedInDeletionArea() -> bool:
+func inDeletionArea() -> bool:
 	var viewport = get_viewport()
 	var mouse_pos = viewport.get_mouse_position()
 	
@@ -231,14 +237,9 @@ func endedInDeletionArea() -> bool:
 #region Adjustments for when starting within a menu
 #region Pre-Drag Adjustments
 func putInLayout():
-	adjustScaleToMatchLayout()
 	adjustMenuOffsets()
 	adjustTransformLocationForLayout()
 	changeOwnerToLayout()
-
-#TEST: Not currently tested
-func adjustScaleToMatchLayout():
-	self.size *= layout.get_scale()
 
 func adjustMenuOffsets():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -246,7 +247,7 @@ func adjustMenuOffsets():
 	#menuOffset = smouse_pos moves it all over the place
 	#scaling self.get_local_mouse_position() by self.size makes everything worse
 	var parent = self.get_parent()
-	if (parent == null):
+	if (parent == null || (not (parent is Container)) ):
 		#Somehow this DraggableObject doesn't have a parent
 		#ALERT: this shouldn't happen
 		menuOffset = mouse_pos
@@ -260,18 +261,17 @@ func adjustMenuOffsets():
 		
 	self.position.x -= menuOffset.x
 	self.position.y -= menuOffset.y
-	print(menuOffset)
 
 func adjustTransformLocationForLayout():
 	var layoutOffset = layout.get_offset()
 	var layoutScale = layout.get_scale()
 	
 	#account for layout offset from the mouse position
-	#self.position.x -= layoutOffset.x
-	#self.position.y -= layoutOffset.y
+	self.position.x -= layoutOffset.x
+	self.position.y -= layoutOffset.y
 	#account for layout scale
-	#self.position.x /= layoutScale.x
-	#self.position.y /= layoutScale.y
+	self.position.x /= layoutScale.x
+	self.position.y /= layoutScale.y
 
 func changeOwnerToLayout():
 	#deparent the object so that is can be added as a child to something else
@@ -282,10 +282,6 @@ func changeOwnerToLayout():
 #endregion
 
 #region Post-Drag Adjustments
-func revertScaleFromLayout():
-	return
-	self.size /= layout.get_scale()
-
 func repopulateMenu():
 	checkLayout()
 	#recreate @ start location in menu
