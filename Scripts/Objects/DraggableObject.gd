@@ -190,11 +190,8 @@ func handleDragEndLogic():
 	
 	# For objects that have been pulled from the menu
 	if startedInMenu:
-		#objectMenuScrollContainer.clip_contents = true #this is also super janky, I'd like to come up with something better but that can wait
 		if (menuParentNode == null):
 			findMenuParent()
-		revertScaleFromLayout()
-		#putInLayout()
 		repopulateMenu()
 	
 	# Delete objects that end their drag in invalid locations
