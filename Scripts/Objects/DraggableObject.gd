@@ -174,7 +174,6 @@ func _on_gui_input(event):
 				# Ensure that the menuParent is not changed during this for duplication at the end of the drag
 				putInLayout()
 			dragStarted = true
-			#objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
 	#endregion
 
 ## Built-in function that is called every time there is an input for this object
@@ -199,17 +198,17 @@ func handleDragEndLogic():
 		repopulateMenu()
 	
 	# Delete objects that end their drag in invalid locations
-	if (endedInDeletionArea()):
+	if (inDeletionArea()):
 		queue_free()
 		return
 	
-	#The drag is over
+	#The drag is over, make sure we return the invarient to such a state that it is ready for next time
 	dragging = false
 	dragStarted = false
 #endregion
 
 #region Deletion Areas
-func endedInDeletionArea() -> bool:
+func inDeletionArea() -> bool:
 	var viewport = get_viewport()
 	var mouse_pos = viewport.get_mouse_position()
 	
@@ -231,14 +230,9 @@ func endedInDeletionArea() -> bool:
 #region Adjustments for when starting within a menu
 #region Pre-Drag Adjustments
 func putInLayout():
-	adjustScaleToMatchLayout()
 	adjustMenuOffsets()
 	adjustTransformLocationForLayout()
 	changeOwnerToLayout()
-
-#TEST: Not currently tested
-func adjustScaleToMatchLayout():
-	self.size *= layout.get_scale()
 
 func adjustMenuOffsets():
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -246,7 +240,7 @@ func adjustMenuOffsets():
 	#menuOffset = smouse_pos moves it all over the place
 	#scaling self.get_local_mouse_position() by self.size makes everything worse
 	var parent = self.get_parent()
-	if (parent == null):
+	if (parent == null || (not (parent is Container)) ):
 		#Somehow this DraggableObject doesn't have a parent
 		#ALERT: this shouldn't happen
 		menuOffset = mouse_pos
@@ -260,18 +254,18 @@ func adjustMenuOffsets():
 		
 	self.position.x -= menuOffset.x
 	self.position.y -= menuOffset.y
-	print(menuOffset)
 
+#TEST: Untested
 func adjustTransformLocationForLayout():
 	var layoutOffset = layout.get_offset()
 	var layoutScale = layout.get_scale()
 	
 	#account for layout offset from the mouse position
-	#self.position.x -= layoutOffset.x
-	#self.position.y -= layoutOffset.y
+	self.position.x -= layoutOffset.x
+	self.position.y -= layoutOffset.y
 	#account for layout scale
-	#self.position.x /= layoutScale.x
-	#self.position.y /= layoutScale.y
+	self.position.x /= layoutScale.x
+	self.position.y /= layoutScale.y
 
 func changeOwnerToLayout():
 	#deparent the object so that is can be added as a child to something else
@@ -282,10 +276,6 @@ func changeOwnerToLayout():
 #endregion
 
 #region Post-Drag Adjustments
-func revertScaleFromLayout():
-	return
-	self.size /= layout.get_scale()
-
 func repopulateMenu():
 	checkLayout()
 	#recreate @ start location in menu
