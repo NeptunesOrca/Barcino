@@ -250,7 +250,6 @@ func adjustMenuOffsets():
 	self.position.x -= menuOffset.x
 	self.position.y -= menuOffset.y
 
-#TEST: Untested
 func adjustTransformLocationForLayout():
 	var layoutOffset = layout.get_offset()
 	var layoutScale = layout.get_scale()
