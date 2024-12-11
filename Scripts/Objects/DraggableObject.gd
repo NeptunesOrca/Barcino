@@ -16,8 +16,13 @@ class_name DraggableObject
 #region Key Nodes
 ## The [ControlMenu]
 var menu : ControlMenu
+## The [Container] within the object menu tab that this [DraggableObject] is held within.
+## [br]This [Container] determines the position within the object menu of the [DraggableObject] for the user to drag it onto a [Venue]
+var menuParentNode : Container
 ## The [VenueController]
 var layoutHandler : VenueController
+## The current layout, i.e. [Venue] that the object will be added to
+var layout : Venue
 #endregion
 
 #region Binary Properties
@@ -30,16 +35,11 @@ var dragStarted : bool = false
 #endregion
 
 #region Menu Properties
-## The [Container] within the object menu tab that this [DraggableObject] is held within.
-## [br]This [Container] determines the position within the object menu of the [DraggableObject] for the user to drag it onto a [Venue]
-var menuParentNode : Container
 ## Used when a [DraggableObject] is dragged out of the menu, to adjust where the object is finally placed on the [Venue]
 var menuOffset : Vector2
 #endregion
 
 #region Layout Properties
-## The current layout, i.e. [Venue] that the object will be added to
-var layout : Venue
 ## An enumeration for clarity within the code
 enum LayoutExists {FALSE, TRUE}
 #endregion
@@ -49,13 +49,18 @@ enum LayoutExists {FALSE, TRUE}
 ## Called when the node enters the scene tree for the first time.
 ## [br]Runs all the required finder functions to prepare the [DraggableObject] for use.
 func _ready() -> void:
+	call_deferred("findAllKeyNodes") #Deferred until after first frame to ensure that all of the Key Nodes have a chance to get themselves in the right groups
+	self.gui_input.connect(_on_gui_input)
+
+#region Finder Functions
+## Function that collects all the finders together for when we want to do all of them at once
+## When called in [method _ready], to be deferred until after first frame, to ensure that all of the Key Nodes have a chance to add themselves to the appropriate groups before this occurs
+func findAllKeyNodes():
 	findMenu()
 	findLayoutHandler()
 	findLayout()
 	findMenuParent()
-	self.gui_input.connect(_on_gui_input)
 
-#region Finder Functions
 ## Generic function that returns a specific [Node] from the tree, using the specified [param groupName].
 func finder(groupName : String):
 	return get_tree().get_first_node_in_group(groupName)
@@ -75,6 +80,7 @@ func findLayout():
 		return LayoutExists.TRUE
 		#early return, no more work to do
 	
+	noLayoutFound()
 	return LayoutExists.FALSE
 
 ## An internal class that simply tells the user that they must select a [Venue] before they can start modifying or using [DraggableObjects].
@@ -93,9 +99,15 @@ class noLayoutPopup extends AcceptDialog:
 	func _on_confirmed():
 		self.queue_free
 
-## A function that determines what to do if no layout has been found for the [DraggableObject] to use
-## Helps the user find where to select a [Venue], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects]
+## A function that determines what to do if no layout has been found for the [DraggableObject] to use.
+## Helps the user find where to select a [Venue], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects].
+## If the [DraggableObject] is currently invisible, does nothing, as the user is clearly not trying to interact with it.
 func noLayoutFound():
+	# If the object is not visible, does nothing. The user clearly isn't trying to interact with it if it's invisible.
+	# The second half of this is a little bit janky, but it'll get the job done
+	if ((not visible) || (menu.current_tab != ControlMenu.TabNumber.OBJECTS_TAB)):
+		return
+	
 	if (menu == null):
 		findMenu()
 	
@@ -125,7 +137,7 @@ func findMenuParent():
 #endregion
 #endregion
 
-#region
+#region Checks
 ## Checks if the [Venue] selected is valid, and returns the result as a bool
 func checkLayout() -> bool:
 	var validLayout = false

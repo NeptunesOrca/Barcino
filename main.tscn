@@ -65,11 +65,10 @@ offset_bottom = 31.0
 offset_right = 200.0
 offset_bottom = 428.0
 theme = ExtResource("2_yg8xr")
-current_tab = 1
+current_tab = 0
 script = ExtResource("1_em4c8")
 
 [node name="Venues" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
-visible = false
 layout_direction = 2
 layout_mode = 2
 theme = SubResource("Theme_vaia0")
@@ -176,6 +175,7 @@ suffix = "%"
 layout_mode = 2
 
 [node name="Objects" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_yg8xr")
 metadata/_tab_index = 1
