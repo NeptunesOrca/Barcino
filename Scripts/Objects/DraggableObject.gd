@@ -48,12 +48,13 @@ enum LayoutExists {FALSE, TRUE}
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 ## [br]Runs all the required finder functions to prepare the [DraggableObject] for use.
+## [br]When running [method findAllKeyNodes], calls it as deferred to ensure that all of the Key Nodes have a chance to properly add themselve to the correct groups before trying to find them
 func _ready() -> void:
 	call_deferred("findAllKeyNodes") #Deferred until after first frame to ensure that all of the Key Nodes have a chance to get themselves in the right groups
 	self.gui_input.connect(_on_gui_input)
 
 #region Finder Functions
-## Function that collects all the finders together for when we want to do all of them at once
+## Function that collects all the finders together for when we want to do all of them at once.
 ## When called in [method _ready], to be deferred until after first frame, to ensure that all of the Key Nodes have a chance to add themselves to the appropriate groups before this occurs
 func findAllKeyNodes():
 	findMenu()
@@ -62,7 +63,7 @@ func findAllKeyNodes():
 	findMenuParent()
 
 ## Generic function that returns a specific [Node] from the tree, using the specified [param groupName].
-func finder(groupName : String):
+func finder(groupName : String) -> Node:
 	return get_tree().get_first_node_in_group(groupName)
 
 ## A finder function for the [VenueController]
@@ -70,7 +71,7 @@ func findLayoutHandler():
 	layoutHandler = finder(VenueController.layoutHandlerGroupName)
 
 #region Finding the Layout and what to do if no Layout Found
-## A finder function for the layout, i.e. [Venue] 
+## A finder function for the [member layout] 
 func findLayout():
 	if (layoutHandler == null):
 		findLayoutHandler()
@@ -83,7 +84,7 @@ func findLayout():
 	noLayoutFound()
 	return LayoutExists.FALSE
 
-## An internal class that simply tells the user that they must select a [Venue] before they can start modifying or using [DraggableObjects].
+## An internal class that simply tells the user that they must select a [Venue] for [member layout] before they can start modifying or using [DraggableObjects].
 ## [br]Essentially just an [AcceptDialog], but automatically deletes itself from memory once closed in any way.
 class noLayoutPopup extends AcceptDialog:
 	func _init(attachingNode : Node):
@@ -99,8 +100,8 @@ class noLayoutPopup extends AcceptDialog:
 	func _on_confirmed():
 		self.queue_free
 
-## A function that determines what to do if no layout has been found for the [DraggableObject] to use.
-## Helps the user find where to select a [Venue], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects].
+## A function that determines what to do if no [member layout] has been found for the [DraggableObject] to use.
+## Helps the user find where to select a [Venue] for [member layout], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects].
 ## If the [DraggableObject] is currently invisible, does nothing, as the user is clearly not trying to interact with it.
 func noLayoutFound():
 	# If the object is not visible, does nothing. The user clearly isn't trying to interact with it if it's invisible.
@@ -121,11 +122,12 @@ func noLayoutFound():
 #endregion
 
 #region Menu and Menu Features
-## A finder function for the [ControlMenu]
+## A finder function for the [member menu]
 func findMenu():
 	menu = finder(ControlMenu.objectMenuGroupName)
 
 ## Locates the [member menuParentNode] for use in creating new objects.
+## Throws an error if an appropriate [member menuParentNode] cannot be found.
 func findMenuParent():
 	if (self.get_parent() is Container):
 		menuParentNode = self.get_parent()
@@ -138,7 +140,7 @@ func findMenuParent():
 #endregion
 
 #region Checks
-## Checks if the [Venue] selected is valid, and returns the result as a bool
+## Checks if the [member layout] selected is valid, and returns the result as a bool
 func checkLayout() -> bool:
 	var validLayout = false
 	#check that layout exists, is a venue, and is visible
@@ -148,6 +150,28 @@ func checkLayout() -> bool:
 	else :
 		validLayout = findLayout()
 	return validLayout
+
+## Checks if the [DraggableObject] is currently inside one of the Deletion Areas (i.e. a location that does not make sense and that the [DraggableObject] should be deleted if it's in), and returns the result as a bool.
+## [br]The currently specified Deletion Areas are:
+## [br] - Outside the program window
+## [br] - The Object Menu/Venue Controller menu
+func inDeletionArea() -> bool:
+	var viewport = get_viewport()
+	var mouse_pos = viewport.get_mouse_position()
+	
+	# If you drag an object to back inside the menu, that is an invalid spot
+	# So the Object Menu is a deletion area
+	if (menu.isInside(mouse_pos)):
+		return true
+	
+	# NOTE: The Selection Menu should be a deletion area too
+	
+	# Outside of the program's screen is a deletion area
+	if (not viewport.get_visible_rect().has_point(mouse_pos)):
+		return true
+	
+	# No invalid spot has been found that the object is in, so it did not end in a deletion area
+	return false
 #endregion
 
 #region GUI Input
@@ -214,33 +238,15 @@ func handleDragEndLogic():
 	dragStarted = false
 #endregion
 
-#region Deletion Areas
-func inDeletionArea() -> bool:
-	var viewport = get_viewport()
-	var mouse_pos = viewport.get_mouse_position()
-	
-	# If you drag an object to back inside the menu, that is an invalid spot
-	# So the Object Menu is a deletion area
-	if (menu.isInside(mouse_pos)):
-		return true
-	
-	# NOTE: The Selection Menu should be a deletion area too
-	
-	# Outside of the program's screen is a deletion area
-	if (not viewport.get_visible_rect().has_point(mouse_pos)):
-		return true
-	
-	# No invalid spot has been found that the object is in, so it did not end in a deletion area
-	return false
-#endregion
-
 #region Adjustments for when starting within a menu
 #region Pre-Drag Adjustments
+## Performs all the functions needed to put a [DraggableObject] inside the [member layout] instead of still being in the menu
 func putInLayout():
 	adjustMenuOffsets()
 	adjustTransformLocationForLayout()
 	changeOwnerToLayout()
 
+## Adjusts the position of the [DraggableObject] so that when it enters the [member layout], it will be in the same position relative to the mouse
 func adjustMenuOffsets():
 	var mouse_pos = get_viewport().get_mouse_position()
 	#menuOffset = self.get_local_mouse_position() is consistent, but doesn't move it by enough
@@ -262,6 +268,7 @@ func adjustMenuOffsets():
 	self.position.x -= menuOffset.x
 	self.position.y -= menuOffset.y
 
+## Adjusts the position of the [DraggableObject] so that when it enters the [member layout], it's dropped position will be the same relative to the scale of the [Venue]
 func adjustTransformLocationForLayout():
 	var layoutOffset = layout.get_offset()
 	var layoutScale = layout.get_scale()
@@ -273,6 +280,7 @@ func adjustTransformLocationForLayout():
 	self.position.x /= layoutScale.x
 	self.position.y /= layoutScale.y
 
+## Changes Ownership of the [DraggableObject], making it a child node of the [member layout], instead of [member menuParentNode] or some other descendant of [member menu].
 func changeOwnerToLayout():
 	#deparent the object so that is can be added as a child to something else
 	#we could use menuParentNode, but this is more reliable, as it will work no matter what structure we have, whether it's the same or not
@@ -282,6 +290,7 @@ func changeOwnerToLayout():
 #endregion
 
 #region Post-Drag Adjustments
+## Places a copy of this [DraggableObject] in the [member menu] so that another one can be added
 func repopulateMenu():
 	checkLayout()
 	#recreate @ start location in menu
