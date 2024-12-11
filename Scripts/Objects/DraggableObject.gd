@@ -25,8 +25,10 @@ var layoutHandler : VenueController
 #region Binary Properties
 ## Used when a [DraggableObject] is dragged, indicates whether it started within the object menu or if it was already on a layout
 var startedInMenu : bool
-## Used when ????, indicates whether the [DraggableObject] is currently undergoing a drag movement
+## Used when inputs occur (as handled by [method _input] and [method _on_gui_input]) , indicates whether the [DraggableObject] is currently undergoing a drag movement
 var dragging : bool
+##Used when starting a drag movement on a [DraggableObject] to prevent certain actions from occurring multiple times, indicates whether the [DraggableObject] has done the initial drag effects or not
+var dragStarted : bool = false
 #endregion
 
 #region Menu Properties
@@ -156,11 +158,6 @@ func _on_gui_input(event):
 		#region handle starting within the Objects Menu
 		#Set whether the object started within the objects menu or not
 		startedInMenu = menu.isInside(get_viewport().get_mouse_position())
-		#If the object started within the menu, have have some behaviours to adjust before dragging
-		if startedInMenu:
-			adjustScaleToMatchLayout()
-			calculateMenuOffsets()
-			print("Dragging node: ",self)
 		#endregion
 		
 	#region Perform the drag
@@ -169,11 +166,14 @@ func _on_gui_input(event):
 		self.position += event.relative
 		dragging = true
 		
-		# Reparent object to the menu, so that the ScrollContainer for the Object Menu won't clip it during the drag
-		# Ensure that the menuParent is not changed during this
-		if startedInMenu:
-			adjustScaleToMatchLayout()
-			calculateMenuOffsets()
+		# This is for anythings that we want to do exactly once per drag (i.e. any initial setup)
+		if not dragStarted:
+			# This is for anything that only happens for when the drag starts within the Menu (i.e. this is a new object)
+			if startedInMenu:
+				# Reparent object to the layout, so that the ScrollContainer for the Object Menu won't clip it during the drag
+				# Ensure that the menuParent is not changed during this for duplication at the end of the drag
+				putInLayout()
+			dragStarted = true
 			#objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
 	#endregion
 
@@ -182,8 +182,9 @@ func _on_gui_input(event):
 func _input(_event):
 	handleDragEndLogic()
 
+## Does any required finishing work for when a drag ends. Called when an event is passed to [method _input].
+## Does nothing if a drag is not ending, i.e. if [member dragging] is false or if a left click has not just been released
 func handleDragEndLogic():
-	print(self, ": dragging: ", dragging)
 	# Ignore anything that isn't the end of a drag
 	if ( not (dragging && Input.is_action_just_released("LClick")) ):
 		return
@@ -194,7 +195,7 @@ func handleDragEndLogic():
 		if (menuParentNode == null):
 			findMenuParent()
 		revertScaleFromLayout()
-		putInLayout()
+		#putInLayout()
 		repopulateMenu()
 	
 	# Delete objects that end their drag in invalid locations
@@ -204,6 +205,7 @@ func handleDragEndLogic():
 	
 	#The drag is over
 	dragging = false
+	dragStarted = false
 #endregion
 
 #region Deletion Areas
@@ -228,26 +230,48 @@ func endedInDeletionArea() -> bool:
 
 #region Adjustments for when starting within a menu
 #region Pre-Drag Adjustments
+func putInLayout():
+	adjustScaleToMatchLayout()
+	adjustMenuOffsets()
+	adjustTransformLocationForLayout()
+	changeOwnerToLayout()
+
+#TEST: Not currently tested
 func adjustScaleToMatchLayout():
-	return
 	self.size *= layout.get_scale()
 
-func calculateMenuOffsets():
-	return
+func adjustMenuOffsets():
 	var mouse_pos = get_viewport().get_mouse_position()
-	menuOffset = mouse_pos - self.get_local_mouse_position()
-	#NOTE: This may need some rejiggering later
+	#menuOffset = self.get_local_mouse_position() is consistent, but doesn't move it by enough
+	#menuOffset = smouse_pos moves it all over the place
+	#scaling self.get_local_mouse_position() by self.size makes everything worse
+	var parent = self.get_parent()
+	if (parent == null):
+		#Somehow this DraggableObject doesn't have a parent
+		#ALERT: this shouldn't happen
+		menuOffset = mouse_pos
+		#TODO: Non-fatal(?) error popup
+	else:
+		# For reasons I don't fully understand, the global position of the parent does not matter, despite the position within the parent mattering
+		var positionWithinParent = parent.get_local_mouse_position()
+		# The direction of the subtraction could be reversed, but this keeps the form self.position -= offset consident with other offset changes
+		menuOffset = positionWithinParent - mouse_pos
+	#account for the position the object was pulled from in the menu
+		
+	self.position.x -= menuOffset.x
+	self.position.y -= menuOffset.y
+	print(menuOffset)
+
+func adjustTransformLocationForLayout():
+	var layoutOffset = layout.get_offset()
+	var layoutScale = layout.get_scale()
 	
-#endregion
-
-#region Post-Drag Adjustments
-func revertScaleFromLayout():
-	return
-	self.size /= layout.get_scale()
-
-func putInLayout():
-	changeOwnerToLayout()
-	adjustTransformLocationForLayout()
+	#account for layout offset from the mouse position
+	#self.position.x -= layoutOffset.x
+	#self.position.y -= layoutOffset.y
+	#account for layout scale
+	#self.position.x /= layoutScale.x
+	#self.position.y /= layoutScale.y
 
 func changeOwnerToLayout():
 	#deparent the object so that is can be added as a child to something else
@@ -255,32 +279,19 @@ func changeOwnerToLayout():
 	self.get_parent().remove_child(self)
 	# make the object a child of the layout
 	layout.add_child(self)
+#endregion
+
+#region Post-Drag Adjustments
+func revertScaleFromLayout():
+	return
+	self.size /= layout.get_scale()
 
 func repopulateMenu():
-	print("Node ",self," is triggering repopulateMenu()")
 	checkLayout()
-	
 	#recreate @ start location in menu
 	var copiedNode : DraggableObject = self.duplicate()
 	menuParentNode.add_child(copiedNode)
 	copiedNode.findMenuParent()
-	print("These nodes: ",self,copiedNode)
-	print("Parents nodes: ",menuParentNode.get_children())
-
-func adjustTransformLocationForLayout():
-	return
-	var layoutOffset = layout.get_offset()
-	var layoutScale = layout.get_scale()
-	
-	#account for the position the object was pulled from in the menu
-	self.position.x += menuOffset.x
-	self.position.y += menuOffset.y
-	#account for layout offset from the mouse position
-	self.position.x -= layoutOffset.x
-	self.position.y -= layoutOffset.y
-	#account for layout scale
-	self.position.x /= layoutScale.x
-	self.position.y /= layoutScale.y
 #endregion
 #endregion
 #endregion
