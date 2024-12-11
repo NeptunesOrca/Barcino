@@ -200,12 +200,9 @@ script = ExtResource("8_44xfp")
 objectMenuScrollContainer = NodePath("../../..")
 
 [node name="Venue" type="CanvasLayer" parent="."]
-offset = Vector2(500, 200)
-transform = Transform2D(1, 0, 0, 1, 500, 200)
 script = ExtResource("5_eydxy")
 venueName = "Test"
 venueImage = ExtResource("6_ukox7")
-defaultPan = Vector2(500, 200)
 
 [connection signal="pressed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Reset Button" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_reset_view"]
 [connection signal="pressed" from="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/Clear Button" to="MenuCanvasLayer/ControlMenu/Venues/VBoxContainer/VenueControllerNode" method="_on_clear_layout"]

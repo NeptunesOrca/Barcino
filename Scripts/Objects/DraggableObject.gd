@@ -160,6 +160,7 @@ func _on_gui_input(event):
 		if startedInMenu:
 			adjustScaleToMatchLayout()
 			calculateMenuOffsets()
+			print("Dragging node: ",self)
 		#endregion
 		
 	#region Perform the drag
@@ -173,7 +174,6 @@ func _on_gui_input(event):
 		if startedInMenu:
 			adjustScaleToMatchLayout()
 			calculateMenuOffsets()
-			print("Dragging node: ",self)
 			#objectMenuScrollContainer.clip_contents = false # this is super janky, I'd rather have something better
 	#endregion
 
@@ -183,6 +183,7 @@ func _input(_event):
 	handleDragEndLogic()
 
 func handleDragEndLogic():
+	print(self, ": dragging: ", dragging)
 	# Ignore anything that isn't the end of a drag
 	if ( not (dragging && Input.is_action_just_released("LClick")) ):
 		return
@@ -200,6 +201,9 @@ func handleDragEndLogic():
 	if (endedInDeletionArea()):
 		queue_free()
 		return
+	
+	#The drag is over
+	dragging = false
 #endregion
 
 #region Deletion Areas
@@ -253,6 +257,7 @@ func changeOwnerToLayout():
 	layout.add_child(self)
 
 func repopulateMenu():
+	print("Node ",self," is triggering repopulateMenu()")
 	checkLayout()
 	
 	#recreate @ start location in menu
