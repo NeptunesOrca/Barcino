@@ -45,13 +45,13 @@ static func getErrorHandler() -> ErrorHandler:
 
 ## Static function to create a new error without needing to find or reference the [member handler]
 ## [br] Takes in all possible arguments for [method CustomError._init], though does so optionally
-static func newError(error_msg := "", error_num := CustomError.undefinedErrorNumber, pushToConsole := true):
+static func newError(error_msg := "", error_num := CustomError.ErrorTypes.UNDEFINED_ERROR_NUMBER, pushToConsole := true):
 	getErrorHandler()
 	handler.createNewError(error_msg, error_num, pushToConsole)
 
 ## Create a new [CustomError] as a child of the [member handler].
 ## [br] Takes in all possible arguments for [method CustomError._init], though does so optionally for [param CustomError.error_num] and [param CustomError.pushToConsole]
-func createNewError(error_msg : String, error_num := CustomError.undefinedErrorNumber, pushToConsole := true):
+func createNewError(error_msg : String, error_num := CustomError.ErrorTypes.UNDEFINED_ERROR_NUMBER, pushToConsole := true):
 	#Create a new error
 	var new_error = CustomError.new(error_msg, error_num, pushToConsole)
 	self.add_child(new_error)

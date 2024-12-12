@@ -117,7 +117,7 @@ func noLayoutFound():
 	
 	#NOTE: Optional feature: highlight the venue selection area
 	
-	#Throw an error opup for the user
+	#Throw a popup for the user to tell them to select a layout
 	noLayoutPopup.new(menu)
 #endregion
 
@@ -133,8 +133,7 @@ func findMenuParent():
 		menuParentNode = self.get_parent()
 	else:
 		var error_msg = "The menu parent node of " + str(self) + " is " + str(self.get_parent()) + ", a " + str(self.get_parent().get_class()) + ", not a Container"
-		print(error_msg)
-		#NOTE: Error handling goes here
+		ErrorHandler.newError(error_msg)
 #endregion
 #endregion
 #endregion
@@ -255,9 +254,8 @@ func adjustMenuOffsets():
 	var parent = self.get_parent()
 	if (parent == null || (not (parent is Container)) ):
 		#Somehow this DraggableObject doesn't have a parent
-		#ALERT: this shouldn't happen
-		menuOffset = mouse_pos
-		#TODO: Non-fatal(?) error popup
+		var error_msg = "DraggableObject " + str(self) + " does not have a parent."
+		ErrorHandler.newError(error_msg)
 	else:
 		# For reasons I don't fully understand, the global position of the parent does not matter, despite the position within the parent mattering
 		var positionWithinParent = parent.get_local_mouse_position()

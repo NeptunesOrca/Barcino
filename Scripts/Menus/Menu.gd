@@ -29,7 +29,8 @@ func findMenuCanvasLayer(maxIterations: int) -> CanvasLayer:
 		obj = self.get_parent()
 		if (obj == null):
 			#no parent found
-			#TODO: do error message once we have error handling
+			errMsg = "There does not exist a CanvasLayer that is a ancestor to this menu within the tree, and there are no more ancestors to check."
+			ErrorHandler.newError(errMsg,CustomError.ErrorTypes.MISSING_CANVAS_LAYER_PARENT)
 			break
 		if (obj.is_class("CanvasLayer")):
 			# the menu canvaslayer has been found
@@ -39,8 +40,8 @@ func findMenuCanvasLayer(maxIterations: int) -> CanvasLayer:
 		iterations +=1
 	
 	#we reach the maximum iterations, something's gone wrong
-	#TODO: do error message once we have error handling
-	
+	errMsg = "A CanvasLayer parent could not be found for the menu within " + str(maxIterations) + ", please specify a larger number of iterations, check the node tree, and report this message to support."
+	ErrorHandler.newError(errMsg,CustomError.ErrorTypes.MISSING_CANVAS_LAYER_PARENT)
 	return null
 #endregion
 
