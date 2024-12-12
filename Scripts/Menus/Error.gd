@@ -1,5 +1,5 @@
 extends AcceptDialog
-class_name CustomError
+class_name Error
 ## Class for custom error popups to indicate that something has gone wrong with the program.
 ## [br][b]Not[/b] for use for cases where the user does something incorrectly (e.g. invalid input), this class is [i]exclusively[/i] for situations where the programmer has made a mistake.
 
@@ -31,8 +31,8 @@ const ErrorNames  = {
 	ErrorTypes.VENUE_WITHOUT_IMAGE: "MISSING VENUE IMAGE",
 }
 
-## Constructor for the [CustomError] class.
-## [br] Requires [param error_msg]. This string is passed directly as the [member AcceptDialog.dialog_text] of the [CustomError], and should be generated with all relevant information by calling code.
+## Constructor for the [Error] class.
+## [br] Requires [param error_msg]. This string is passed directly as the [member AcceptDialog.dialog_text] of the [Error], and should be generated with all relevant information by calling code.
 ## [br] [param error_num] defaults to [member undefinedErrorNumber] (-1). If specified as a key within [member ErrorTypes], will populate the error's [member AcceptDialog.title] with the appropriate value.
 ## [br] [param pushToConsole] defaults to [code]true[/code]. Set to [code]false[/code] if you do not want to push the error message to console (which may stop execution)
 func _init(error_msg: String, error_num := ErrorTypes.UNDEFINED_ERROR_NUMBER, pushToConsole := true):

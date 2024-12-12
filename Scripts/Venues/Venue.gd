@@ -124,7 +124,7 @@ func updateImage():
 		imageTextRect.texture = venueImage
 	else:
 		var error_msg = "The imageTextRect (the Texture Rectangle for the venue image) of  " + str(self) + " is null "
-		ErrorHandler.newError(error_msg, CustomError.ErrorTypes.VENUE_WITHOUT_IMAGE)
+		ErrorHandler.newError(error_msg, Error.ErrorTypes.VENUE_WITHOUT_IMAGE)
 #endregion
 
 #region Visibility
