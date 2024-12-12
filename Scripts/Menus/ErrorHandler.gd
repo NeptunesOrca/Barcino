@@ -5,13 +5,13 @@ class_name ErrorHandler
 const errorHandlerGroupName = "ErrorHandler"
 ## The sole [ErrorHandler] for handling any and all errors.
 static var handler: ErrorHandler = null:
-	get:
-		return getErrorHandler()
+	get = getErrorHandler
 
 ## Returns the [member handler] node, or creates one if one does not already exist.
 ## Also ensures that the [member handler] node is contained in the current scene
 static func getErrorHandler() -> ErrorHandler:
-	var sceneTree : SceneTree = SceneTree.current_scene.get_tree()
+	var sceneTree : SceneTree = Engine.call_deferred("get_main_loop")
+	#ALERT: Need some way of making sure that the SceneTree actually has a current scene
 	
 	# Quick(ish) return if we already have an errorhandler set
 	if handler!= null:
@@ -37,7 +37,10 @@ static func getErrorHandler() -> ErrorHandler:
 	
 	# If no error handler has been found, create one
 	if (handler== null):
-		handler= ErrorHandler.new()
+		handler = ErrorHandler.new()
+		print(handler)
+		print(sceneTree)
+		print(sceneTree.current_scene)
 		handler.add_to_group(errorHandlerGroupName)
 		sceneTree.current_scene.add_child(handler)
 	

@@ -11,20 +11,22 @@ class_name Error
 ## [br] - 3000 : [DraggableObject] Errrors
 ## [br] - 4000 :
 enum ErrorTypes {
-	MISSING_ERROR_NUMBER = -2, ## Indicates that while a error number has been passed, [member ErrorNames] does not have an appropriate name for it
-	UNDEFINED_ERROR_NUMBER = -1, ## A default error number for any undefined error. Set to -1.
-	TEST_ERROR = 0, ## Test Error, used for testing that errors are working correctly
-	MISSING_PARENT_NODE = 89, ## Used for when a parent node is expected, but not found
+	TEST_ERROR_NO_NAME = -102,		## Test Error, used for testing errors that don't have names
+	TEST_ERROR = -100, 				## Test Error, used for testing that errors are working correctly
+	MISSING_ERROR_NUMBER = -2, 		## Indicates that while a error number has been passed, [member ErrorNames] does not have an appropriate name for it
+	UNDEFINED_ERROR_NUMBER = -1,	## A default error number for any undefined error. Set to -1.
+	MISSING_PARENT_NODE = 89, 		## Used for when a parent node is expected, but not found
 	MISSING_CANVAS_LAYER_PARENT = 1089, ## Used for when a [Menu] cannot find [CanvasLayer] as an ancestor
 	BAD_VENUE_TAG = 2000, ## Use for when a [Node] has been inappropriately labelled as a [Venue]
 	VENUE_WITHOUT_IMAGE = 2404, ## Used for when a [Venue] does not have an image
 }
 
 ## The appropriate name for each value of [enum ErrorTypes]
+## Explicitly does not include TEST_ERROR_NO_NAME as a key, for the purposes of testing the missing number functionality
 const ErrorNames  = {
+	ErrorTypes.TEST_ERROR: "TEST ERROR",
 	ErrorTypes.MISSING_ERROR_NUMBER: "UNNAMED ERROR #", ## Should have the actual error number apended to the end
 	ErrorTypes.UNDEFINED_ERROR_NUMBER: "UNDEFINED ERROR",
-	ErrorTypes.TEST_ERROR: "TEST ERROR",
 	ErrorTypes.MISSING_PARENT_NODE: "MISSING PARENT NODE",
 	ErrorTypes.MISSING_CANVAS_LAYER_PARENT: "MISSING [CanvasLayer] ANCESTOR",
 	ErrorTypes.BAD_VENUE_TAG: "IMPROPER USE OF [Venue.layoutGroupName] TAG (" + Venue.layoutGroupName + ")",
@@ -50,7 +52,7 @@ func _init(error_msg: String, error_num := ErrorTypes.UNDEFINED_ERROR_NUMBER, pu
 			error_label = ErrorNames.get(ErrorTypes.MISSING_ERROR_NUMBER) + str(error_num)
 		
 		# For the default undefined error, overwrite the title
-		if (error_num < 0):
+		if (error_num == ErrorTypes.UNDEFINED_ERROR_NUMBER):
 			error_title = "ERROR: " #overwrites the title because "ERROR -1: " for the start of the title would just be silly
 	else:
 		# If some unknown number, use the undefined error label

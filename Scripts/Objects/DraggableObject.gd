@@ -98,7 +98,7 @@ class noLayoutPopup extends AcceptDialog:
 		self.popup_centered()
 		self.confirmed.connect(_on_confirmed)
 	func _on_confirmed():
-		self.queue_free
+		self.queue_free()
 
 ## A function that determines what to do if no [member layout] has been found for the [DraggableObject] to use.
 ## Helps the user find where to select a [Venue] for [member layout], and uses the [noLayoutPopup] to tell the user to select a [Venue] before trying to use the [DraggableObjects].
