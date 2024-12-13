@@ -37,19 +37,19 @@ const ErrorNames  = {
 ## [br] Requires [param error_msg]. This string is passed directly as the [member AcceptDialog.dialog_text] of the [Error], and should be generated with all relevant information by calling code.
 ## [br] [param error_num] defaults to [member undefinedErrorNumber] (-1). If specified as a key within [member ErrorTypes], will populate the error's [member AcceptDialog.title] with the appropriate value.
 ## [br] [param pushToConsole] defaults to [code]true[/code]. Set to [code]false[/code] if you do not want to push the error message to console (which may stop execution)
-func _init(error_msg: String, error_num := ErrorTypes.UNDEFINED_ERROR_NUMBER, pushToConsole := true):
+func _init(error_msg: String, error_num = ErrorTypes.UNDEFINED_ERROR_NUMBER, pushToConsole := true):
 	#Require the user to click OK to close
 	self.exclusive = true
 	
 	# Generate the error title
 	var error_title = "ERROR " + str(error_num) + ": "
 	var error_label
-	if (ErrorTypes.has(error_num)):
+	if (error_num is ErrorTypes):
 		# Check for missing error numbers, in case an error number has been listed in ErrorTypes, but a name has not been made for it in ErrorNames
 		if (ErrorNames.has(error_num)):
-			error_label = ErrorNames.get(error_num)
+			error_label = ErrorNames[error_num]
 		else:
-			error_label = ErrorNames.get(ErrorTypes.MISSING_ERROR_NUMBER) + str(error_num)
+			error_label = ErrorNames[ErrorTypes.MISSING_ERROR_NUMBER] + str(error_num)
 		
 		# For the default undefined error, overwrite the title
 		if (error_num == ErrorTypes.UNDEFINED_ERROR_NUMBER):
