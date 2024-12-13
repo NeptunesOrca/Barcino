@@ -49,10 +49,6 @@ func _ready():
 	#This is a test
 	var expectedParent = Engine.get_main_loop().current_scene
 	var actualParent = self.get_parent()
-	print(expectedParent, " = ", actualParent, " ? ", expectedParent == actualParent)
-	print(self)
-	print(actualParent.get_children())
-	print(expectedParent.get_children())
 
 ## Static function to create a new error without needing to find or reference the [member handler]
 ## [br] Takes in all possible arguments for [method Error._init], though does so optionally

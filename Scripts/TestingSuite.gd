@@ -6,11 +6,11 @@ func _ready() -> void:
 	call_deferred("testsToCall")
 
 func testsToCall():
-	ErrorHandlerTesting()
-	#ErrorTesting()
+	#ErrorHandlerTesting() #TEST: passed DEC13/2024
+	ErrorTesting()
 	return
 
-func ErrorHandlerTesting():
+func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
 	#testing that getErrorHandler works as intended, i.e. there is only ever one handler
 	var handler = ErrorHandler.handler
 	print(handler) #TEST: passed
