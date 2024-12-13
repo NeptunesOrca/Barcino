@@ -3,6 +3,9 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	call_deferred("testsToCall")
+
+func testsToCall():
 	ErrorHandlerTesting()
 	#ErrorTesting()
 	return
@@ -13,14 +16,14 @@ func ErrorHandlerTesting():
 	print(handler) #TEST: passed
 	var newhandler = ErrorHandler.getErrorHandler()
 	print(handler == newhandler) #TEST: passed
-	var testmessage = "This is an ErrorHandler test"
+	var testmessage = "This is an ErrorHandler test"	
 	
 	#Optional test with manual ErrorHandler that there is only ever one handler (should be at bottom of tree for first execution)
 	print(ErrorHandlerTest == handler) #TEST: passed
 	
 	#testing that both createNewError() and newError() work as intended.
-	handler.createNewError(testmessage, CustomError.ErrorTypes.TEST_ERROR)
-	ErrorHandler.newError(testmessage, CustomError.ErrorTypes.TEST_ERROR)
+	handler.createNewError(testmessage, CustomError.ErrorTypes.TEST_ERROR) #TEST: passed
+	ErrorHandler.newError(testmessage, CustomError.ErrorTypes.TEST_ERROR) #TEST: passed
 
 func ErrorTesting():
 	var test : CustomError

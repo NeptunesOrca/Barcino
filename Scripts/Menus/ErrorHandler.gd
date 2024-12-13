@@ -11,8 +11,7 @@ static var handler: ErrorHandler = null:
 ## Also ensures that the [member handler] node is contained in the current scene
 static func getErrorHandler() -> ErrorHandler:
 	var sceneTree : SceneTree = Engine.get_main_loop()
-	#ALERT: Need some way of making sure that the SceneTree actually has a current scene
-	#var sceneTree = someNodeInTree.get_tree()
+	#TODO: Need some way of making sure that the SceneTree actually has a current scene
 	
 	# Quick(ish) return if we already have an errorhandler set
 	if handler!= null:
@@ -44,11 +43,16 @@ static func getErrorHandler() -> ErrorHandler:
 		handler.add_to_group(errorHandlerGroupName)
 		sceneTree.current_scene.add_child(handler)
 	
-	print(sceneTree.current_scene)
-	print(sceneTree.root)
-	print(sceneTree.current_scene.get_children())
-	
 	return handler
+
+func _ready():
+	#This is a test
+	var expectedParent = Engine.get_main_loop().current_scene
+	var actualParent = self.get_parent()
+	print(expectedParent, " = ", actualParent, " ? ", expectedParent == actualParent)
+	print(self)
+	print(actualParent.get_children())
+	print(expectedParent.get_children())
 
 ## Static function to create a new error without needing to find or reference the [member handler]
 ## [br] Takes in all possible arguments for [method Error._init], though does so optionally
@@ -62,8 +66,3 @@ func createNewError(error_msg : String, error_num := CustomError.ErrorTypes.UNDE
 	#Create a new error
 	var new_error = CustomError.new(error_msg, error_num, pushToConsole)
 	self.add_child(new_error)
-	#var new_popup = AcceptDialog.new()
-	#self.add_child(new_popup)
-	#print(self.is_visible())
-	#new_popup.popup_centered()
-	#print(new_popup.is_visible())

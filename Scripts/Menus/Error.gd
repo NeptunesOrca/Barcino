@@ -70,17 +70,14 @@ func _init(error_msg: String, error_num := ErrorTypes.UNDEFINED_ERROR_NUMBER, pu
 	
 	#Ensure connections made
 	self.confirmed.connect(_on_confirm)
-	print("heyo ",self)
 
 ## Called when the node enters the scene tree for the first time.
 ## Immediately pops up the error message.
 func _ready() -> void:
 	#Popup
 	self.popup_centered()
-	print(self, " vis? ", is_visible())
 
 ## Handles when the user confirms and [signal confirmed] is sent.
 ## Deletes the node to conserve memory
 func _on_confirm():
-	print("Deleting error")
 	queue_free()
