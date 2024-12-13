@@ -10,7 +10,7 @@ static var handler: ErrorHandler = null:
 ## Returns the [member handler] node, or creates one if one does not already exist.
 ## Also ensures that the [member handler] node is contained in the current scene
 static func getErrorHandler() -> ErrorHandler:
-	var sceneTree : SceneTree = Engine.call_deferred("get_main_loop")
+	var sceneTree : SceneTree = Engine.get_main_loop()
 	#ALERT: Need some way of making sure that the SceneTree actually has a current scene
 	
 	# Quick(ish) return if we already have an errorhandler set
