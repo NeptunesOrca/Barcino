@@ -2,6 +2,7 @@
 extends CanvasLayer
 class_name Venue
 ## Controls images of the various UABG Venues, as well as what objects are included in the layout for that venue.
+## Will update within Editor as well as during deployment.
 ##
 ## May be interchangably described in documentation as both a layout and a venue.
 ## [br]Technically, the [Venue] is the class that contains and encompasses both the layout and the venue.
@@ -32,7 +33,7 @@ const imageDisplayName = "VenueImageDisplay"
 		return venueImage
 	set(newtexture):
 		venueImage = newtexture
-		updateImage()
+		self.call_deferred("updateImage") ## This has to be deferred, or else when starting up it does updateImage() before the imageTextRect can be made, and makes all kinds of wacky problems
 
 ## The background canvaslayer, which the [member imageTextRect] is on.
 @onready var background = CanvasLayer.new()
@@ -124,8 +125,7 @@ func updateImage():
 		imageTextRect.texture = venueImage
 	else:
 		var error_msg = "The imageTextRect (the Texture Rectangle for the venue image) of  " + str(self) + " is null "
-		#TODO: Error handling
-		#ErrorHandler.newError(self, error_msg)
+		ErrorHandler.newError(error_msg, CustomError.ErrorTypes.VENUE_WITHOUT_IMAGE)
 #endregion
 
 #region Visibility

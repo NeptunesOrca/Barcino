@@ -67,9 +67,8 @@ func addLayoutsToItemList():
 			venueNum += 1
 		else:
 			var error_msg = "The node " + str(venue) + " is not a venue, but is inappropriately tagged in the group 'Layouts'"
-			print(error_msg)
 			layoutsList.remove_at(venueNum)
-			#TODO: Add error handling here when that's ready to go
+			ErrorHandler.newError(error_msg,CustomError.ErrorTypes.BAD_VENUE_TAG,false)
 #endregion
 
 #region Venue Selection
