@@ -1,5 +1,6 @@
 #meta-name: New PropertyField
-#meta-description: 
+#meta-description: Template for creating a new PropertyFields. Will automatically append "PropertyField" to the end of whatever name is given
+#meta-default: true
 extends PropertyField
 class_name _CLASS_PropertyField
 
