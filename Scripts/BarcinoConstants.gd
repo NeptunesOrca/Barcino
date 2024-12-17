@@ -3,7 +3,6 @@ class_name ProjectConstants
 
 #region Group Names
 const controlMenuName = "ControlMenuName"
-const selectionMenuName = "SelectionMenuName"
 #endregion
 
 #region Numerical Constants

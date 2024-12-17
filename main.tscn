@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=17 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 [ext_resource type="Theme" uid="uid://dqckf2al7eibk" path="res://UI/menu_style.tres" id="2_yg8xr"]
@@ -10,6 +10,7 @@
 [ext_resource type="StyleBox" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
 [ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
 [ext_resource type="Script" path="res://Scripts/Objects/DraggableObject.gd" id="8_44xfp"]
+[ext_resource type="Script" path="res://Scripts/Menus/SelectionMenu.gd" id="9_k5117"]
 [ext_resource type="Script" path="res://Scripts/TestingSuite.gd" id="11_7hak7"]
 
 [sub_resource type="GDScript" id="GDScript_ibgdb"]
@@ -203,6 +204,30 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("8_44xfp")
+
+[node name="TabContainer" type="TabContainer" parent="MenuCanvasLayer" node_paths=PackedStringArray("propertyStorage")]
+custom_minimum_size = Vector2(200, 30)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 428.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource("2_yg8xr")
+tab_alignment = 2
+current_tab = 0
+script = ExtResource("9_k5117")
+propertyStorage = NodePath("Selected/PropertyFieldContainer")
+
+[node name="Selected" type="ScrollContainer" parent="MenuCanvasLayer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PropertyFieldContainer" type="VBoxContainer" parent="MenuCanvasLayer/TabContainer/Selected"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Venue" type="CanvasLayer" parent="."]
 visible = false

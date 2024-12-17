@@ -8,7 +8,7 @@ func _ready() -> void:
 
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
-	ErrorTesting()
+	#ErrorTesting()
 	return
 
 func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
