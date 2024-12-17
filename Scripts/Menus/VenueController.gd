@@ -9,13 +9,12 @@ class_name VenueController
 #region Member Variables
 #region Group Names
 ## The group name for [VenueController] so that it can easily be found
-const layoutHandlerGroupName = "LayoutHandler"
+const groupName = "LayoutHandler"
 #endregion
 
 #region Layout Variables
 ## The list of available layouts/venues that a user can select
 var layoutsList
-#@onready var layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
 ## Should only be true if a layout has been selected, that is, if [member activeLayout] is not [b]null[/b]
 var layoutSelected : bool = false
 ## The currently active layout that the user is able to add and remove objects from, which is visible to the user.
@@ -37,8 +36,8 @@ var activeLayout : Venue
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#Add to the layoutHandlerGroupName so other objects can easily find this
-	self.add_to_group(layoutHandlerGroupName)
+	#Add to the layout Handler groupName so other objects can easily find this
+	self.add_to_group(groupName)
 	#Connect self
 	self.item_selected.connect(_on_venue_selection)
 	#Connect subcontrollers
@@ -54,7 +53,7 @@ func _ready() -> void:
 ## Finds everything tagged as a layout, and adds all valid ones to the list of layouts
 func addLayoutsToItemList():
 	# Gets everything tagged with the layout group
-	layoutsList = get_tree().get_nodes_in_group(Venue.layoutGroupName)
+	layoutsList = get_tree().get_nodes_in_group(Venue.groupName)
 	
 	# 
 	var venueNum = 0

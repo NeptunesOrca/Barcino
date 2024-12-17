@@ -8,8 +8,8 @@ class_name DraggableObject
 ## i.e. The menu and layout have to have the same layer value
 
 # needed groupnames
-#menuGroupName -> ControlMenu.objectMenuGroupName
-#layoutHandlerGroupName -> VenueController.layoutHandlerGroupName
+#menuGroupName -> ControlMenu.groupName
+#layoutHandlerGroupName -> VenueController.groupName
 #layoutGroupName -> Venue.layoutGroupName
 
 #region Member Variables
@@ -92,7 +92,7 @@ func finder(groupName : String) -> Node:
 
 ## A finder function for the [VenueController]
 func findLayoutHandler():
-	layoutHandler = finder(VenueController.layoutHandlerGroupName)
+	layoutHandler = finder(VenueController.groupName)
 
 #region Finding the Layout and what to do if no Layout Found
 ## A finder function for the [member layout] 
@@ -148,7 +148,7 @@ func noLayoutFound():
 #region Menu and Menu Features
 ## A finder function for the [member menu]
 func findMenu():
-	menu = finder(ControlMenu.objectMenuGroupName)
+	menu = finder(ControlMenu.groupName)
 
 ## Locates the [member menuParentNode] for use in creating new objects.
 ## Throws an error if an appropriate [member menuParentNode] cannot be found.
@@ -279,7 +279,8 @@ func handleDragEndLogic():
 #endregion
 
 #region Selection and Deselection
-##
+## Selects the [DraggableObject], and also generates every [PropertyField] from [member propertyList]
+## [br] Each [PropertyField] is added to [member propertyFieldList] and also to the [member selectionMenu]
 func select():
 	if selected:
 		return
@@ -367,3 +368,5 @@ func repopulateMenu():
 #endregion
 #endregion
 #endregion
+
+#TODO: I'd really like to find a way to tell the object to deselect itself before it's deleted by queue free or similar, might have to look into that

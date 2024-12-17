@@ -8,7 +8,7 @@ class_name ControlMenu
 #region Member Variables
 #region Group Names
 ## The group name for [ControlMenu] so that it can easily be found
-const objectMenuGroupName = "ObjectMenu"
+const groupName = "ObjectMenu"
 #endregion
 
 enum TabNumber {VENUES_TAB, OBJECTS_TAB}
@@ -19,7 +19,7 @@ var availableFileTypes = [".png"]
 
 #region Startup
 func _ready():
-	add_to_group(objectMenuGroupName)
+	add_to_group(groupName)
 #endregion
 
 #region Tab Control
