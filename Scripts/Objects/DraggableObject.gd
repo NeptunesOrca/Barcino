@@ -50,11 +50,11 @@ enum LayoutExists {FALSE, TRUE}
 
 #region Object Properties for Selection
 #region Property Lists
-## An array that stores every defined [Property] for the [DraggableObject]. Used to generate the [member propertyFieldList].
+## An array that stores every defined [SelectionProperty] for the [DraggableObject]. Used to generate the [member propertyFieldList].
 var propertyList = []
 ## A [Dictionary] that stores each [PropertyField] generated from the [member propertyList] when the [DraggableObject] is selected by the [SelectionMenu]
 ## [br] Each [PropertyField] corresponds to an entry in the [member selectionMenu] that can be used to adjust or display various aspects of the [DraggableObject]
-## [br] For each [Property] in the [member propertyList], [member propertyList] stores the [member Property.name] as the key and a reference to each [PropertyField] as the value
+## [br] For each [SelectionProperty] in the [member propertyList], [member propertyList] stores the [member SelectionProperty.name] as the key and a reference to each [PropertyField] as the value
 var propertyFieldList = {}
 #endregion
 
