@@ -1,11 +1,19 @@
+#meta-name: New PropertyField
+#meta-description: 
 extends PropertyField
 class_name _CLASS_PropertyField
 
-# Member Variables Here
+#region Member Variables
 
-# Class Initialization
+#endregion
+
+#region Initialization
+## Class Initialization
 func _init(obj : DraggableObject, property : _CLASS_Property).(obj,property):
 	#Note that PropertyField will run its initialization before this subclass
 	pass
+#end region
 
-# Other functions, as required
+#region Functions
+
+#endregion

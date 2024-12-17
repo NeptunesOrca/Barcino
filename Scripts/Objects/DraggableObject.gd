@@ -294,7 +294,7 @@ func select():
 	selected = true
 
 ## Deselects the [DraggableObject], and also destroys every [PropertyField] generated from [member propertyFieldList]
-## [br][br]It's possible that it would be better to generate all the property fields, and then just remove them as children of the parent, having them hide in memory somewhere.
+## [br][br]It's possible that it would be better to generate all the [PropertyField]s, and then just remove them as children of the parent, having them hide in memory somewhere.
 ## [br]The advantage would be that we aren't regenerating and deleting things very often, but the disadvantage is that we have a bunch of memory being taken up by things that might not be seen again.
 ## [br]If selection is taking a very long time, consider an alternative implementation.
 func deselect():
