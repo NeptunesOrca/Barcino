@@ -2,7 +2,6 @@ extends Object
 class_name ProjectConstants
 
 #region Group Names
-const controlMenuName = "ControlMenuName"
 #endregion
 
 #region Numerical Constants
