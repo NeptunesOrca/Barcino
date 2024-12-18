@@ -8,7 +8,7 @@ func _ready() -> void:
 
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
-	#ErrorTesting()
+	#ErrorTesting() #TEST: passed DEC13/2024
 	return
 
 func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
@@ -78,6 +78,6 @@ func ErrorTesting(): #TEST: all passed DEC13/2024
 	print(test == null)
 	return
 
-func testError(test : CustomError):
+func testError(test : CustomError): #common test unit for ErrorTesting()
 	self.add_child(test)
 	await(test.confirmed)
