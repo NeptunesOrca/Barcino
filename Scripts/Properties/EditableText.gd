@@ -5,28 +5,27 @@ class_name EditableTextProperty
 ## The [SelectionProperty] used to generate [EditableTextPropertyField].
 ##
 ## Dictates the properties of a [EditableTextPropertyField]. 
-#region Constants
-
-#endregion
 
 #region Member Variables
+## The value for the [member TextEdit.text] in the [EditableTextPropertyField].
+## [br]If unspecified, is set to [code]""[/code] (empty).
 @export var defaultText : String :
 	get:
 		return defaultText
 
+## Whether the [member SelectionProperty.name] is displayed on a seperate line from the [member TextEdit.text] in the [EditableTextPropertyField] or not.
+## [br]Set to [code]false[/code] by default.
 @export var underLable : bool :
 	get:
 		return underLable
 #endregion
 
 #region Initialization
-## Class Initialization
+## Class Initialization. Requires [param name] and [param command].
+## [br]Defaults [param default] to [code]""[/code] (empty) for [member defaultText]
+## [br]Defaults [param underneath] to [code]true[/code] for [member underLable]
 func _init(name : String, command : String, default := "", underneath := false):
 	super(-1, name, command)
 	defaultText = default
 	underLable = underneath
-#endregion
-
-#region Functions
-
 #endregion

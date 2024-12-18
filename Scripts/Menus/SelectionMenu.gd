@@ -1,18 +1,23 @@
 extends Menu
 class_name SelectionMenu
 
+##
 const groupName = "SelectionMenu"
 
+##
 var selectedObject : DraggableObject
 
+##
 @export var propertyStorage : VBoxContainer
 
 #region Startup
+##
 func _ready():
 	add_to_group(groupName)
 #endregion
 
 #region Selection and Deselection
+##
 func select(obj : DraggableObject):
 	#Deselect first to clean everything up
 	deselect()
@@ -41,6 +46,7 @@ func deselect():
 #endregion
 
 #region Adding Properties
+##
 func addPropertyField(field): #field to be typed as  : PropertyField
 	propertyStorage.add_child(field)
 #endregion

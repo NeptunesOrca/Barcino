@@ -11,17 +11,16 @@ class_name _CLASS_Property
 #endregion
 
 #region Member Variables
+## Somedescription
+## [br]If unspecified, is set to [code]%value%[/code]
 @export var %somename% : %sometype% :
 	get:
 		return %somename%
 #endregion
 
 #region Initialization
-## Class Initialization
+## Class Initialization. Requires [param name] and [param command]
+## [br]Defaults [param something] to [code]%value%[/code] for [member somename]
 func _init(name : String, command : String):
 	super(-1, name, command) #calls SelectionProperty._init()
-#endregion
-
-#region Functions
-
 #endregion
