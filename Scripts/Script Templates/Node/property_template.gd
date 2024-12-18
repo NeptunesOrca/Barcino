@@ -3,6 +3,10 @@
 extends SelectionProperty
 class_name _CLASS_Property
 
+#region Constants
+
+#endregion
+
 #region Member Variables
 @export var %somename% : %sometype% :
 	get:

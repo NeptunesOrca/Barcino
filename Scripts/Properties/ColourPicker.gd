@@ -22,7 +22,7 @@ func _init(name: String, command:String, default := DEFAULT_COLOUR, includeAlpha
 	super._init(-1,name, command)
 	defaultColour = default
 	alphaEnabled = includeAlpha
-#end region
+#endregion
 
 #region Functions
 
