@@ -19,7 +19,7 @@ const DEFAULT_COLOUR = Color.WHITE
 #region Initialization
 ## Class Initialization
 func _init(name: String, command:String, default := DEFAULT_COLOUR, includeAlpha := false):
-	super._init(-1,name, command)
+	super(-1,name, command) #calls SelectionProperty._init()
 	defaultColour = default
 	alphaEnabled = includeAlpha
 #endregion

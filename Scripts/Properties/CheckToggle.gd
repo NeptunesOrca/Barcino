@@ -11,8 +11,9 @@ class_name CheckToggleProperty
 
 #region Initialization
 ## Class Initialization
-func _init(name : String, command : String):
-	super._init(-1, name, command)
+func _init(name : String, command : String, val := false):
+	super(-1, name, command) #calls SelectionProperty._init()
+	defaultValue = val
 #endregion
 
 #region Functions

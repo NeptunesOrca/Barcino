@@ -1,22 +1,24 @@
 #meta-name: New SelectionProperty
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
-class_name _CLASS_Property
+class_name HeaderProperty
 
 #region Constants
 
 #endregion
 
 #region Member Variables
-@export var %somename% : %sometype% :
+## Syntatic sugar for name to make it easier to refer to with greater clarity
+@export var header : String :
 	get:
-		return %somename%
+		return header
 #endregion
 
 #region Initialization
 ## Class Initialization
-func _init(name : String, command : String):
-	super(-1, name, command) #calls SelectionProperty._init()
+func _init(name : String):
+	super(-1, name, "") #calls SelectionProperty._init()
+	header = name
 #endregion
 
 #region Functions

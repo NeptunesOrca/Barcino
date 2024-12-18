@@ -1,22 +1,22 @@
 #meta-name: New SelectionProperty
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
-class_name _CLASS_Property
+class_name SeperatorProperty
 
 #region Constants
 
 #endregion
 
 #region Member Variables
-@export var %somename% : %sometype% :
-	get:
-		return %somename%
+
 #endregion
 
 #region Initialization
 ## Class Initialization
-func _init(name : String, command : String):
-	super(-1, name, command) #calls SelectionProperty._init()
+func _init(name := ""):
+	super(-1, name, "")
+	#Seperator has no properties or data, it's just a horizontal line used to mark a seperation of some kind
+	#The name is not displayed, and only used for programmers to be able to use if they want
 #endregion
 
 #region Functions

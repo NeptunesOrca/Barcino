@@ -34,7 +34,7 @@ const GARGANTUAN_SIZE = 64
 #region Initialization
 ## Class Initialization
 func _init(name := "", command := "", colour := DEFAULT_WHITE, sideLength := NORMAL_SIZE, hztlCentred := false, showName := true):
-	super._init(-1, name, command)
+	super(-1, name, command) #calls SelectionProperty._init()
 	defaultColour = colour
 	size = sideLength
 	centred = hztlCentred
