@@ -2,6 +2,9 @@
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
 class_name DisplayColourProperty
+## The [SelectionProperty] used to generate [DisplayColourPropertyField].
+##
+## Dictates the properties of a [DisplayColourPropertyField]. 
 
 #region Constants
 const DEFAULT_WHITE = Color.WHITE_SMOKE

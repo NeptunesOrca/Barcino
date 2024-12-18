@@ -2,6 +2,9 @@
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
 class_name ColourPickerProperty
+## The [SelectionProperty] used to generate [ColourPickerPropertyField].
+##
+## Dictates the properties of a [ColourPickerPropertyField]. 
 
 #region Constants
 const DEFAULT_COLOUR = Color.WHITE

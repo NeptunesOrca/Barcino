@@ -2,7 +2,9 @@
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
 class_name EditableTextProperty
-
+## The [SelectionProperty] used to generate [EditableTextPropertyField].
+##
+## Dictates the properties of a [EditableTextPropertyField]. 
 #region Constants
 
 #endregion

@@ -1,7 +1,8 @@
-#meta-name: New SelectionProperty
-#meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
 class_name CheckToggleProperty
+## The [SelectionProperty] used to generate [CheckTogglePropertyField].
+##
+## Dictates the properties of a [CheckTogglePropertyField]. 
 
 #region Member Variables
 @export var defaultValue : bool :

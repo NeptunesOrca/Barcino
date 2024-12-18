@@ -1,7 +1,10 @@
 #meta-name: New SelectionProperty
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
-class_name NumericFieldProperty
+class_name NumericEntryProperty
+## The [SelectionProperty] used to generate [NumericEntryPropertyField].
+##
+## Dictates the properties of a [NumericEntryPropertyField].
 
 #region Constants
 const NO_MINIMUM = -INF

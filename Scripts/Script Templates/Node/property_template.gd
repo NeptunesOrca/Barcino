@@ -4,7 +4,7 @@ extends SelectionProperty
 class_name _CLASS_Property
 ## The [SelectionProperty] used to generate [_CLASS_PropertyField].
 ##
-## Dictates the properties of a [_CLASS_PropertyField]. 
+## Dictates the properties of a [_CLASS_PropertyField].
 
 #region Constants
 

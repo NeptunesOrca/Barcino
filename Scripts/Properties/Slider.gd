@@ -2,6 +2,9 @@
 #meta-description: Template for creating a new SelectionProperty. Will automatically append "Property" to the end of whatever name is given
 extends SelectionProperty
 class_name SliderProperty
+## The [SelectionProperty] used to generate [SliderPropertyField].
+##
+## Dictates the properties of a [SliderPropertyField]. 
 
 #region Constants
 #region Godot Slider defaults

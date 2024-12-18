@@ -1,6 +1,9 @@
 extends Object
 class_name SelectionProperty
-
+## 
+##
+## 
+ 
 @export var name : String :
 	get:
 		return name
