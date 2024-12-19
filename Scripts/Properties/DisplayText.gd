@@ -33,6 +33,12 @@ func _init(name := "", displayText := "", showName := true):
 	includeName = showName
 #endregion
 
-#region Functions
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return "name: \"" + name + "\", text: " + text + ", includeName: " + str(includeName)
 
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "DisplayTextProperty"
 #endregion

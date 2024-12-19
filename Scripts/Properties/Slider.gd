@@ -160,3 +160,13 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 func hasOverrides() -> bool:
 	return allowLower || allowHigher
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultValue: " + str(defaultValue) + ", minimum: " + str(minimum) + ", maximum: " + str(maximum)  + ", ticks: " + str(ticks) + ", step: " + str(step) + ", allowLower: " + str(allowLower) + ", allowHigher: " + str(allowHigher)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "SliderProperty"
+#endregion

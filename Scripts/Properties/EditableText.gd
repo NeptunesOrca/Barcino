@@ -31,3 +31,13 @@ func _init(name : String, command : String, default := "", underneath := false):
 	defaultText = default
 	underLable = underneath
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultText: " + str(defaultText) + ", underLable: " + str(underLable)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "EditableTextProperty"
+#endregion

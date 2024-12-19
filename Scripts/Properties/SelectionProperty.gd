@@ -35,3 +35,20 @@ func _init(propType, propName := "", onUpdate := ""):
 	#if (type >= PropertyTypes.size() || type < 0):
 		#type = -1
 #endregion
+
+#region String generation
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas. Overridden by subclasses as required.
+func generatePropertiesString() -> String:
+	return "name: \"" + name + "\", type: " + str(type) + ", commandName: \"" + commandName
+
+## Returns the name of the class. Overridden by subclasses.
+func generateObjectClass() -> String:
+	return "SelectionProperty"
+
+## Returns a formatted string with the RID of the [SelectionProperty]
+func generateInstanceID() -> String:
+	return "#" + str(self.get_instance_id())
+
+## Overrides the _to_string()
+func _to_string() -> String:
+	return "<" + generateObjectClass() + generateInstanceID() + " ["+ generatePropertiesString() + "] >"

@@ -22,3 +22,13 @@ func _init(name : String):
 	super(-1, name, "") #calls SelectionProperty._init()
 	header = name
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return "name (header): \"" + str(header) + "\""
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "HeaderProperty"
+#endregion

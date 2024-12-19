@@ -34,3 +34,13 @@ func _init(name: String, command:String, default := DEFAULT_COLOUR, includeAlpha
 	defaultColour = default
 	alphaEnabled = includeAlpha
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultColour: " + str(defaultColour) + ", alphaEnabled: " + str(alphaEnabled)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "ColourPickerProperty"
+#endregion

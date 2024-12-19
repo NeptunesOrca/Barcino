@@ -3,13 +3,22 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await get_tree().process_frame
+	await get_tree().process_frame #waits until after the first frame to make sure that everything has a chance to properly load first
 	call_deferred("testsToCall")
 
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
+	SelectionPropertyTesting()
 	return
+
+func SelectionPropertyTesting():
+	#var mystring = "test"
+	#print(mystring)
+	#print(mystring.erase(mystring.length()-2))
+	#print(mystring.substr(0,mystring.length()-2))
+	var test = CheckToggleProperty.new("as","df",true)
+	print(test)
 
 func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
 	#testing that getErrorHandler works as intended, i.e. there is only ever one handler

@@ -24,6 +24,12 @@ func _init(name : String, command : String, optionList : Array):
 	options = PackedStringArray(optionList) # turns whatever the type of optionsList into strings so that they can be used properly
 #endregion
 
-#region Functions
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() #+ ", options: " + str(options)
 
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "DropdownProperty"
 #endregion

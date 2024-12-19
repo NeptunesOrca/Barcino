@@ -74,3 +74,13 @@ func _init(name : String, command : String, val : float, lowerBound := NO_MINIMU
 	prefix = pre
 	suffix = post
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultValue: " + str(defaultValue) + ", minimum: " + str(minimum) + ", maximum: " + str(maximum)  + ", decimalPlaces: " + str(decimalPlaces) + ", prefix: " + str(prefix)  + ", suffix: " + str(suffix)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "NumericEntryProperty"
+#endregion

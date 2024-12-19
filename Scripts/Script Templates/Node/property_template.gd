@@ -26,3 +26,13 @@ class_name _CLASS_Property
 func _init(name : String, command : String):
 	super(-1, name, command) #calls SelectionProperty._init()
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() #+ ", %somename%: " + str(%somevalue%)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "_CLASS_Property"
+#endregion

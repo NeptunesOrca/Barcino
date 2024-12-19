@@ -31,3 +31,13 @@ func _init(name : String, command : String, default := "", num_lines :=1):
 	defaultText = default
 	lines = num_lines
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultText: " + defaultText + ", lines: " + str(lines)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "ParagraphEntryProperty"
+#endregion

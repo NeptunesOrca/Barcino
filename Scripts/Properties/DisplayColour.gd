@@ -77,3 +77,13 @@ func _init(name := "", command := "", colour := DEFAULT_WHITE, sideLength := NOR
 	centred = hztlCentred
 	includeName = showName
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultColour: " + str(defaultColour) + ", size: " + str(size) + ", centred: " + str(centred) + ", incldeName: " + str(includeName)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "DisplayColourProperty"
+#endregion

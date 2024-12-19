@@ -21,3 +21,13 @@ func _init(name : String, command : String, val := false):
 	super(-1, name, command) #calls SelectionProperty._init()
 	defaultValue = val
 #endregion
+
+#region String Generation Overrides
+## Generates the list of member variables and their values, in the form of property: value, seperated by commas
+func generatePropertiesString() -> String:
+	return super() + ", defaultValue: " + str(defaultValue)
+
+## Returns the name of the class. Overrides [method SelectionProperty.generateObjectClass].
+func generateObjectClass() -> String:
+	return "CheckToggleProperty"
+#endregion
