@@ -1,14 +1,22 @@
 extends _BASE_
 class_name _CLASS_
 
-# Member Variables Here
+#region Member Variables
 
+#endregion
+
+#region Initialization
 ## _CLASS_ Initialization
 func _init():
 	#Note that a subclass will run its initialization AFTER the superclass
 	pass
+#endregion
 
-func _ ready():
+#region Startup
+func _ready():
 	pass
+#endregion
 
-# Other functions, as required
+#region Functions
+
+#endregion

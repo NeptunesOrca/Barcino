@@ -9,16 +9,7 @@ func _ready() -> void:
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
-	SelectionPropertyTesting()
 	return
-
-func SelectionPropertyTesting():
-	#var mystring = "test"
-	#print(mystring)
-	#print(mystring.erase(mystring.length()-2))
-	#print(mystring.substr(0,mystring.length()-2))
-	var test = CheckToggleProperty.new("as","df",true)
-	print(test)
 
 func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
 	#testing that getErrorHandler works as intended, i.e. there is only ever one handler

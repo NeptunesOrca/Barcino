@@ -52,9 +52,9 @@ enum LayoutExists {FALSE, TRUE}
 #region Property Lists
 ## An array that stores every defined [SelectionProperty] for the [DraggableObject]. Used to generate the [member propertyFieldList].
 var propertyList = []
-## A [Dictionary] that stores each [PropertyField] generated from the [member propertyList] when the [DraggableObject] is selected by the [SelectionMenu]
-## [br] Each [PropertyField] corresponds to an entry in the [member selectionMenu] that can be used to adjust or display various aspects of the [DraggableObject]
-## [br] For each [SelectionProperty] in the [member propertyList], [member propertyList] stores the [member SelectionProperty.name] as the key and a reference to each [PropertyField] as the value
+## A [Dictionary] that stores each [SelectionPropertyField] generated from the [member propertyList] when the [DraggableObject] is selected by the [SelectionMenu]
+## [br] Each [SelectionPropertyField] corresponds to an entry in the [member selectionMenu] that can be used to adjust or display various aspects of the [DraggableObject]
+## [br] For each [SelectionProperty] in the [member propertyList], [member propertyList] stores the [member SelectionProperty.name] as the key and a reference to each [SelectionPropertyField] as the value
 var propertyFieldList = {}
 #endregion
 
@@ -279,8 +279,8 @@ func handleDragEndLogic():
 #endregion
 
 #region Selection and Deselection
-## Selects the [DraggableObject], and also generates every [PropertyField] from [member propertyList]
-## [br] Each [PropertyField] is added to [member propertyFieldList] and also to the [member selectionMenu]
+## Selects the [DraggableObject], and also generates every [SelectionPropertyField] from [member propertyList]
+## [br] Each [SelectionPropertyField] is added to [member propertyFieldList] and also to the [member selectionMenu]
 func select():
 	if selected:
 		return
@@ -293,8 +293,8 @@ func select():
 	
 	selected = true
 
-## Deselects the [DraggableObject], and also destroys every [PropertyField] generated from [member propertyFieldList]
-## [br][br]It's possible that it would be better to generate all the [PropertyField]s, and then just remove them as children of the parent, having them hide in memory somewhere.
+## Deselects the [DraggableObject], and also destroys every [SelectionPropertyField] generated from [member propertyFieldList]
+## [br][br]It's possible that it would be better to generate all the [SelectionPropertyField]s, and then just remove them as children of the parent, having them hide in memory somewhere.
 ## [br]The advantage would be that we aren't regenerating and deleting things very often, but the disadvantage is that we have a bunch of memory being taken up by things that might not be seen again.
 ## [br]If selection is taking a very long time, consider an alternative implementation.
 func deselect():

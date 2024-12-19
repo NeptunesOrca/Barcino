@@ -24,7 +24,7 @@ func _ready():
 func select(obj : DraggableObject):
 	#Deselect first to clean everything up
 	deselect()
-	#Select the new object (will handle it's own propertyField generation)
+	#Select the new object (will handle it's own SelectionPropertyField generation)
 	selectedObject = obj
 	selectedObject.select()
 
@@ -35,7 +35,7 @@ func deselect():
 	if (selectedObject == null):
 		return
 	
-	#Delete all the PropertyField objects that of the selected object
+	#Delete all the SelectionPropertyField objects that of the selected object
 	#See DraggableObject.deselect documentation for reasoning about this
 	var currentProperties = self.get_children()
 	for child in currentProperties:
@@ -48,7 +48,7 @@ func deselect():
 
 #region Adding Properties
 ## Adds a provided [SelectionPropertyField] to the [member propertyStorage] for the user to use.
-func addPropertyField(field): #TODO field to be typed as  : PropertyField
+func addPropertyField(field): #TODO field to be typed as  : SelectionPropertyField
 	propertyStorage.add_child(field)
 #endregion
 

@@ -52,3 +52,4 @@ func generateInstanceID() -> String:
 ## Overrides the _to_string()
 func _to_string() -> String:
 	return "<" + generateObjectClass() + generateInstanceID() + " ["+ generatePropertiesString() + "] >"
+#endregion
