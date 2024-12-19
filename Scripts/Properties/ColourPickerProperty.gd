@@ -3,7 +3,7 @@ class_name ColourPickerProperty
 ## The [SelectionProperty] used to generate [ColourPickerPropertyField].
 ##
 ## Dictates the properties of a [ColourPickerPropertyField].
-## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when:
 ## [br] - [ColorPicker] of the [ColourPickerPropertyField] emits [signal ColorPicker.color_changed]
 
 #region Constants
