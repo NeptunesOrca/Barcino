@@ -156,6 +156,7 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 #endregion
 
 #region Functions
+## Returns whether there are any overrides
 func hasOverrides() -> bool:
 	return allowLower || allowHigher
 #endregion

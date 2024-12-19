@@ -1,35 +1,36 @@
 extends Menu
 class_name SelectionMenu
 
-##
+## The group name for [SelectionMenu] so that it can easily be found by other nodes
 const groupName = "SelectionMenu"
 
-##
+## The [DraggableObject] that is currently selected.
 var selectedObject : DraggableObject
 
-##
+## The [VBoxContainer] that stores the [SelectionPropertyField]s associated with the [member selectedObject]
 @export var propertyStorage : VBoxContainer
 
 #region Startup
-##
+## Called when the node enters the scene tree for the first time.
+## Adds the [member groupName] to this node so it can be easily found by other nodes.
 func _ready():
 	add_to_group(groupName)
 #endregion
 
 #region Selection and Deselection
-##
+## Selects the [param obj] passed in the call.
+## [br] Always calls [method deselect] before doing anything else.
+## [br] Uses [method DraggableObject.select].
 func select(obj : DraggableObject):
 	#Deselect first to clean everything up
 	deselect()
 	#Select the new object (will handle it's own propertyField generation)
 	selectedObject = obj
 	selectedObject.select()
-	print("Object selected: ", selectedObject)
 
 ## Controls the deselection of whatever [DraggableObject] (if any) is currently the [member selectedObject].
 ## [br] Also deletes all the children property nodes.
 func deselect():
-	print("Object deselected: ", selectedObject)
 	#If no object is selected, early return to save some resources
 	if (selectedObject == null):
 		return
@@ -46,8 +47,8 @@ func deselect():
 #endregion
 
 #region Adding Properties
-##
-func addPropertyField(field): #field to be typed as  : PropertyField
+## Adds a provided [SelectionPropertyField] to the [member propertyStorage] for the user to use.
+func addPropertyField(field): #TODO field to be typed as  : PropertyField
 	propertyStorage.add_child(field)
 #endregion
 

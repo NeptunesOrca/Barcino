@@ -7,7 +7,7 @@ class_name ControlMenu
 
 #region Member Variables
 #region Group Names
-## The group name for [ControlMenu] so that it can easily be found
+## The group name for [ControlMenu] so that it can easily be found by other nodes
 const groupName = "ObjectMenu"
 #endregion
 
@@ -18,6 +18,8 @@ var availableFileTypes = [".png"]
 #endregion
 
 #region Startup
+## Called when the node enters the scene tree for the first time.
+## Adds the [member groupName] to this node so it can be easily found by other nodes.
 func _ready():
 	add_to_group(groupName)
 #endregion
