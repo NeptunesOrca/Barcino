@@ -2,7 +2,9 @@ extends SelectionProperty
 class_name CheckToggleProperty
 ## The [SelectionProperty] used to generate [CheckTogglePropertyField].
 ##
-## Dictates the properties of a [CheckTogglePropertyField]. 
+## Dictates the properties of a [CheckTogglePropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when:
+## [br] - the [CheckBox] of the [CheckTogglePropertyField] emits [signal CheckBox.toggled].
 
 #region Member Variables
 ## The default value for the [member Checkbox.button_pressed] in the [CheckTogglePropertyField].

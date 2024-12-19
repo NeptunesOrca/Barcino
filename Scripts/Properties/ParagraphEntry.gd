@@ -4,7 +4,9 @@ extends SelectionProperty
 class_name ParagraphEntryProperty
 ## The [SelectionProperty] used to generate [ParagraphEntryPropertyField].
 ##
-## Dictates the properties of a [ParagraphEntryPropertyField]. 
+## Dictates the properties of a [ParagraphEntryPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [EditableTextPropertyField] emits [signal EditableTextPropertyField.sendText] when the [TextEdit] of the [EditableTextPropertyField] emits [signal TextEdit.text_changed]
 
 #region Member Variables
 ## The value for the [member TextEdit.text] in the [ParagraphEntryPropertyField].

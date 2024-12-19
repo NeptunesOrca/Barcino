@@ -2,7 +2,9 @@ extends SelectionProperty
 class_name ColourPickerProperty
 ## The [SelectionProperty] used to generate [ColourPickerPropertyField].
 ##
-## Dictates the properties of a [ColourPickerPropertyField]. 
+## Dictates the properties of a [ColourPickerPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [ColorPicker] of the [ColourPickerPropertyField] emits [signal ColorPicker.color_changed]
 
 #region Constants
 ## The default value for the [member ColorPicker.color] of the [ColourPickerPropertyField] if the [member defaultColour] is not specified.

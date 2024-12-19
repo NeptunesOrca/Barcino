@@ -4,7 +4,9 @@ extends SelectionProperty
 class_name DropdownProperty
 ## The [SelectionProperty] used to generate [DropdownPropertyField].
 ##
-## Dictates the properties of a [DropdownPropertyField]. 
+## Dictates the properties of a [DropdownPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [OptionButton] of the [DropdownPropertyField] emits [signal OptionButton.item_selected]
 
 #region Member Variables
 ## The list of options available within the [OptionButton] of the [DropdownPropertyField]

@@ -4,7 +4,9 @@ extends SelectionProperty
 class_name EditableTextProperty
 ## The [SelectionProperty] used to generate [EditableTextPropertyField].
 ##
-## Dictates the properties of a [EditableTextPropertyField]. 
+## Dictates the properties of a [EditableTextPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [EditableTextPropertyField] emits [signal EditableTextPropertyField.sendText] when the [TextEdit] of the [EditableTextPropertyField] emits [signal TextEdit.text_changed]
 
 #region Member Variables
 ## The value for the [member TextEdit.text] in the [EditableTextPropertyField].

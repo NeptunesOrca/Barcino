@@ -4,7 +4,8 @@ extends SelectionProperty
 class_name DisplayTextProperty
 ## The [SelectionProperty] used to generate [DisplayTextPropertyField].
 ##
-## Dictates the properties of a [DisplayTextPropertyField]. 
+## Dictates the properties of a [DisplayTextPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] has no effect.
 
 #region Member Variables
 ## The value for the [member Label.text] in the [DisplayTextPropertyField].

@@ -5,6 +5,8 @@ class_name _CLASS_Property
 ## The [SelectionProperty] used to generate [_CLASS_PropertyField].
 ##
 ## Dictates the properties of a [_CLASS_PropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [%object%] of the [_CLASS_PropertyField] emits [signal %object%.%signal%]
 
 #region Constants
 

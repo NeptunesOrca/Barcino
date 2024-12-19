@@ -5,6 +5,8 @@ class_name NumericEntryProperty
 ## The [SelectionProperty] used to generate [NumericEntryPropertyField].
 ##
 ## Dictates the properties of a [NumericEntryPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [SpinBox] of the [NumericEntryPropertyField] emits [signal Range.value_changed]
 
 #region Constants
 #region Numeric Range Constants

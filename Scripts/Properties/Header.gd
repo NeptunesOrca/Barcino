@@ -4,7 +4,8 @@ extends SelectionProperty
 class_name HeaderProperty
 ## The [SelectionProperty] used to generate [HeaderPropertyField].
 ##
-## Dictates the properties of a [HeaderPropertyField]. 
+## Dictates the properties of a [HeaderPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] has no effect.
 
 #region Member Variables
 ## Syntatic sugar for [member SelectionProperty.name] to make it easier to refer to with greater clarity

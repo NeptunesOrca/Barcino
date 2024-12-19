@@ -2,7 +2,9 @@ extends SelectionProperty
 class_name DisplayColourProperty
 ## The [SelectionProperty] used to generate [DisplayColourPropertyField].
 ##
-## Dictates the properties of a [DisplayColourPropertyField]. 
+## Dictates the properties of a [DisplayColourPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [DisplayColourPropertyField] emits [signal DisplayColourPropertyField.colourChanged]
 
 #region Constants
 ## The default value for the [member ColorRect.color] of the [DisplayColourPropertyField] if the [member defaultColour] is not specified.

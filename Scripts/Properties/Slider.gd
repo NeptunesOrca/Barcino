@@ -4,7 +4,9 @@ extends SelectionProperty
 class_name SliderProperty
 ## The [SelectionProperty] used to generate [SliderPropertyField].
 ##
-## Dictates the properties of a [SliderPropertyField]. 
+## Dictates the properties of a [SliderPropertyField].
+## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
+## [br] - [HSlider] of the [SliderPropertyField] emits [signal HSlider.%signal%]
 
 #region Constants
 #region Godot Slider defaults
