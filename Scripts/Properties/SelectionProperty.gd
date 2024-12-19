@@ -39,7 +39,7 @@ func _init(propType, propName := "", onUpdate := ""):
 #region String generation
 ## Generates the list of member variables and their values, in the form of property: value, seperated by commas. Overridden by subclasses as required.
 func generatePropertiesString() -> String:
-	return "name: \"" + name + "\", type: " + str(type) + ", commandName: \"" + commandName
+	return "name: \"" + name + "\", type: " + str(type) + ", commandName: \"" + commandName + "\""
 
 ## Returns the name of the class. Overridden by subclasses.
 func generateObjectClass() -> String:
