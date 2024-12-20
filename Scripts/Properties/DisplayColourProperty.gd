@@ -19,7 +19,7 @@ const SMALL_SIZE = 12
 ## [br]Set to [code]16px[/code]
 const NORMAL_SIZE = 16
 
-## Specification for a "full" (i.e. larger than normal, yet very reasonable] [member size]
+## Specification for a "full" size, that is, taking up the same height as a line [member size]
 ## [br]Set to [code]20px[/code]
 const FULL_SIZE = 20
 

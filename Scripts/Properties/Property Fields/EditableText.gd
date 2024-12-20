@@ -33,7 +33,7 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	textbox = TextEdit.new()
 	textbox.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
 	textbox.text = property.defaultText
-	self.size_flags_horizontal = 0
+	#textbox.
 	
 	#if putting it on the line below, need to fundamentally rethink the structure of PropertyField for this object type and override it completely
 	if (not property.underLable):

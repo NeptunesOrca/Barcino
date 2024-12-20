@@ -35,7 +35,6 @@ func _init(obj : DraggableObject, property : ParagraphEntryProperty):
 	textbox.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
 	textbox.text = property.defaultText
 	textbox.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	self.size_flags_horizontal = 0
 	
 	# create a dummy vBox so that we can stack elements vertically instead of horizontally
 	parentContainer = VBoxContainer.new()

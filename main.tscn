@@ -1,51 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://bo3q75epmq7ul"]
+[gd_scene load_steps=10 format=3 uid="uid://bo3q75epmq7ul"]
 
 [ext_resource type="Script" path="res://Scripts/Menus/ControlMenu.gd" id="1_em4c8"]
 [ext_resource type="Theme" uid="uid://dqckf2al7eibk" path="res://UI/menu_style.tres" id="2_yg8xr"]
 [ext_resource type="Theme" path="res://UI/header_style.tres" id="4_oipcn"]
-[ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="4_ryxm2"]
 [ext_resource type="Script" path="res://Scripts/Venues/Venue.gd" id="5_eydxy"]
-[ext_resource type="StyleBox" path="res://UI/half_scroll_slider_stylebox.tres" id="5_h7lkv"]
 [ext_resource type="Script" path="res://Scripts/Menus/VenueController.gd" id="5_ux6w8"]
-[ext_resource type="StyleBox" path="res://UI/half_scroll_right_channel.tres" id="6_10yw5"]
 [ext_resource type="Texture2D" uid="uid://12mdgdogebvk" path="res://icon.svg" id="6_ukox7"]
 [ext_resource type="Script" path="res://Scripts/Objects/DraggableObject.gd" id="8_44xfp"]
 [ext_resource type="Script" path="res://Scripts/Menus/SelectionMenu.gd" id="9_k5117"]
 [ext_resource type="Script" path="res://Scripts/TestingSuite.gd" id="11_7hak7"]
-
-[sub_resource type="GDScript" id="GDScript_ibgdb"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xy0w"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-draw_center = false
-corner_detail = 1
-script = SubResource("GDScript_ibgdb")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqf7m"]
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 4.0
-content_margin_bottom = 8.0
-bg_color = Color(0.180392, 0.180392, 0.180392, 1)
-border_width_top = 2
-border_color = Color(0.243137, 0.243137, 0.243137, 1)
-border_blend = true
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 16
-expand_margin_top = 1.0
-
-[sub_resource type="Theme" id="Theme_vaia0"]
-HSeparator/constants/separation = 3
-ScrollContainer/styles/panel = SubResource("StyleBoxFlat_7xy0w")
-TabContainer/constants/side_margin = 8
-TabContainer/font_sizes/font_size = 18
-TabContainer/fonts/font = ExtResource("4_ryxm2")
-TabContainer/styles/panel = SubResource("StyleBoxFlat_sqf7m")
-VScrollBar/styles/grabber = ExtResource("5_h7lkv")
-VScrollBar/styles/scroll = ExtResource("6_10yw5")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -78,7 +41,7 @@ script = ExtResource("1_em4c8")
 [node name="Venues" type="ScrollContainer" parent="MenuCanvasLayer/ControlMenu"]
 layout_direction = 2
 layout_mode = 2
-theme = SubResource("Theme_vaia0")
+theme = ExtResource("2_yg8xr")
 metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvasLayer/ControlMenu/Venues"]
@@ -206,7 +169,7 @@ size_flags_horizontal = 0
 script = ExtResource("8_44xfp")
 
 [node name="SelectionMenu" type="TabContainer" parent="MenuCanvasLayer" node_paths=PackedStringArray("propertyStorage")]
-custom_minimum_size = Vector2(250, 428)
+custom_minimum_size = Vector2(200, 428)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

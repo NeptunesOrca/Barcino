@@ -45,7 +45,7 @@ func _init(obj : DraggableObject, property : SliderProperty):
 		slider.allow_lesser = property.allowLower
 	slider.step = property.step
 	slider.value = property.defaultValue
-	slider.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
+	slider.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can
 	
 	# create a dummy vBox so that we can stack elements vertically instead of horizontally
 	parentContainer = VBoxContainer.new()

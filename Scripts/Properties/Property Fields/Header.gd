@@ -23,6 +23,8 @@ func _init(obj : DraggableObject, property : HeaderProperty):
 	# Change theme to the header theme
 	var headerStyle = load(headerStyleLocation)
 	headerObj.theme = headerStyle
+	#Make it take up as much space as it can
+	headerObj.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 #endregion
 
 #region Functions

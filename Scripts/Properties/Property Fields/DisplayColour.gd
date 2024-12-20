@@ -18,7 +18,7 @@ signal colourChanged(newColour)
 ## The [ColorRect] that will display a square of colour as defined by the [ColourPickerProperty]
 var colourbox : ColorRect
 ## The [Container] that the [member colourbox] will go in.
-## [br]If [member DisplayColourProperty.centred] is true, will be a [CenterContainer]. Otherwise, will be the [DisplayColourProperty] itself.
+## [br]If [member DisplayColourProperty.centred] is true, will be a [CenterContainer]. Otherwise, will be a [HBoxContainer].
 var parentContainer : Container
 #endregion
 
@@ -30,15 +30,20 @@ func _init(obj : DraggableObject, property : DisplayColourProperty):
 	#Create or find the parentContainer for the colourbox to go in
 	if (property.centred): # If centred, create a new CenterContainer for the colourbox
 		parentContainer = CenterContainer.new()
-		parentContainer.size_flags_horizontal = SIZE_EXPAND_FILL
 		self.add_child(parentContainer)
-	else: #otherwise just use self
-		parentContainer = self
+	else: #otherwise create a new HBox
+		parentContainer = HBoxContainer.new()
+	parentContainer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parentContainer.size_flags_vertical = Control.SIZE_SHRINK_CENTER # Needed to make the parent container not grow boxes it isn't supposed to
+	self.add_child(parentContainer)
 	
 	# Create the colourbox to display the colour
 	colourbox = ColorRect.new()
 	colourbox.color = property.defaultColour
+	self.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	self.size_flags_vertical = Control.SIZE_FILL
 	colourbox.custom_minimum_size = Vector2(property.size, property.size) # makes the box a square
+	parentContainer.add_child(colourbox)
 	
 	# Remove the name if it's flagged as not included
 	if (not property.includeName):
@@ -46,8 +51,6 @@ func _init(obj : DraggableObject, property : DisplayColourProperty):
 	
 	# Connection
 	self.colourChanged.connect(Callable(obj, property.commandName))
-	
-	parentContainer.add_child(colourbox)
 #endregion
 
 #region Colour Functions

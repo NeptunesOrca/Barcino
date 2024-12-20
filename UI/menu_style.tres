@@ -1,9 +1,9 @@
 [gd_resource type="Theme" load_steps=8 format=3 uid="uid://dqckf2al7eibk"]
 
 [ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="1_rblmr"]
-[ext_resource type="StyleBox" path="res://UI/half_scroll_slider_stylebox.tres" id="2_8e1ig"]
-[ext_resource type="StyleBox" path="res://UI/half_scroll_right_channel.tres" id="3_g05pr"]
-[ext_resource type="StyleBox" path="res://UI/half_scroll_slider_highlighted_stylebox.tres" id="3_x5wnj"]
+[ext_resource type="StyleBox" uid="uid://b35u46xj8edbi" path="res://UI/half_scroll_slider_stylebox.tres" id="2_8e1ig"]
+[ext_resource type="StyleBox" uid="uid://brp7wv4y0upbh" path="res://UI/half_scroll_right_channel.tres" id="3_g05pr"]
+[ext_resource type="StyleBox" uid="uid://b223dyav2alsg" path="res://UI/half_scroll_slider_highlighted_stylebox.tres" id="3_x5wnj"]
 
 [sub_resource type="GDScript" id="GDScript_ibgdb"]
 

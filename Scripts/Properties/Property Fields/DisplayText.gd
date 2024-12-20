@@ -22,7 +22,6 @@ func _init(obj : DraggableObject, property : DisplayTextProperty, style : Theme 
 	textbox.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	textbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	textbox.text = property.text
-	self.size_flags_horizontal = 0 # removes the fill flag on the PropertyField, otherwsie the textbox will be too wide
 	if (style != null): # can optionally apply a theme here
 		textbox.theme = style
 	self.add_child(textbox)
