@@ -24,7 +24,7 @@ func _init(obj : DraggableObject, property : SliderProperty):
 	# create and setup the slider
 	slider = HSlider.new()
 	slider.scrollable = true
-	slider.tick_count = property.ticks
+	slider.tick_count = property.ticks + 1 # accounts for the 1 extra tick needed to add one to at the maximum
 	# this sets a default behaviour for maximum and minimums, including whether the user can go above/below them (only if they are specified)
 	if (property.minimum > SliderProperty.NO_MINIMUM):
 		slider.min_value = property.minimum
@@ -40,7 +40,7 @@ func _init(obj : DraggableObject, property : SliderProperty):
 		#displayed max will be whatever the default is
 		
 	#override allow higher/lower if specified
-	if (property.override_maxmin):
+	if (property.hasOverrides()):
 		slider.allow_greater = property.allowHigher
 		slider.allow_lesser = property.allowLower
 	slider.step = property.step
@@ -58,10 +58,12 @@ func _init(obj : DraggableObject, property : SliderProperty):
 	parentContainer.add_child(slider)
 	
 	# connect the slider
-	slider.value_changed.connect(Callable(obj,property.onUpdate))
+	slider.value_changed.connect(Callable(obj,property.commandName))
 	#value_changed sends a float of value, so no need for setters or getters or anything
 #endregion
 
 #region Functions
-
+##
+func getSlider() -> HSlider:
+	return slider
 #endregion

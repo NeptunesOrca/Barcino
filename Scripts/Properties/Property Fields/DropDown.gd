@@ -29,7 +29,7 @@ func _init(obj : DraggableObject, property : DropdownProperty):
 	self.add_child(dropdown)
 	
 	#connect to object
-	dropdown.item_selected.connect(Callable(obj, property.onUpdate))
+	dropdown.item_selected.connect(Callable(obj, property.commandName))
 #endregion
 
 #region Functions

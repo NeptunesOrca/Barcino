@@ -34,7 +34,7 @@ func _init(obj : DraggableObject, property : ParagraphEntryProperty):
 	textbox = TextEdit.new()
 	textbox.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
 	textbox.text = property.defaultText
-	textbox.wrap_enabled = true
+	textbox.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	self.size_flags_horizontal = 0
 	
 	# create a dummy vBox so that we can stack elements vertically instead of horizontally
@@ -50,14 +50,14 @@ func _init(obj : DraggableObject, property : ParagraphEntryProperty):
 	
 	#when the text changes, do what the property specifies
 	textbox.text_changed.connect(sendText)
-	self.send_text.connect(Callable(obj,property.onUpdate))
+	self.send_text.connect(Callable(obj,property.commandName))
 	# we use the custom send_text signal to avoid a mess of getters and setters and to just send the text directly
 
 ## Sizes the textbox to the specified number of line of the determined height
 func match_height_to_lines():
 	var fontheightspacing = 2
 	var fontheight = textbox.get_line_height()
-	textbox.rect_min_size.y = (fontheight + fontheightspacing) * self.definition.lines
+	textbox.custom_minimum_size.y = (fontheight + fontheightspacing) * self.definition.lines
 #endregion
 
 #region Functions

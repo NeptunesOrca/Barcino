@@ -38,14 +38,14 @@ func _init(obj : DraggableObject, property : DisplayColourProperty):
 	# Create the colourbox to display the colour
 	colourbox = ColorRect.new()
 	colourbox.color = property.defaultColour
-	colourbox.rect_min_size = Vector2(property.size, property.size) # makes the box a square
+	colourbox.custom_minimum_size = Vector2(property.size, property.size) # makes the box a square
 	
 	# Remove the name if it's flagged as not included
 	if (not property.includeName):
 		self.propertyName.queue_free()
 	
 	# Connection
-	self.colourChanged.connect(Callable(obj, property.onUpdate))
+	self.colourChanged.connect(Callable(obj, property.commandName))
 	
 	parentContainer.add_child(colourbox)
 #endregion

@@ -26,6 +26,6 @@ func _init(obj : DraggableObject, property : ColourPickerProperty):
 	self.add_child(colourpicker)
 	
 	#Connect
-	colourpicker.color_changed.connect(Callable(obj,property.onUpdate))
+	colourpicker.color_changed.connect(Callable(obj,property.commandName))
 	# the color_changed signal will send the new Color to obj to handle
 #endregion

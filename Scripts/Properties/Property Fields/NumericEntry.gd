@@ -42,6 +42,6 @@ func _init(obj : DraggableObject, property : NumericEntryProperty):
 	self.add_child(numbox)
 	
 	#connect the numbox
-	numbox.value_changed.connect(Callable(obj,property.onUpdate))
+	numbox.value_changed.connect(Callable(obj,property.commandName))
 	#this will directly send the float value, so there is no need for the object to use a getter on this
 #endregion

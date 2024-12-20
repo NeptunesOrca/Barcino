@@ -9,7 +9,85 @@ func _ready() -> void:
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
+	SelectionPropertiesAndFieldsTesting() #TEST: 
 	return
+
+func SelectionPropertiesAndFieldsTesting():
+	var testObj = testSelectionObject.new()
+	var layout = $"../Venue"
+	layout.add_child(testObj)
+	await get_tree().process_frame
+	#testObj.selectionMenu.select(testObj)
+	var selectionMenu = testObj.selectionMenu
+	selectionMenu.select(testObj)
+	print(testObj, " selected.")
+
+class testSelectionObject extends DraggableObject:
+	#region test properties and propertyfields
+	var headerTest = HeaderProperty.new("Test Header") #TEST: passed Dec20/2024
+	var seperatorTest = SeperatorProperty.new("testname") #TEST: passed Dec20/2024
+	var displayTextTest1 = DisplayTextProperty.new("Display Text 1", "Lorem ipsum", true) #TEST: passed Dec20/2024
+	var displayTextTest2 = DisplayTextProperty.new("Display Text 2", "dolor sic amet", false) #TEST: passed Dec20/2024
+	var staticTests = [headerTest, seperatorTest, displayTextTest1, displayTextTest2]
+	
+	var checkTest = CheckToggleProperty.new("Test Check", "toggleCheck") #TEST: passed DEC20/2024
+	var checkTests = [checkTest]
+	
+	var colourPickTest = ColourPickerProperty.new("Colour Test", "colourCheck") #TEST: passed DEC20/2024
+	var displayColourTest1 = DisplayColourProperty.new("Display Colour Test 1", "colourCheck", DisplayColourProperty.DEFAULT_WHITE, DisplayColourProperty.SMALL_SIZE, false, true) #TEST: passed Dec20/2024
+	var displayColourTest2 = DisplayColourProperty.new("Display Colour Test 2", "colourCheck", Color.BLUE, DisplayColourProperty.LARGE_SIZE, true, false) #TEST: passed Dec20/2024
+	var colourTests = [colourPickTest, displayColourTest1, displayColourTest2]
+	
+	var dropdownOptions = [0, "Option 1", 2, "Option 3"]
+	var dropdownTest = DropdownProperty.new("Dropdown Test", "dropdownCheck", dropdownOptions) #TEST: passed Dec20/2024
+	var dropdownTests = [dropdownTest]
+	
+	var textboxTest1 = EditableTextProperty.new("Textbox test 1", "textCheck", "Lorem ipsum", false) #TEST: passed Dec20/2024
+	var textboxTest2 = EditableTextProperty.new("Textbox test 2", "textCheck", "dolor sic ament", true) #TEST: passed Dec20/2024
+	var paragraphTest1 = ParagraphEntryProperty.new("Paragraph test 1", "textCheck", "Lorem", 1) #TEST: passed Dec20/2024
+	var paragraphTest2 = ParagraphEntryProperty.new("Paragraph test 2", "textCheck", "ipsum", 2) #TEST: passed Dec20/2024
+	var paragraphTest3 = ParagraphEntryProperty.new("Paragraph test 3", "textCheck", "dolor", 3) #TEST: passed Dec20/2024
+	var paragraphTest4 = ParagraphEntryProperty.new("Paragraph test 4", "textCheck", "sic amet", 5) #TEST: passed Dec20/2024
+	var textTests = [textboxTest1, textboxTest2, paragraphTest1, paragraphTest2, paragraphTest3, paragraphTest4]
+	
+	var numericTest1 = NumericEntryProperty.new("Numeric test 1", "numCheck", 0, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 0)
+	var numericTest2 = NumericEntryProperty.new("Numeric test 2", "numCheck", 0.5, 0, 1, 3, "Some prefix", "/post") #TEST: passed Dec20/2024
+	var numTests = [numericTest1, numericTest2]
+	
+	var sliderTest1 = SliderProperty.new("Slider test 1", "numCheck", 0) #TEST: passed Dec20/2024
+	var sliderTest2 = SliderProperty.new("Slider test 2", "numCheck", 50, 0, 100) #TEST: 
+	var sliderTest3 = SliderProperty.new("Slider test 3", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, 2) #TEST: 
+	var sliderTest4 = SliderProperty.new("Slider test 4", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, SliderProperty.AUTO_TICKS, 25) #TEST: passed Dec20/2024
+	var sliderTest5 = SliderProperty.new("Slider test 5", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, SliderProperty.AUTO_TICKS, SliderProperty.DEFAULT_STEPSIZE, SliderProperty.MaxMinOverride.BOTH_OVER_AND_UNDER)
+	var sliderAdjusterTest = NumericEntryProperty.new("Change slider 5", "sliderAdjust", sliderTest5.defaultValue, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 1)
+	var sliderTests = [sliderTest1, sliderTest2, sliderTest3, sliderTest4, sliderTest5, sliderAdjusterTest]
+	
+	var propertyTests = [staticTests, checkTests, colourTests, dropdownTests, textTests, numTests, sliderTests]
+	#endregion
+	
+	func _ready():
+		super()
+		for testList in propertyTests:
+			propertyList.append_array(testList)
+	
+	func toggleCheck(boolval : bool):
+		print("Bool value: ",boolval)
+	
+	func colourCheck(colourval : Color):
+		print("Colour Value: ", colourval)
+	
+	func dropdownCheck(val : int):
+		print("Option selected: ", val, " -> ", dropdownOptions[val])
+	
+	func textCheck(text : String):
+		print("Text value: ", text)
+	
+	func numCheck(val):
+		print("Number value: ", val)
+	
+	func sliderAdjust(val):
+		print("Slider5 should have value of: ", val)
+		propertyFieldList[sliderTest5.name].getSlider().value = val
 
 func ErrorHandlerTesting(): #TEST: all passed DEC13/2024
 	#testing that getErrorHandler works as intended, i.e. there is only ever one handler

@@ -23,6 +23,6 @@ func _init(obj : DraggableObject, property : CheckToggleProperty):
 	self.add_child(checkbox)
 	
 	#connect command
-	checkbox.toggled.connect(Callable(obj,property.onUpdate))
+	checkbox.toggled.connect(Callable(obj,property.commandName))
 	#the toggled signal sends the bool value of the checkbox
 #endregion

@@ -36,7 +36,7 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	self.size_flags_horizontal = 0
 	
 	#if putting it on the line below, need to fundamentally rethink the structure of PropertyField for this object type and override it completely
-	if (not property.isUnder()):
+	if (not property.underLable):
 		#No need for modifications
 		parentContainer = self
 	else:
@@ -55,7 +55,7 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	
 	#when the text changes, do what the property specifies
 	textbox.text_changed.connect(sendText)
-	self.send_text.connect(Callable(obj,property.onUpdate))
+	self.send_text.connect(Callable(obj,property.commandName))
 	# we use the custom send_text signal to avoid a mess of getters and setters and to just send the text directly
 
 ## Sizes the textbox to 1 line of the determined height
@@ -64,7 +64,7 @@ func fit_to_content_height():
 	var fontheight = textbox.get_line_height()
 	var fontheightspacing = 2
 	var linesize = fontheight * getLines() + fontheightspacing
-	textbox.rect_min_size.y = linesize
+	textbox.custom_minimum_size.y = linesize
 #endregion
 
 #region Functions

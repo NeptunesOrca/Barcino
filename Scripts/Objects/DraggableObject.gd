@@ -83,7 +83,7 @@ func findAllKeyNodes():
 	findMenu()
 	findSelectionMenu()
 	findLayoutHandler()
-	findLayout()
+	findLayout() #should probably yeet this
 	findMenuParent()
 
 ## Generic function that returns a specific [Node] from the tree, using the specified [param groupName].
@@ -151,7 +151,8 @@ func findMenu():
 	menu = finder(ControlMenu.groupName)
 
 ## Locates the [member menuParentNode] for use in creating new objects.
-## Throws an error if an appropriate [member menuParentNode] cannot be found.
+## [br]Intended to be called while in the Object Menu before it is dragged, not after. Will throw an error if called while a [DraggableObject] is inside a [Venue].
+## [br]Throws an error if an appropriate [member menuParentNode] cannot be found.
 func findMenuParent():
 	if (self.get_parent() is Container):
 		menuParentNode = self.get_parent()
@@ -288,8 +289,9 @@ func select():
 	#Generate Property Fields
 	var newfield
 	for property in propertyList:
-		newfield = property.generate()
+		newfield = property.generate(self)
 		selectionMenu.addPropertyField(newfield)
+		propertyFieldList[property.name] = newfield
 	
 	selected = true
 

@@ -11,7 +11,7 @@ class_name SelectionProperty
 	get:
 		return name
 
-##Do we even need this anymore?
+#TODO: remove type, no longer needed
 @export var type : int = -1 :
 	get:
 		return type

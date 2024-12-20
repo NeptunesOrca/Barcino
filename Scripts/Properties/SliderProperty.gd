@@ -19,7 +19,8 @@ const DEFAULT_MAXVAL = 100
 #endregion
 
 #region Tick Options
-## If [member ticks] is this value, will calculate the [Slider.tick_count] the [HSlider] of the [SliderPropertyField] should have instead of using a programmer provided number.
+## If [member ticks] is this value, will calculate the [Slider.tick_count] the [HSlider] of the [SliderPropertyField] should instead of using a programmer provided number.
+## [br]Will put a tick every [member step] units.
 const AUTO_TICKS = -1
 ## If [member ticks] is this value, the [HSlider] of the [SliderPropertyField] will have no ticks (i.e. [member Slider.tick_count] = 0).
 ## [br]A convenient syntactic sugar for programmers who are adding properties.
@@ -84,7 +85,8 @@ enum MaxMinOverride {
 		return ticks
 
 ## The number between positions on the slider that the user should be able to pick from.
-## [br]Defaults to [constant DEFAULT_STEPSIZE]
+## [br]If a custom value of [member ticks] is provided (i.e. neither [constant AUTO_TICKS] nor [constant NO_TICKS]) but no value is specified for [member steps], will calculate [member steps] to match [member ticks]
+## [br]Defaults to [constant DEFAULT_STEPSIZE].
 @export var step : float :
 	get:
 		return step
@@ -136,11 +138,13 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 	# calculate ticks from step if there has not been a custom tick number given
 	if customticks == AUTO_TICKS:
 		if (minimum != NO_MINIMUM && maximum != NO_MAXIMUM):
-			ticks = round((maximum - minimum)/step)
+			ticks = round((maximum - minimum)/step) # the +1 accounts for the tick at the front and back respectively
 		else:
 			ticks = NO_TICKS
+	elif customticks == NO_TICKS:
+		pass #if we have noticks, no calculations required.
 	else :
-		ticks = customticks
+		ticks = customticks +1
 		# we adjust the step to match the ticks if the ticks are custom, but only if that isn't also custom
 		if (stepsize == DEFAULT_STEPSIZE):
 			var top = DEFAULT_MAXVAL
@@ -150,7 +154,7 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 			if (maximum != NO_MAXIMUM):
 				top = maximum
 			step = (maximum - minimum)/ticks
-			ticks += 1 # this is to add on the ticks at the front and the back, GODOT is just weird like that
+			#ticks += 1 # this is to add on the ticks at the front and the back, GODOT is just weird like that
 			#TODO: check it still works this way
 	#endregion
 #endregion

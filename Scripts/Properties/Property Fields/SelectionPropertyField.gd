@@ -31,10 +31,10 @@ func _init(obj: DraggableObject, prop : SelectionProperty):
 	associatedObject = obj
 	
 	# Setup the HBoxContainer boundaries
-	self.rect_min_size = Vector2(minwidth, minheight)
+	self.custom_minimum_size = Vector2(minwidth, minheight)
 	
 	# Generate name label
-	var text = definition.propName + ":"
+	var text = definition.name + ":"
 	propertyName = Label.new()
 	propertyName.text = text
 	self.add_child(propertyName)
