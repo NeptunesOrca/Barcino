@@ -48,7 +48,7 @@ func deselect():
 
 #region Adding Properties
 ## Adds a provided [SelectionPropertyField] to the [member propertyStorage] for the user to use.
-func addPropertyField(field): #TODO field to be typed as  : SelectionPropertyField
+func addPropertyField(field : SelectionPropertyField):
 	propertyStorage.add_child(field)
 #endregion
 
