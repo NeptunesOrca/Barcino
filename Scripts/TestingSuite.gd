@@ -9,10 +9,10 @@ func _ready() -> void:
 func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
-	SelectionPropertiesAndFieldsTesting() #TEST: 
+	#SelectionPropertiesAndFieldsTesting() #TEST: passed DEC13/2024
 	return
 
-func SelectionPropertiesAndFieldsTesting():
+func SelectionPropertiesAndFieldsTesting(): #TEST: passed DEC13/2024
 	var testObj = testSelectionObject.new()
 	var layout = $"../Venue"
 	layout.add_child(testObj)

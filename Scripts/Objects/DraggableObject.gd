@@ -59,13 +59,35 @@ var propertyFieldList = {}
 #endregion
 
 #region General Properties
-
+const genpropheader = "General Properties"
+var genpropheaderprop = HeaderProperty.new(genpropheader)
+var typeName : String = "DraggableObject"
+var typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+var genpropsep = SeperatorProperty.new(genpropheader + " seperator")
+var genprops = [genpropheaderprop, typeNameProp, genpropsep]
 #endregion
 
-#region Placement Properties
+#region Placement Properties,
+const posHeader = "Positional Properties"
+var posheaderprop = HeaderProperty.new(posHeader)
+const positionUnits = ""
+var xprop = NumericEntryProperty.new("X","setX",self.position.x,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
+var yprop = NumericEntryProperty.new("Y","setY",self.position.y,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
+const rotUnits = "°"
+var rotationprop = NumericEntryProperty.new("Rotation","setRotation",self.rotation_degrees,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,1,"",rotUnits)
+var possep = SeperatorProperty.new(posHeader + "seperator")
+var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
+#endregion
+#endregion
+#endregion
 
-#endregion
-#endregion
+#region Class Initialization
+func _init():
+	collectProperties()
+
+func collectProperties():
+	propertyList.append_array(genprops)
+	propertyList.append_array(posprops)
 #endregion
 
 #region Startup
@@ -371,4 +393,20 @@ func repopulateMenu():
 #endregion
 #endregion
 
+#region Properties Adjustment
+func setName(text : String):
+	self.name = text
+
+func setX(x : float):
+	self.position.x = x
+
+func setY(y : float):
+	self.position.y = y
+
+func setRotation(angle : float):
+	self.rotation_degrees = angle
+
+func updatePosition():
+	pass
+#endregion
 #TODO: I'd really like to find a way to tell the object to deselect itself before it's deleted by queue free or similar, might have to look into that
