@@ -41,3 +41,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "EditableTextProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [EditableTextPropertyField] generated from the definition provided by the [EditableTextProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return EditableTextPropertyField.new(obj, self)
+#endregion

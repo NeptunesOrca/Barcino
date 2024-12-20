@@ -41,3 +41,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "ParagraphEntryProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [ParagraphEntryPropertyField] generated from the definition provided by the [ParagraphEntryProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return ParagraphEntryPropertyField.new(obj, self)
+#endregion

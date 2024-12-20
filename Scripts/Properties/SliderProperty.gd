@@ -170,3 +170,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "SliderProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [SliderPropertyField] generated from the definition provided by the [SliderProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return SliderPropertyField.new(obj, self)
+#endregion

@@ -44,3 +44,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "ColourPickerProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [ColourPickerPropertyField] generated from the definition provided by the [ColourPickerProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return ColourPickerPropertyField.new(obj, self)
+#endregion

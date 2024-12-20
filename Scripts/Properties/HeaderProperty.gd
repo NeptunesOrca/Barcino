@@ -32,3 +32,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "HeaderProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [HeaderPropertyField] generated from the definition provided by the [HeaderProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return HeaderPropertyField.new(obj, self)
+#endregion

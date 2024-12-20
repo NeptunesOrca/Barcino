@@ -53,3 +53,8 @@ func generateInstanceID() -> String:
 func _to_string() -> String:
 	return "<" + generateObjectClass() + generateInstanceID() + " ["+ generatePropertiesString() + "] >"
 #endregion
+
+#region Generate Property Field
+## Returns the [SelectionPropertyField] generated from the definition provided by the [SelectionProperty]. Overrideen by subclasses.
+func generate(obj : DraggableObject) -> SelectionPropertyField:
+	return null

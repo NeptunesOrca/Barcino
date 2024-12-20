@@ -36,3 +36,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "_CLASS_Property"
 #endregion
+
+#region Generate Property Field
+## Returns the [_CLASS_PropertyField] generated from the definition provided by the [_CLASS_Property].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return _CLASS_PropertyField.new(obj, self)
+#endregion

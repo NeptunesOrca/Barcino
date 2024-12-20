@@ -26,3 +26,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "SeperatorProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [SeperatorPropertyField] generated from the definition provided by the [SeperatorProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return SeperatorPropertyField.new(obj, self)
+#endregion

@@ -31,3 +31,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "CheckToggleProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [CheckTogglePropertyField] generated from the definition provided by the [CheckToggleProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return CheckTogglePropertyField.new(obj, self)
+#endregion

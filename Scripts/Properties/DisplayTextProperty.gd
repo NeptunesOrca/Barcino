@@ -42,3 +42,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "DisplayTextProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [DisplayTextPropertyField] generated from the definition provided by the [DisplayTextProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return DisplayTextPropertyField.new(obj, self)
+#endregion

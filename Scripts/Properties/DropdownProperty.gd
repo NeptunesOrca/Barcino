@@ -33,3 +33,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "DropdownProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [DropdownPropertyField] generated from the definition provided by the [DropdownProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return DropdownPropertyField.new(obj, self)
+#endregion

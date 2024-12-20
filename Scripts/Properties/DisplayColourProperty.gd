@@ -87,3 +87,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "DisplayColourProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [DisplayColourPropertyField] generated from the definition provided by the [DisplayColourProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return DisplayColourPropertyField.new(obj, self)
+#endregion

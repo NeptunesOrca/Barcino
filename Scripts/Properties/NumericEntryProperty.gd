@@ -84,3 +84,9 @@ func generatePropertiesString() -> String:
 func generateObjectClass() -> String:
 	return "NumericEntryProperty"
 #endregion
+
+#region Generate Property Field
+## Returns the [NumericEntryPropertyField] generated from the definition provided by the [NumericEntryProperty].
+func generate(obj : DraggableObject) -> SelectionPropertyField :
+	return NumericEntryPropertyField.new(obj, self)
+#endregion
