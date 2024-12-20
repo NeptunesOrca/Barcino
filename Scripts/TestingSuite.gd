@@ -50,16 +50,16 @@ class testSelectionObject extends DraggableObject:
 	var paragraphTest4 = ParagraphEntryProperty.new("Paragraph test 4", "textCheck", "sic amet", 5) #TEST: passed Dec20/2024
 	var textTests = [textboxTest1, textboxTest2, paragraphTest1, paragraphTest2, paragraphTest3, paragraphTest4]
 	
-	var numericTest1 = NumericEntryProperty.new("Numeric test 1", "numCheck", 0, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 0)
+	var numericTest1 = NumericEntryProperty.new("Numeric test 1", "numCheck", 0, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 0) #TEST: passed Dec20/2024
 	var numericTest2 = NumericEntryProperty.new("Numeric test 2", "numCheck", 0.5, 0, 1, 3, "Some prefix", "/post") #TEST: passed Dec20/2024
 	var numTests = [numericTest1, numericTest2]
 	
 	var sliderTest1 = SliderProperty.new("Slider test 1", "numCheck", 0) #TEST: passed Dec20/2024
-	var sliderTest2 = SliderProperty.new("Slider test 2", "numCheck", 50, 0, 100) #TEST: 
-	var sliderTest3 = SliderProperty.new("Slider test 3", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, 2) #TEST: 
+	var sliderTest2 = SliderProperty.new("Slider test 2", "numCheck", 50, 0, 100) #TEST: passed Dec20/2024
+	var sliderTest3 = SliderProperty.new("Slider test 3", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, 2) #TEST: passed Dec20/2024
 	var sliderTest4 = SliderProperty.new("Slider test 4", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, SliderProperty.AUTO_TICKS, 25) #TEST: passed Dec20/2024
-	var sliderTest5 = SliderProperty.new("Slider test 5", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, SliderProperty.AUTO_TICKS, SliderProperty.DEFAULT_STEPSIZE, SliderProperty.MaxMinOverride.BOTH_OVER_AND_UNDER)
-	var sliderAdjusterTest = NumericEntryProperty.new("Change slider 5", "sliderAdjust", sliderTest5.defaultValue, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 1)
+	var sliderTest5 = SliderProperty.new("Slider test 5", "numCheck", 0, SliderProperty.DEFAULT_MINVAL, SliderProperty.DEFAULT_MAXVAL, SliderProperty.AUTO_TICKS, SliderProperty.DEFAULT_STEPSIZE, SliderProperty.MaxMinOverride.BOTH_OVER_AND_UNDER) #TEST: passed Dec20/2024
+	var sliderAdjusterTest = NumericEntryProperty.new("Change slider 5", "sliderAdjust", sliderTest5.defaultValue, NumericEntryProperty.NO_MINIMUM, NumericEntryProperty.NO_MAXIMUM, 1) #TEST: passed Dec20/2024
 	var sliderTests = [sliderTest1, sliderTest2, sliderTest3, sliderTest4, sliderTest5, sliderAdjusterTest]
 	
 	var propertyTests = [staticTests, checkTests, colourTests, dropdownTests, textTests, numTests, sliderTests]

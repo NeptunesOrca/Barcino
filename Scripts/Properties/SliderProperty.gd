@@ -76,8 +76,8 @@ enum MaxMinOverride {
 	get:
 		return maximum
 
-## The number of [i]internal[/i] visible tick marks on the [HSlider] of the of the [SliderPropertyField]. This is the value used to decide [Slider.tick_count] of the [HSlider].
-## [br]The positions at either end of the slider (the [member Range.min_value] and [member Range.max_value] of the [HSlider]) are not included.
+## The number of divisions of the range of the [HSlider] of the of the [SliderPropertyField]. This is the value used to decide [Slider.tick_count] of the [HSlider], if one is not provided by the programmer.
+## [br]The positions at the [member Range.min_value] is not included.
 ## [br]When calculated automatically (i.e. as a result of [constant AUTO_TICKS], puts each tick at a position selectable by the user.
 ## [br]Defaults to [constant AUTO_TICKS], which automatically calculates the number of ticks that should be visible, using [member step]
 @export var ticks : int :
@@ -144,7 +144,7 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 	elif customticks == NO_TICKS:
 		pass #if we have noticks, no calculations required.
 	else :
-		ticks = customticks +1
+		ticks = customticks
 		# we adjust the step to match the ticks if the ticks are custom, but only if that isn't also custom
 		if (stepsize == DEFAULT_STEPSIZE):
 			var top = DEFAULT_MAXVAL
@@ -154,7 +154,6 @@ func _init(name : String, command : String, val : float = 0, lowerBound := DEFAU
 			if (maximum != NO_MAXIMUM):
 				top = maximum
 			step = (maximum - minimum)/ticks
-			#ticks += 1 # this is to add on the ticks at the front and the back, GODOT is just weird like that
 			#TODO: check it still works this way
 	#endregion
 #endregion

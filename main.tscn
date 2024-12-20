@@ -206,14 +206,14 @@ size_flags_horizontal = 0
 script = ExtResource("8_44xfp")
 
 [node name="SelectionMenu" type="TabContainer" parent="MenuCanvasLayer" node_paths=PackedStringArray("propertyStorage")]
-custom_minimum_size = Vector2(200, 30)
+custom_minimum_size = Vector2(250, 428)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 428.0
 grow_horizontal = 0
-size_flags_horizontal = 8
+size_flags_horizontal = 3
 size_flags_vertical = 0
 theme = ExtResource("2_yg8xr")
 tab_alignment = 2
