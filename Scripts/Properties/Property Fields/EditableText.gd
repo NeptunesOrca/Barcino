@@ -17,8 +17,8 @@ signal send_text(text)
 #region Member Variables
 #I think we don't need this anymore
 #@export var fontheight = 16
-## The [TextEdit] for the [EditableTextPropertyField]
-var textbox : TextEdit
+## The [LineEdit] for the [EditableTextPropertyField]
+var textbox : LineEdit
 ## The [Container] that the [member textbox] will go in.
 ## [br]If [member EditableTextProperty.underLable], will be a [VBoxContainer] to display the elements vertically. Otherwise will be the [EditableTextPropertyField] itself.
 var parentContainer : BoxContainer
@@ -30,10 +30,9 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	super(obj, property) #calls SelectionPropertyField._init()
 	
 	# create the textbox
-	textbox = TextEdit.new()
+	textbox = LineEdit.new()
 	textbox.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
 	textbox.text = property.defaultText
-	#textbox.
 	
 	#if putting it on the line below, need to fundamentally rethink the structure of PropertyField for this object type and override it completely
 	if (not property.underLable):
@@ -51,20 +50,11 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 		parentContainer.add_child(self.propertyName)
 	#add the textbox to whatever the parent container is
 	parentContainer.add_child(textbox)
-	fit_to_content_height()
 	
 	#when the text changes, do what the property specifies
 	textbox.text_changed.connect(sendText)
 	self.send_text.connect(Callable(obj,property.commandName))
 	# we use the custom send_text signal to avoid a mess of getters and setters and to just send the text directly
-
-## Sizes the textbox to 1 line of the determined height
-func fit_to_content_height():
-	var lines = 1 
-	var fontheight = textbox.get_line_height()
-	var fontheightspacing = 2
-	var linesize = fontheight * getLines() + fontheightspacing
-	textbox.custom_minimum_size.y = linesize
 #endregion
 
 #region Functions
