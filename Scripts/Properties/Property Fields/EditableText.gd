@@ -20,7 +20,7 @@ signal send_text(text)
 ## The [TextEdit] for the [EditableTextPropertyField]
 var textbox : TextEdit
 ## The [Container] that the [member textbox] will go in.
-## [br]If [member EditableTextProperty.underLable], will be a VBoxContainer. Otherwise will be the [EditableTextPropertyField] itself.
+## [br]If [member EditableTextProperty.underLable], will be a [VBoxContainer] to display the elements vertically. Otherwise will be the [EditableTextPropertyField] itself.
 var parentContainer : BoxContainer
 #endregion
 
@@ -33,8 +33,6 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	textbox = TextEdit.new()
 	textbox.size_flags_horizontal = SIZE_EXPAND_FILL # will take up whatever space it can after the name
 	textbox.text = property.defaultText
-	#this just gets overwritten anyhow, so we can just skip it
-	#textbox.rect_min_size.y = textbox.get_rect().size.y + 8 # add 8px to the height so that a horizontal scrollbar can go underneath
 	self.size_flags_horizontal = 0
 	
 	#if putting it on the line below, need to fundamentally rethink the structure of PropertyField for this object type and override it completely

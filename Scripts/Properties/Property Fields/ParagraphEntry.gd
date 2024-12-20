@@ -21,7 +21,7 @@ signal send_text(text)
 ## The [TextEdit] for the [EditableTextPropertyField]
 var textbox : TextEdit
 ## The [Container] that the [member textbox] will go in.
-## [br]If [member EditableTextProperty.underLable], will be a VBoxContainer. Otherwise will be the [EditableTextPropertyField] itself.
+## [br]A [VBoxContainer] to display the elements vertically.
 var parentContainer : BoxContainer
 #endregion
 
