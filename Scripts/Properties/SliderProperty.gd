@@ -6,7 +6,7 @@ class_name SliderProperty
 ##
 ## Dictates the properties of a [SliderPropertyField].
 ## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when the
-## [br] - [HSlider] of the [SliderPropertyField] emits [signal HSlider.%signal%]
+## [br] - [HSlider] of the [SliderPropertyField] emits [signal Range.value_changed]
 
 #region Constants
 #region Godot Slider defaults

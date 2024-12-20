@@ -16,7 +16,7 @@ signal send_text(text)
 
 #region Member Variables
 #I think we don't need this anymore
-@export var fontheight = 16
+#@export var fontheight = 16
 ## The [TextEdit] for the [EditableTextPropertyField]
 var textbox : TextEdit
 ## The [Container] that the [member textbox] will go in.
@@ -62,14 +62,20 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 
 ## Sizes the textbox to 1 line of the determined height
 func fit_to_content_height():
-	var lines = 1 # this is hardcoded, because if you want multiple lines you should use a ParagraphFieldPropertyField instead
-	fontheight = textbox.get_line_height()
+	var lines = 1 
+	var fontheight = textbox.get_line_height()
 	var fontheightspacing = 2
-	var linesize = fontheight * lines + fontheightspacing
+	var linesize = fontheight * getLines() + fontheightspacing
 	textbox.rect_min_size.y = linesize
 #endregion
 
 #region Functions
+## Determines the number of lines to be generated
+## [br]This is hardcoded to return 1, because if you want multiple lines you should use a ParagraphFieldPropertyField instead
+## Could potentially change this in the future to make ParagraphEntry/EditableText a super/subclass of each other, it would certainly be more elegant
+func getLines() -> int:
+	return 1
+
 ## Triggered when the value of [member textbox] changes (i.e. emits [signal TextEdit.text_changed])
 ## [br]Emits [signal send_text] with the value of [member TextEdit.text] from [member textbox]
 func sendText():
