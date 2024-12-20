@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://dqckf2al7eibk"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dqckf2al7eibk"]
 
+[ext_resource type="Texture2D" uid="uid://d4anehsw130we" path="res://UI/SliderTick.png" id="1_h0brh"]
 [ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="1_rblmr"]
 [ext_resource type="StyleBox" uid="uid://b35u46xj8edbi" path="res://UI/half_scroll_slider_stylebox.tres" id="2_8e1ig"]
 [ext_resource type="StyleBox" uid="uid://brp7wv4y0upbh" path="res://UI/half_scroll_right_channel.tres" id="3_g05pr"]
@@ -31,6 +32,7 @@ expand_margin_top = 1.0
 
 [resource]
 HSeparator/constants/separation = 3
+HSlider/icons/tick = ExtResource("1_h0brh")
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_7xy0w")
 TabContainer/constants/side_margin = 8
 TabContainer/font_sizes/font_size = 18
