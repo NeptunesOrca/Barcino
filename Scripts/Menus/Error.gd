@@ -29,7 +29,7 @@ const ErrorNames  = {
 	ErrorTypes.UNDEFINED_ERROR_NUMBER: "UNDEFINED ERROR",
 	ErrorTypes.MISSING_PARENT_NODE: "MISSING PARENT NODE",
 	ErrorTypes.MISSING_CANVAS_LAYER_PARENT: "MISSING [CanvasLayer] ANCESTOR",
-	ErrorTypes.BAD_VENUE_TAG: "IMPROPER USE OF [Venue.layoutGroupName] TAG (" + Venue.layoutGroupName + ")",
+	ErrorTypes.BAD_VENUE_TAG: "IMPROPER USE OF [Venue.groupName] TAG (" + Venue.groupName + ")",
 	ErrorTypes.VENUE_WITHOUT_IMAGE: "MISSING VENUE IMAGE",
 }
 

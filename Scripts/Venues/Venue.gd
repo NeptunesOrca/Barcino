@@ -12,7 +12,7 @@ class_name Venue
 #region Member Variables
 #region Venue Properties
 ## The group that applies to all layouts
-const layoutGroupName = "Layouts"
+const groupName = "Layouts"
 ## The name of the Venue (e.g. Diwan, Welcome Centre, etc.)
 @export var venueName : String:
 	get:
@@ -79,12 +79,12 @@ var venuePan : Vector2 = defaultPan
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 ## [br] - Sets up the [member background] and [member imageTextRect] with the correct name and structure
-## [br] - Adds itself to the [member layoutGroupName] group so it can be found by the [VenueController]
+## [br] - Adds itself to the [member groupName] group so it can be found by the [VenueController]
 ## [br] - Connects the visiblity_changed signal to [method _on_Venue_visibility_changed] so that when the visibility of the [Venue] changes, it is properly reflected by the [member background]
 ## [br] - Ensures the venue is deactivated by default so that [VenueController] will show only the selected Venue
 func _ready() -> void:
 	#Add this to the correct group
-	add_to_group(Venue.layoutGroupName)
+	add_to_group(Venue.groupName)
 	
 	#Setup the background canvas and add the image for the venue to it
 	#In the structure of:
