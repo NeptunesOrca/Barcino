@@ -61,8 +61,8 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 ## Determines the number of lines to be generated
 ## [br]This is hardcoded to return 1, because if you want multiple lines you should use a ParagraphFieldPropertyField instead
 ## Could potentially change this in the future to make ParagraphEntry/EditableText a super/subclass of each other, it would certainly be more elegant
-func getLines() -> int:
-	return 1
+#func getLines() -> int:
+	#return 1
 
 ## Triggered when the value of [member textbox] changes (i.e. emits [signal TextEdit.text_changed])
 ## [br]Emits [signal send_text] with the value of [member TextEdit.text] from [member textbox]
