@@ -59,13 +59,45 @@ var propertyFieldList = {}
 #endregion
 
 #region General Properties
-
+const genpropheader = "General Properties"
+var genpropheaderprop = HeaderProperty.new(genpropheader)
+var typeName : String = "DraggableObject"
+var editableName = EditableTextProperty.new("Name","setName",typeName)
+var typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+var genpropsep = SeperatorProperty.new(genpropheader + " seperator")
+var genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
 #endregion
 
-#region Placement Properties
+#region Placement Properties,
+const posHeader = "Positional Properties"
+var posheaderprop = HeaderProperty.new(posHeader)
+const positionUnits = ""
+var xprop = NumericEntryProperty.new("X","setX",self.position.x,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
+var yprop = NumericEntryProperty.new("Y","setY",self.position.y,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
+const rotUnits = "°"
+var rotationprop = NumericEntryProperty.new("Rotation","setRotation",self.rotation_degrees,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,1,"",rotUnits)
+var possep = SeperatorProperty.new(posHeader + "seperator")
+var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
+#endregion
+#endregion
+#endregion
 
-#endregion
-#endregion
+#region Class Initialization
+## Class initialization
+func _init():
+	collectProperties()
+	setRotationPoint()
+
+## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
+func collectProperties():
+	propertyList.append_array(genprops)
+	propertyList.append_array(posprops)
+
+## Sets the point the [DraggableObject] should rotate around. Defaults to the centre, but can be overridden by subclasses
+## [br] Used during [method _init].
+## [br][br] See [method Control.set_anchors_preset], and [enum Control.LayoutPreset.PRESET_CENTER]
+func setRotationPoint():
+	set_anchors_preset(Control.PRESET_CENTER)
 #endregion
 
 #region Startup
@@ -277,6 +309,9 @@ func handleDragEndLogic():
 	#The drag is over, make sure we return the invarient to such a state that it is ready for next time
 	dragging = false
 	dragStarted = false
+	
+	#Update the selectionMenu properties to match the final position
+	updatePositionPropertyFields()
 #endregion
 
 #region Selection and Deselection
@@ -295,16 +330,13 @@ func select():
 	
 	selected = true
 
-## Deselects the [DraggableObject], and also destroys every [SelectionPropertyField] generated from [member propertyFieldList]
+## Deselects the [DraggableObject]. The destruction of the [PropertyField]s is handled by [method SelectionMenu.deselect], so that it has control over its children.
 ## [br][br]It's possible that it would be better to generate all the [SelectionPropertyField]s, and then just remove them as children of the parent, having them hide in memory somewhere.
 ## [br]The advantage would be that we aren't regenerating and deleting things very often, but the disadvantage is that we have a bunch of memory being taken up by things that might not be seen again.
 ## [br]If selection is taking a very long time, consider an alternative implementation.
 func deselect():
 	selected = false
 	
-	#delete all the propertyfields
-	for field in propertyFieldList.values():
-		field.queue_free()
 	#empty the list so we don't have keys that correspond to previous references
 	propertyFieldList.clear()
 #endregion
@@ -371,4 +403,53 @@ func repopulateMenu():
 #endregion
 #endregion
 
-#TODO: I'd really like to find a way to tell the object to deselect itself before it's deleted by queue free or similar, might have to look into that
+#region Properties Adjustment
+## Sets the [member Node.name] of the [DraggableObject], for the user to customize.
+## [br] Used by the [PropertyField] corresponding to [member editableName]
+func setName(text : String):
+	self.name = text
+	editableName.defaultText = text
+
+## Manually sets the X-value of the [member Control.position] of the object.
+## [br] Used by the [PropertyField] corresponding to [member xprop]
+func setX(x : float):
+	self.position.x = x
+	xprop.defaultValue = x
+
+## Manually sets the Y-value of the [member Control.position] of the object.
+## [br] Used by the [PropertyField] corresponding to [member yprop]
+func setY(y : float):
+	self.position.y = y
+	yprop.defaultValue = y
+
+## Sets the [member Control.rotation_degrees] of the object.
+## [br] Used by the [PropertyField] corresponding to [member rotationprop]
+func setRotation(angle : float):
+	self.rotation_degrees = angle
+	rotationprop.defaultValue = angle
+
+## Updates [member xprop], [member yprop], and any corresponding [PropertyField]s to match the accurate [member Control.position] of the [DraggableObject]
+## [br] Used by [method handleEndDragLogic] when the drag ends.
+func updatePositionPropertyFields():
+	var currentPosition = self.position
+	xprop.defaultValue = currentPosition.x
+	yprop.defaultValue = currentPosition.y
+	
+	if selected:
+		var xpropfield = propertyFieldList[xprop.name]
+		var ypropfield = propertyFieldList[yprop.name]
+		xpropfield.updateValueNoSignal(currentPosition.x)
+		ypropfield.updateValueNoSignal(currentPosition.y)
+#endregion
+
+#region Close Up
+## Overridden from [Node]. Called whenever the [DraggableObject] is about to leave the [SceneTree] (specifically, when removed as a child with [method Node.remove_child] or when freed (deleted) such as by [method Node queue_free]).
+## [br] Ensures that the [DraggableObject] [deselect]s itself (also see [method selectionMenu.deselect]) before it's deleted by [method Node.queue_free] or similar.
+func _exit_tree() -> void:
+	# We don't want to deselect the object if it is pulled from the menu
+	# However, if we don't check for it, it will be automatically deselected because we call remove_child on it to remove it from the Objects Menu and add it to the layout
+	# So we use startedInMenu to check for this.
+	# If there was some other reason the draggable object was removed from the tree but not deleted, we would want to ensure that we were excluding that case as well
+	if not startedInMenu:
+		selectionMenu.deselect() #since the selectionmenu handles the the propertyfields as it's own descendants, we want to ensure that it is managing that
+#endregion
