@@ -45,3 +45,9 @@ func _init(obj : DraggableObject, property : NumericEntryProperty):
 	numbox.value_changed.connect(Callable(obj,property.commandName))
 	#this will directly send the float value, so there is no need for the object to use a getter on this
 #endregion
+
+func updateValue(number : float):
+	numbox.value = number
+
+func updateValueNoSignal(number : float):
+	numbox.set_value_no_signal(number)
