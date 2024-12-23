@@ -37,7 +37,7 @@ func deselect():
 	
 	#Delete all the SelectionPropertyField objects that of the selected object
 	#See DraggableObject.deselect documentation for reasoning about this
-	var currentProperties = self.get_children()
+	var currentProperties = propertyStorage.get_children()
 	for child in currentProperties:
 		child.queue_free()
 	
