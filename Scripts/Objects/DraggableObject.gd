@@ -61,14 +61,14 @@ var propertyFieldList = {}
 #region General Properties
 const genpropheader = "General Properties"
 var genpropheaderprop = HeaderProperty.new(genpropheader)
-var typeName : String = "DraggableObject"
-var editableName = EditableTextProperty.new("Name","setName",typeName)
-var typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+var typeName : String
+var editableName : EditableTextProperty
+var typeNameProp : DisplayTextProperty
 var genpropsep = SeperatorProperty.new(genpropheader + " seperator")
 var genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
 #endregion
 
-#region Placement Properties,
+#region Positional Properties,
 const posHeader = "Positional Properties"
 var posheaderprop = HeaderProperty.new(posHeader)
 const positionUnits = ""
@@ -83,8 +83,10 @@ var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
 #endregion
 
 #region Class Initialization
-## Class initialization
-func _init():
+## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "DraggbleObject", but can be overridden by subclasses.
+func _init(typeName : String = "DraggableObject"):
+	editableName = EditableTextProperty.new("Name","setName",typeName)
+	typeNameProp = DisplayTextProperty.new("Object Type", typeName)
 	collectProperties()
 	setRotationPoint()
 
@@ -404,12 +406,15 @@ func repopulateMenu():
 #endregion
 
 #region Properties Adjustment
+#region General Properties
 ## Sets the [member Node.name] of the [DraggableObject], for the user to customize.
 ## [br] Used by the [PropertyField] corresponding to [member editableName]
 func setName(text : String):
 	self.name = text
 	editableName.defaultText = text
+#endregion
 
+#region Positional Properties
 ## Manually sets the X-value of the [member Control.position] of the object.
 ## [br] Used by the [PropertyField] corresponding to [member xprop]
 func setX(x : float):
@@ -440,6 +445,7 @@ func updatePositionPropertyFields():
 		var ypropfield = propertyFieldList[yprop.name]
 		xpropfield.updateValueNoSignal(currentPosition.x)
 		ypropfield.updateValueNoSignal(currentPosition.y)
+#endregion
 #endregion
 
 #region Close Up

@@ -4,6 +4,10 @@
 extends _BASE_
 class_name _CLASS_
 
+#region Constants and Enumerations
+
+#endregion
+
 #region Member Variables
 
 #region Object Properties For Selection
@@ -12,6 +16,10 @@ class_name _CLASS_
 #endregion
 
 #region Class Initialization
+## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "_CLASS_".
+func _init(typeName : String = "_CLASS_"):
+	super(typeName)
+
 ## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
 ## [br] Overrides [method DraggableObject.collectProperties].
 func collectProperties():

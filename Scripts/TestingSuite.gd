@@ -1,5 +1,7 @@
 extends Node
-@export var ErrorHandlerTest : ErrorHandler
+
+#@export
+var ErrorHandlerTest : ErrorHandler
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
