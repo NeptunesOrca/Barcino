@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dqckf2al7eibk"]
+
+[ext_resource type="Texture2D" uid="uid://d4anehsw130we" path="res://UI/SliderTick.png" id="1_h0brh"]
+[ext_resource type="FontFile" uid="uid://bowsbis0sxjed" path="res://UI/DINPro-Bold.otf" id="1_rblmr"]
+[ext_resource type="StyleBox" uid="uid://b35u46xj8edbi" path="res://UI/half_scroll_slider_stylebox.tres" id="2_8e1ig"]
+[ext_resource type="StyleBox" uid="uid://brp7wv4y0upbh" path="res://UI/half_scroll_right_channel.tres" id="3_g05pr"]
+[ext_resource type="StyleBox" uid="uid://b223dyav2alsg" path="res://UI/half_scroll_slider_highlighted_stylebox.tres" id="3_x5wnj"]
+
+[sub_resource type="GDScript" id="GDScript_ibgdb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7xy0w"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+corner_detail = 1
+script = SubResource("GDScript_ibgdb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqf7m"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+border_width_top = 2
+border_color = Color(0.243137, 0.243137, 0.243137, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+expand_margin_top = 1.0
+
+[resource]
+HSeparator/constants/separation = 3
+HSlider/icons/tick = ExtResource("1_h0brh")
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_7xy0w")
+TabContainer/constants/side_margin = 8
+TabContainer/font_sizes/font_size = 18
+TabContainer/fonts/font = ExtResource("1_rblmr")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_sqf7m")
+VScrollBar/styles/grabber = ExtResource("2_8e1ig")
+VScrollBar/styles/grabber_highlight = ExtResource("3_x5wnj")
+VScrollBar/styles/grabber_pressed = ExtResource("3_x5wnj")
+VScrollBar/styles/scroll = ExtResource("3_g05pr")
