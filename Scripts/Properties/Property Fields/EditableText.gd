@@ -11,12 +11,10 @@ class_name EditableTextPropertyField
 #region Custom Signals
 ## Custom signal emitted by [method sendText] in response to changes to the value of [member TextEdit.text] in [member textbox].
 ## [br]Includes the [param text] is the value of [member TextEdit.text] in [member textbox]
-signal send_text(text)
+#signal send_text(text)
 #endregion
 
 #region Member Variables
-#I think we don't need this anymore
-#@export var fontheight = 16
 ## The [LineEdit] for the [EditableTextPropertyField]
 var textbox : LineEdit
 ## The [Container] that the [member textbox] will go in.
@@ -52,8 +50,10 @@ func _init(obj : DraggableObject, property : EditableTextProperty):
 	parentContainer.add_child(textbox)
 	
 	#when the text changes, do what the property specifies
-	textbox.text_changed.connect(sendText)
-	self.send_text.connect(Callable(obj,property.commandName))
+	#textbox.text_submitted.connect(Callable(obj,property.commandName))
+	textbox.text_changed.connect(Callable(obj, property.commandName))
+	#We only need to use the custom send_text if we use a TextEdit instead of of a LineEdit
+	#self.send_text.connect(Callable(obj,property.commandName))
 	# we use the custom send_text signal to avoid a mess of getters and setters and to just send the text directly
 #endregion
 
@@ -66,6 +66,7 @@ func getLines() -> int:
 
 ## Triggered when the value of [member textbox] changes (i.e. emits [signal TextEdit.text_changed])
 ## [br]Emits [signal send_text] with the value of [member TextEdit.text] from [member textbox]
-func sendText():
-	emit_signal("send_text", textbox.text)
+#func sendText():
+	#print("Sending send_text")
+	#emit_signal("send_text", textbox.text)
 #endregion
