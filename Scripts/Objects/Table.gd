@@ -37,24 +37,30 @@ const linenColour = {
 
 #region Size Information
 #var sizeInfoHeaderProp = HeaderProperty.new("Size")
-
+## The appropriate dimensions of the table, stored as a [TableDim]. Intepreted depending on [member shape]. Determines size using [method TableDim.length], [method TableDim.width], [method TableDim.diameter], and [method TableDim.radius]
 var dimensions : TableDim
+## The shape of the table, is used to determine how the [member dimensions] should be displayed and considered. See [enum tableShapeType] for options.
 var shape : tableShapeType
 
 var d_or_l_dimensionalProp : DisplayTextProperty
 var w_dimensionalProp : DisplayTextProperty
 
 var sizeSep = SeperatorProperty.new("Size Seperators")
+## The collection of properties relating to size
 var sizeProps
 #endregion
 
 #region Chairs
 var chairHeaderProp = HeaderProperty.new("Chair Options")
 
+## The total number of chairs around the [Table]
 var totalChairs : int = 0 #TODO: switch this to being chairs.length
+## The [Chair] objects belonging to this [Table]
 var chairs #TODO: switch this to being an actual number of chair children of the table
+## The style of chairs used at this [Table]
 var chairType #TODO specify with enum from Chair class
 #var evenChairSpacing : bool
+## The maximum number of chairs that can fit at this table. Overridden by subclasses.
 var maxchairs : int
 
 var chairsNumProp = NumericEntryProperty.new("Chairs", "changeChairNumber", totalChairs, 0, maxchairs)
@@ -62,20 +68,23 @@ var chairOptions : Array = [] #TODO specify with enum from Chair class
 var chairTypeProp = DropdownProperty.new("Chair Type", "changeChairType", chairOptions)
 
 var chairSep = SeperatorProperty.new("Chair Option Seperator")
+## The collection of properties relating to the chair options of the [Table]
 var chairProperties = [chairHeaderProp, chairsNumProp, chairTypeProp]
 #endregion
 
 #region Linens
 var linenHeaderProp = HeaderProperty.new("Linen Options")
 
+## Whether the 
 var hasLinen : bool = false
 var linenType : linenStyle
 var linenOptions : Array = linenStyle.keys()
 
 var linenTypeProp = DropdownProperty.new("Linen Type", "changeLinen", linenOptions)
-var linenColourDisplayProp = DisplayColourProperty.new("Linen Colour","",linenColour[linenStyle.NONE],DisplayColourProperty.NORMAL_SIZE,true,false)
+var linenColourDisplayProp = DisplayColourProperty.new("Linen Colour","",linenColour[linenStyle.NONE],DisplayColourProperty.LARGE_SIZE,true,false)
 
 var linenSep = SeperatorProperty.new("Linen Seperator")
+## The collection of properties relating to the linen options for the [Table]
 var linenProperties = [linenHeaderProp, linenTypeProp, linenColourDisplayProp, linenSep]
 #endregion
 #endregion
@@ -129,9 +138,14 @@ func collectProperties():
 #endregion
 
 #region Properties Adjustment
+## Changes the linen used by the table. Called by the 
 func changeLinen(typeIndex):
-	linenType = typeIndex
+	linenType = linenOptions[typeIndex]
 	
+	if linenType == linenStyle.NONE:
+		hasLinen = false
+	else:
+		hasLinen = true
 	#Sort the linen options list to have the selected linen type at the front
 	#This way, the user will see the selected linen type as the selected type if they 
 	#chairOptions.push_front(chairOptions.pop_at(typeIndex))
