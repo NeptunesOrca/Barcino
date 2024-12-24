@@ -326,6 +326,9 @@ func select():
 	#Generate Property Fields
 	var newfield
 	for property in propertyList:
+		if property == null: #skip null properties, just don't bother trying to display them. We assume this is intentional by the programmer, and do not throw an error popup.
+			push_error(property, " in ", self, " is null. Is this intentional?")
+			continue
 		newfield = property.generate(self)
 		selectionMenu.addPropertyField(newfield)
 		propertyFieldList[property.name] = newfield

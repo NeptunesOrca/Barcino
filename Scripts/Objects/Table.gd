@@ -162,7 +162,7 @@ func respaceChairs():
 	pass
 #endregion
 
-#region Units
+#region Display Units
 # maybe someday
 #func displayMetric():
 	#pass
