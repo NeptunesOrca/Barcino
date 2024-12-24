@@ -5,6 +5,7 @@ extends DraggableObject
 class_name Table
 
 #region Constants and Enumerations
+#
 enum tableShapeType {
 	ROUND,
 	RECTANGULAR,
@@ -33,9 +34,7 @@ const linenColour = {
 #region Object Properties For Selection
 
 #region Size Information
-var diameter : float
-var width : float
-var length : float
+var dimensions : TableDim
 var shape : tableShapeType
 
 var d_or_l_dimensionalProp : DisplayTextProperty
@@ -64,11 +63,28 @@ var linenTypeProp = DropdownProperty.new("Linen Type", "changeLinen", linenOptio
 #endregion
 
 #region Class Initialization
-## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "Table", but can be overridden by subclasses.
+## Class Initialization. Requires [param tableshape] as one of the valid [enum tableShapeType]s, and [param dims] as an appropriately defined [TableDim] (see below for more information).
+## [br] Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "Table", but can be overridden by subclasses.
 ## [br] Also takes in the [param maximumChairs] that can fit around the table. Defaults to 8, but can be overridden by subclasses.
-func _init(typeName : String = "Table", maximumChairs : int = 8):
+## [br][br] [b]Appropriately defined [TableDim] guidance[/b]
+## [br] If [param tableshape] is [enum tableShapeType.RECTANGULAR], will need both a [method TableDim.length] and [method TableDim.width].
+## [br] If [param tableshape] is [enum tableShapeType.ROUND], will only need a [method TableDim.diameter]. [method TableDim.radius]/[method TableDim.width] is unused and ignored.
+## [br] If [param tableshape] is [enum tableShapeType.SEMICIRCULAR], will need to define [method TableDim.diameter], though it will not be used directly. [method TableDim.radius] will be automatically calculated, and used. [method TableDim.width] is ignored
+func _init(tableshape : tableShapeType, dims : TableDim, typeName : String = "Table", maximumChairs : int = 8):
 	super(typeName)
 	maxchairs = maximumChairs
+	shape = tableshape
+	dimensions = dims
+	
+	var unit = "'"
+	match shape:
+		tableShapeType.RECTANGULAR:
+			d_or_l_dimensionalProp = DisplayTextProperty.new("Length",str(dimensions.length()) + unit)
+			w_dimensionalProp = DisplayTextProperty.new("Width", str(dimensions.width()) + unit)
+		tableShapeType.ROUND:
+			d_or_l_dimensionalProp = DisplayTextProperty.new("Diameter",str(dimensions.diameter())+unit)
+		tableShapeType.SEMICIRCULAR:
+			w_dimensionalProp = DisplayTextProperty.new("Radius",str(dimensions.radius())+unit)
 	
 ## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
 ## [br] Overrides [method DraggableObject.collectProperties].
@@ -135,6 +151,7 @@ func changeChairType(typeIndex):
 #endregion
 
 #region Functions
+#region Adjust Chairs
 func addChair():
 	pass
 
@@ -143,4 +160,14 @@ func deleteChair():
 
 func respaceChairs():
 	pass
+#endregion
+
+#region Units
+# maybe someday
+#func displayMetric():
+	#pass
+#
+#func displayImperial():
+	#pass
+#endregion
 #endregion
