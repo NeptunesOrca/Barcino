@@ -12,10 +12,10 @@ func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
 	#SelectionPropertiesAndFieldsTesting() #TEST: passed DEC13/2024
-	TablesTesting()
+	#TablesPropertiesTesting() #TEST: passed DEC24/2024
 	return
 
-func TablesTesting():
+func TablesPropertiesTesting(): #TEST: passed DEC24/2024
 	var testRect = Table.new(Table.tableShapeType.RECTANGULAR,TableDim.new(6,2.5),"Rectangular Table")
 	testRect.name = "Rect1"
 	var testRound = Table.new(Table.tableShapeType.ROUND,TableDim.new(5), "Round Table")
