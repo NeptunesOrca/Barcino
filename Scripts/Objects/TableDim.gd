@@ -19,3 +19,6 @@ func width() -> float:
 
 func radius() -> float:
 	return long_dim/2
+
+func _to_string() -> String:
+	return "length: " + str(length()) + ", width: " + str(width()) + ", diamter: " + str(diameter()) + ", radius: " + str(radius())

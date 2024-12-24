@@ -65,19 +65,19 @@ var typeName : String
 var editableName : EditableTextProperty
 var typeNameProp : DisplayTextProperty
 var genpropsep = SeperatorProperty.new(genpropheader + " seperator")
-var genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
+var genprops
 #endregion
 
 #region Positional Properties,
 const posHeader = "Positional Properties"
-var posheaderprop = HeaderProperty.new(posHeader)
+#var posheaderprop = HeaderProperty.new(posHeader)
 const positionUnits = ""
 var xprop = NumericEntryProperty.new("X","setX",self.position.x,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
 var yprop = NumericEntryProperty.new("Y","setY",self.position.y,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
 const rotUnits = "°"
 var rotationprop = NumericEntryProperty.new("Rotation","setRotation",self.rotation_degrees,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,1,"",rotUnits)
 var possep = SeperatorProperty.new(posHeader + "seperator")
-var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
+var posprops = [xprop, yprop, rotationprop, possep]
 #endregion
 #endregion
 #endregion
@@ -87,6 +87,8 @@ var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
 func _init(typeName : String = "DraggableObject"):
 	editableName = EditableTextProperty.new("Name","setName",typeName)
 	typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+	genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
+	print("generation")
 	collectProperties()
 	setRotationPoint()
 

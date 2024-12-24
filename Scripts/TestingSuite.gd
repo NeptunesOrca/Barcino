@@ -12,7 +12,30 @@ func testsToCall():
 	#ErrorHandlerTesting() #TEST: passed DEC13/2024
 	#ErrorTesting() #TEST: passed DEC13/2024
 	#SelectionPropertiesAndFieldsTesting() #TEST: passed DEC13/2024
+	TablesTesting()
 	return
+
+func TablesTesting():
+	var testRect = Table.new(Table.tableShapeType.RECTANGULAR,TableDim.new(6,2.5),"Rectangular Table")
+	testRect.name = "Rect1"
+	var testRound = Table.new(Table.tableShapeType.ROUND,TableDim.new(5), "Round Table")
+	testRound.name = "Round1"
+	var testSemi = Table.new(Table.tableShapeType.SEMICIRCULAR, TableDim.new(6), "Semicircular Table")
+	testSemi.name = "Semi1"
+	
+	add_child(testRect)
+	add_child(testRound)
+	add_child(testSemi)
+	
+	await get_tree().process_frame
+	await get_tree().create_timer(5 + get_children().size() * 0.2)
+	
+	for child in get_children():
+		print(child.name)
+		print(child.dimensions)
+		child.selectionMenu.select(child)
+		await get_tree().create_timer(5)
+		print("next\n")
 
 func SelectionPropertiesAndFieldsTesting(): #TEST: passed DEC13/2024
 	var testObj = testSelectionObject.new()
