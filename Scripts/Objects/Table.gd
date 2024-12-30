@@ -75,9 +75,11 @@ var chairProperties = [chairHeaderProp, chairsNumProp, chairTypeProp]
 #region Linens
 var linenHeaderProp = HeaderProperty.new("Linen Options")
 
-## Whether the 
+## Whether the table has a linen or not. Updated during [method changeLinen]. Defaults to [code]false[/code]
 var hasLinen : bool = false
+## The currently selected [enum linenStyle]
 var linenType : linenStyle
+## This list of options selectable for [member linenType], generated from [enum linenStyle].
 var linenOptions : Array = linenStyle.keys()
 
 var linenTypeProp = DropdownProperty.new("Linen Type", "changeLinen", linenOptions)
@@ -113,6 +115,7 @@ func _init(tableshape : tableShapeType, dims : TableDim, typeName : String = "Ta
 			d_or_l_dimensionalProp = DisplayTextProperty.new("Diameter",str(dimensions.diameter())+unit)
 		tableShapeType.SEMICIRCULAR:
 			w_dimensionalProp = DisplayTextProperty.new("Radius",str(dimensions.radius())+unit)
+	#generate any properties first, so that they will be properly added by collectProperties() when super() is called
 	
 	super(typeName) #need this afterwards to that the dimensionProp are properly generated
 	
@@ -138,7 +141,8 @@ func collectProperties():
 #endregion
 
 #region Properties Adjustment
-## Changes the linen used by the table. Called by the 
+## Changes the linen used by the [Table]. Used by the [member linenTypeProp].
+## [br] Updates the values of both [member linenType] and [member hasLinen]
 func changeLinen(typeIndex):
 	linenType = linenOptions[typeIndex]
 	
@@ -153,6 +157,8 @@ func changeLinen(typeIndex):
 	
 	propertyFieldList[linenColourDisplayProp.name].updateColour(linenColour[linenType])
 
+## Changes the total number of chairs at the [Table]. Used by the [member chairsNumProp].
+## [br] Updates the values of both [member totalChairs] and [member chairs], including adding [Chair] children to [member chairs].
 func changeChairNumber(newnum):
 	totalChairs = newnum
 	
@@ -178,6 +184,7 @@ func changeChairNumber(newnum):
 		
 	respaceChairs()
 
+##
 func changeChairType(typeIndex):
 	chairType = typeIndex #TODO make this the correct thing after implementing Chair
 	
@@ -194,12 +201,17 @@ func changeChairType(typeIndex):
 
 #region Functions
 #region Adjust Chairs
+## Adds a [Chair] of the selected [member chairType] to the [Table] as a child.
+## [br]TODO
 func addChair():
 	pass
 
+## Removes a [Chair] of the selected [member chairType] to the [Table] as a child.
+## [br]TODO
 func deleteChair():
 	pass
 
+## Updates the spacing of each of the children [Chair]s at the [Table]. Overridden by different subtypes.
 func respaceChairs():
 	pass
 #endregion

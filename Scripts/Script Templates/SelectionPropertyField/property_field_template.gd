@@ -17,6 +17,7 @@ class_name _CLASS_PropertyField
 #region Initialization
 ## Class Initialization
 func _init(obj : DraggableObject, property : _CLASS_Property):
+	#generate any properties here first, so that they will be properly added by collectProperties() when super() is called
 	super(obj, property) #calls SelectionPropertyField._init()
 	
 #endregion
