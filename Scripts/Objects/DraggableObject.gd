@@ -61,30 +61,34 @@ var propertyFieldList = {}
 #region General Properties
 const genpropheader = "General Properties"
 var genpropheaderprop = HeaderProperty.new(genpropheader)
-var typeName : String = "DraggableObject"
-var editableName = EditableTextProperty.new("Name","setName",typeName)
-var typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+var typeName : String
+var editableName : EditableTextProperty
+var typeNameProp : DisplayTextProperty
 var genpropsep = SeperatorProperty.new(genpropheader + " seperator")
-var genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
+var genprops
 #endregion
 
-#region Placement Properties,
+#region Positional Properties,
 const posHeader = "Positional Properties"
-var posheaderprop = HeaderProperty.new(posHeader)
+#var posheaderprop = HeaderProperty.new(posHeader)
 const positionUnits = ""
 var xprop = NumericEntryProperty.new("X","setX",self.position.x,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
 var yprop = NumericEntryProperty.new("Y","setY",self.position.y,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,2,"",positionUnits)
 const rotUnits = "°"
 var rotationprop = NumericEntryProperty.new("Rotation","setRotation",self.rotation_degrees,NumericEntryProperty.NO_MINIMUM,NumericEntryProperty.NO_MAXIMUM,1,"",rotUnits)
 var possep = SeperatorProperty.new(posHeader + "seperator")
-var posprops = [posheaderprop, xprop, yprop, rotationprop, possep]
+var posprops = [xprop, yprop, rotationprop, possep]
 #endregion
 #endregion
 #endregion
 
 #region Class Initialization
-## Class initialization
-func _init():
+## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "DraggbleObject", but can be overridden by subclasses.
+func _init(typeName : String = "DraggableObject"):
+	editableName = EditableTextProperty.new("Name","setName",typeName)
+	typeNameProp = DisplayTextProperty.new("Object Type", typeName)
+	genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
+	print("generation")
 	collectProperties()
 	setRotationPoint()
 
@@ -324,6 +328,9 @@ func select():
 	#Generate Property Fields
 	var newfield
 	for property in propertyList:
+		if property == null: #skip null properties, just don't bother trying to display them. We assume this is intentional by the programmer, and do not throw an error popup.
+			push_error(property, " in ", self, " is null. Is this intentional?")
+			continue
 		newfield = property.generate(self)
 		selectionMenu.addPropertyField(newfield)
 		propertyFieldList[property.name] = newfield
@@ -404,12 +411,15 @@ func repopulateMenu():
 #endregion
 
 #region Properties Adjustment
+#region General Properties
 ## Sets the [member Node.name] of the [DraggableObject], for the user to customize.
 ## [br] Used by the [PropertyField] corresponding to [member editableName]
 func setName(text : String):
 	self.name = text
 	editableName.defaultText = text
+#endregion
 
+#region Positional Properties
 ## Manually sets the X-value of the [member Control.position] of the object.
 ## [br] Used by the [PropertyField] corresponding to [member xprop]
 func setX(x : float):
@@ -440,6 +450,7 @@ func updatePositionPropertyFields():
 		var ypropfield = propertyFieldList[yprop.name]
 		xpropfield.updateValueNoSignal(currentPosition.x)
 		ypropfield.updateValueNoSignal(currentPosition.y)
+#endregion
 #endregion
 
 #region Close Up
