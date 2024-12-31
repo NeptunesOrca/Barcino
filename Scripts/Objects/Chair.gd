@@ -64,8 +64,16 @@ var sizeProps
 #endregion
 
 #region Style Information
+var chairTypeHeaderProp = HeaderProperty.new("Chair Type")
+
 ##
 @export var chairType : chairStyle
+var chairOptions : Array = chairStyle.keys()
+var chairTypeProp = DropdownProperty.new("Type","changeType",chairOptions)
+
+var chairTypeSep = SeperatorProperty.new()
+##
+var chairTypeProps = [chairTypeHeaderProp,chairTypeProp,chairTypeSep]
 #endregion
 #endregion
 #endregion
@@ -90,6 +98,8 @@ func collectProperties():
 	
 	sizeProps = [l_dimensionalProp, w_dimensionalProp, sizeSep]
 	propertyList.append_array(sizeProps)
+	
+	propertyList.append_array(chairTypeProps)
 
 ## Sets the point the [DraggableObject] should rotate around. Defaults to the centre. See [method DraggableObject.setRorationPoint]
 ## [br] Used during [method _init].
