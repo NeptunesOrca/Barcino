@@ -98,9 +98,8 @@ func collectProperties():
 
 ## Sets the point the [DraggableObject] should rotate around. Defaults to the centre, but can be overridden by subclasses
 ## [br] Used during [method _init].
-## [br][br] See [method Control.set_anchors_preset], and [enum Control.LayoutPreset.PRESET_CENTER]
 func setRotationPoint():
-	set_anchors_preset(Control.PRESET_CENTER)
+	set_pivot_offset(size/2)
 #endregion
 
 #region Startup
@@ -110,6 +109,7 @@ func setRotationPoint():
 func _ready() -> void:
 	call_deferred("findAllKeyNodes") #Deferred until after first frame to ensure that all of the Key Nodes have a chance to get themselves in the right groups
 	self.gui_input.connect(_on_gui_input)
+	setRotationPoint()
 
 #region Finder Functions
 ## Function that collects all the finders together for when we want to do all of them at once.

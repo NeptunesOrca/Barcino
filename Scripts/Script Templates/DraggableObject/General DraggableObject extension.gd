@@ -25,18 +25,17 @@ func _init(typeName : String = "_CLASS_"):
 ## [br] Overrides [method DraggableObject.collectProperties].
 func collectProperties():
 	super()
-
-## Sets the point the [DraggableObject] should rotate around. Defaults to the centre. See [method DraggableObject.setRorationPoint]
-## [br] Used during [method _init].
-## [br][br] See [method Control.set_anchors_preset], and [enum Control.LayoutPreset.PRESET_CENTER]
-#func setRotationPoint():
-#	set_anchors_preset(Control.PRESET_CENTER)
 #endregion
 
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 #func _ready():
 #	super()
+
+## Sets the point the [DraggableObject] should rotate around. Defaults to the centre, but can be overridden by subclasses
+## [br] Used during [method _ready].
+#func setRotationPoint():
+#	set_pivot_offset(size/2)
 
 #region Finder Functions
 ## Function that collects all the finders together for when we want to do all of them at once.
