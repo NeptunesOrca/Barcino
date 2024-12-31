@@ -88,7 +88,6 @@ func _init(typeName : String = "DraggableObject"):
 	editableName = EditableTextProperty.new("Name","setName",typeName)
 	typeNameProp = DisplayTextProperty.new("Object Type", typeName)
 	genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
-	print("generation")
 	collectProperties()
 	setRotationPoint()
 

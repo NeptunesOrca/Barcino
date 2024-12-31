@@ -65,7 +65,7 @@ var width : float
 ## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "Chair".
 func _init(style : chairStyle = chairStyle.WHITE_FOLDING):
 	changeType(style)
-	super(typeName)
+	super(self.typeName)
 
 ## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
 ## [br] Overrides [method DraggableObject.collectProperties].
@@ -99,9 +99,15 @@ func collectProperties():
 #region Properties Adjustment
 func changeType(newStyle : chairStyle) :
 	chairType = newStyle
-	typeName = chairNames[newStyle]
+	updateTypeName(chairNames[newStyle])
 	length = chairLengths[newStyle]
 	width = chairWidths[newStyle]
+
+##
+func updateTypeName(newType : String):
+	self.typeName = newType
+	if typeNameProp != null :
+		typeNameProp.text = newType
 #endregion
 
 #region Functions
