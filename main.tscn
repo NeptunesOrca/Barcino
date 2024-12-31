@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dqckf2al7eibk" path="res://UI/menu_style.tres" id="2_yg8xr"]
 [ext_resource type="Theme" uid="uid://ew2ktx3ycuqo" path="res://UI/header_style.tres" id="4_oipcn"]
 [ext_resource type="Script" path="res://Scripts/Menus/VenueController.gd" id="4_wlfmi"]
-[ext_resource type="Texture2D" uid="uid://b7skc5u5t0mul" path="res://Objects/ObjectImages/WhiteFoldingChair.png" id="6_4yabi"]
+[ext_resource type="Texture2D" uid="uid://682ssik1r15" path="res://Objects/ObjectImages/DiwanChair.png" id="5_y1rgd"]
 [ext_resource type="Script" path="res://Scripts/Menus/SelectionMenu.gd" id="6_gvjwx"]
 [ext_resource type="Script" path="res://Scripts/Objects/Chair.gd" id="7_tpf57"]
 [ext_resource type="Script" path="res://Scripts/Venues/Venue.gd" id="7_u6n5p"]
@@ -152,26 +152,31 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("6_4yabi")
+texture = ExtResource("5_y1rgd")
 stretch_mode = 3
 script = ExtResource("7_tpf57")
 
-[node name="ColorRect2" type="ColorRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer"]
+[node name="ColorRect2" type="TextureRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer"]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_vh5np")
+expand_mode = 1
 script = ExtResource("8_44xfp")
 
 [node name="VFlowContainer" type="VFlowContainer" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer"]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer/VFlowContainer"]
+[node name="ColorRect" type="TextureRect" parent="MenuCanvasLayer/ControlMenu/Objects/VBoxContainer/VFlowContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
+texture = ExtResource("8_vh5np")
 script = ExtResource("8_44xfp")
 
 [node name="SelectionMenu" type="TabContainer" parent="MenuCanvasLayer" node_paths=PackedStringArray("propertyStorage")]
