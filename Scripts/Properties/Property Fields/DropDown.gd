@@ -5,7 +5,7 @@ class_name DropdownPropertyField
 ## Allows the user to interact with the properties of [DraggableObject]s through the [SelectionMenu].
 ## [br]Executes the definition given by a [DropdownProperty].[br]
 ## [br]The function [member SelectionProperty.commandName] of the [member SelectionPropertyField.associatedObject] will be called when:
-## [br] - [member dropdown] emits [signal OptionButton.item_selected]
+## [br] - [member dropdown] emits [signal OptionButton.item_selected], returning the index within the options list that the user has selected.
 
 #region Member Variables
 ## The [OptionButton] that displays the [member DropdownProperty.options]
@@ -33,5 +33,10 @@ func _init(obj : DraggableObject, property : DropdownProperty):
 #endregion
 
 #region Functions
-
+static func putAtFrontOfArray(optionsArray : Array, index : int):
+	if (optionsArray.size() < index):
+		var err_msg = "The array " + str(optionsArray) + " does not have enough items in it to move index " + str(index) + " to the front of the array"
+		ErrorHandler.newError(err_msg)
+		return
+	optionsArray.push_front(optionsArray.pop_at(index))
 #endregion
