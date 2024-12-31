@@ -41,7 +41,14 @@ var chairWidths = {
 	chairStyle.IKOINOBA : 1.75,
 }
 
-##May need to define images for the various chairs here as well
+var chairImages = {
+	chairStyle.WHITE_FOLDING : "res://Objects/ObjectImages/WhiteFoldingChair.png",
+	chairStyle.BROWN_FOLDING : "res://Objects/ObjectImages/BrownFoldingChair.png",
+	chairStyle.GREEN_FOLDING : "res://Objects/ObjectImages/GreenFoldingChair.png",
+	chairStyle.DIWAN : "res://Objects/ObjectImages/DiwanChair.png",
+	chairStyle.OZAWA : "res://Objects/ObjectImages/OzawaChair.png",
+	chairStyle.IKOINOBA : "res://Objects/ObjectImages/IkoiNoBaChair.png",
+}
 #endregion
 
 #region Member Variables
@@ -111,7 +118,7 @@ func collectProperties():
 #region Startup
 ## Called when the node enters the scene tree for the first time.
 #func _ready():
-#	super()
+	#super()
 
 #region Finder Functions
 ## Function that collects all the finders together for when we want to do all of them at once.
@@ -132,6 +139,9 @@ func changeType(newStyle : chairStyle) :
 	updateTypeName(chairNames[newStyle])
 	length = chairLengths[newStyle]
 	width = chairWidths[newStyle]
+	
+	#Update the image
+	set_texture(load(chairImages[newStyle]))
 
 ## Updates the superclass [member DraggableObject.typeName] and [member DraggableObject.typeNameProp]'s text.
 ## [br] Done in the [Chair] class instead of [DraggableObject] because only [Chair] is likely to change [member DraggableObject.typeName].
