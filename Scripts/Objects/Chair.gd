@@ -1,8 +1,8 @@
 #meta-name: New DraggableObject
 #meta-description: Template for creating a new DraggableObjects
 #meta-default: true
-extends _BASE_
-class_name _CLASS_
+extends DraggableObject
+class_name Chair
 
 #region Constants and Enumerations
 
@@ -16,9 +16,8 @@ class_name _CLASS_
 #endregion
 
 #region Class Initialization
-## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "_CLASS_".
-func _init(typeName : String = "_CLASS_"):
-#generate any properties here first, so that they will be properly added by collectProperties() when super() is called
+## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "Chair".
+func _init(typeName : String = "Chair"):
 	super(typeName)
 
 ## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
