@@ -35,6 +35,7 @@ const linenColour = {
 #region Object Properties For Selection
 #region Size Information
 #var sizeInfoHeaderProp = HeaderProperty.new("Size")
+
 ## The appropriate dimensions of the table, stored as a [TableDim]. Intepreted depending on [member shape]. Determines size using [method TableDim.length], [method TableDim.width], [method TableDim.diameter], and [method TableDim.radius]
 var dimensions : TableDim
 ## The shape of the table, is used to determine how the [member dimensions] should be displayed and considered. See [enum tableShapeType] for options.

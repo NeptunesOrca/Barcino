@@ -48,10 +48,19 @@ var chairWidths = {
 
 #region Object Properties For Selection
 #region Size Information
+#var sizeInfoHeaderProp = HeaderProperty.new("Size")
+
 ##
 var length : float
 ##
 var width : float
+
+var l_dimensionalProp : DisplayTextProperty
+var w_dimensionalProp : DisplayTextProperty
+
+var sizeSep = SeperatorProperty.new("Size Seperators")
+## The collection of properties relating to size
+var sizeProps
 #endregion
 
 #region Style Information
@@ -65,12 +74,22 @@ var width : float
 ## Class Initialization. Takes in the descriptive [param typeName] to describe the what the class is (e.g. "Diwan Table", "Ikoi-no-ba Chair", "Speaker" etc.), defaulting to "Chair".
 func _init(style : chairStyle = chairStyle.WHITE_FOLDING):
 	changeType(style)
+	
+	# Generate the dimensional selection properties
+	var unit = "'"
+	l_dimensionalProp = DisplayTextProperty.new("Length",str(length) + unit)
+	w_dimensionalProp = DisplayTextProperty.new("Width", str(width) + unit)
+	#generate any properties first, so that they will be properly added by collectProperties() when super() is called
+	
 	super(self.typeName)
 
 ## Collects all the [SelectionProperty]s to be put in the [member propertyList] during [method _init].
 ## [br] Overrides [method DraggableObject.collectProperties].
 func collectProperties():
 	super()
+	
+	sizeProps = [l_dimensionalProp, w_dimensionalProp, sizeSep]
+	propertyList.append_array(sizeProps)
 
 ## Sets the point the [DraggableObject] should rotate around. Defaults to the centre. See [method DraggableObject.setRorationPoint]
 ## [br] Used during [method _init].
@@ -97,13 +116,16 @@ func collectProperties():
 #endregion
 
 #region Properties Adjustment
+## Changes the [member chairType] to the selected [param newStyle]. Updates the rest of the chair to match the selected [chairStyle].
 func changeType(newStyle : chairStyle) :
 	chairType = newStyle
 	updateTypeName(chairNames[newStyle])
 	length = chairLengths[newStyle]
 	width = chairWidths[newStyle]
 
-##
+## Updates the superclass [member DraggableObject.typeName] and [member DraggableObject.typeNameProp]'s text.
+## [br] Done in the [Chair] class instead of [DraggableObject] because only [Chair] is likely to change [member DraggableObject.typeName].
+## [br] Can put in [DraggableObject] if something else needs to do it too.
 func updateTypeName(newType : String):
 	self.typeName = newType
 	if typeNameProp != null :
