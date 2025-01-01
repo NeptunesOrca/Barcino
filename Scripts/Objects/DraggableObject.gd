@@ -1,4 +1,4 @@
-extends Control
+extends TextureRect
 class_name DraggableObject
 ## The base class for any object that can be dragged around a layout. Extended by things such as tables, chairs, etc.
 ##
@@ -88,7 +88,6 @@ func _init(typeName : String = "DraggableObject"):
 	editableName = EditableTextProperty.new("Name","setName",typeName)
 	typeNameProp = DisplayTextProperty.new("Object Type", typeName)
 	genprops = [genpropheaderprop, editableName, typeNameProp, genpropsep]
-	print("generation")
 	collectProperties()
 	setRotationPoint()
 
@@ -96,12 +95,6 @@ func _init(typeName : String = "DraggableObject"):
 func collectProperties():
 	propertyList.append_array(genprops)
 	propertyList.append_array(posprops)
-
-## Sets the point the [DraggableObject] should rotate around. Defaults to the centre, but can be overridden by subclasses
-## [br] Used during [method _init].
-## [br][br] See [method Control.set_anchors_preset], and [enum Control.LayoutPreset.PRESET_CENTER]
-func setRotationPoint():
-	set_anchors_preset(Control.PRESET_CENTER)
 #endregion
 
 #region Startup
@@ -111,6 +104,12 @@ func setRotationPoint():
 func _ready() -> void:
 	call_deferred("findAllKeyNodes") #Deferred until after first frame to ensure that all of the Key Nodes have a chance to get themselves in the right groups
 	self.gui_input.connect(_on_gui_input)
+	setRotationPoint()
+
+## Sets the point the [DraggableObject] should rotate around. Defaults to the centre, but can be overridden by subclasses
+## [br] Used during [method _ready].
+func setRotationPoint():
+	set_pivot_offset(size/2)
 
 #region Finder Functions
 ## Function that collects all the finders together for when we want to do all of them at once.

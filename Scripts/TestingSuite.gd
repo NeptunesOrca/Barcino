@@ -13,7 +13,11 @@ func testsToCall():
 	#ErrorTesting() #TEST: passed DEC13/2024
 	#SelectionPropertiesAndFieldsTesting() #TEST: passed DEC13/2024
 	#TablesPropertiesTesting() #TEST: passed DEC24/2024
+	ChairsTesting()
 	return
+
+func ChairsTesting():
+	print(Chair.chairStyle.WHITE_FOLDING)
 
 func TablesPropertiesTesting(): #TEST: passed DEC24/2024
 	var testRect = Table.new(Table.tableShapeType.RECTANGULAR,TableDim.new(6,2.5),"Rectangular Table")

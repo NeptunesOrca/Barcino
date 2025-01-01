@@ -32,11 +32,10 @@ const linenColour = {
 #endregion
 
 #region Member Variables
-
 #region Object Properties For Selection
-
 #region Size Information
 #var sizeInfoHeaderProp = HeaderProperty.new("Size")
+
 ## The appropriate dimensions of the table, stored as a [TableDim]. Intepreted depending on [member shape]. Determines size using [method TableDim.length], [method TableDim.width], [method TableDim.diameter], and [method TableDim.radius]
 var dimensions : TableDim
 ## The shape of the table, is used to determine how the [member dimensions] should be displayed and considered. See [enum tableShapeType] for options.
@@ -155,7 +154,8 @@ func changeLinen(typeIndex):
 	#chairOptions.push_front(chairOptions.pop_at(typeIndex))
 	DropdownPropertyField.putAtFrontOfArray(linenOptions,typeIndex)
 	
-	propertyFieldList[linenColourDisplayProp.name].updateColour(linenColour[linenType])
+	if selected:
+		propertyFieldList[linenColourDisplayProp.name].updateColour(linenColour[linenType])
 
 ## Changes the total number of chairs at the [Table]. Used by the [member chairsNumProp].
 ## [br] Updates the values of both [member totalChairs] and [member chairs], including adding [Chair] children to [member chairs].
