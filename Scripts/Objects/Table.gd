@@ -154,7 +154,8 @@ func changeLinen(typeIndex):
 	#chairOptions.push_front(chairOptions.pop_at(typeIndex))
 	DropdownPropertyField.putAtFrontOfArray(linenOptions,typeIndex)
 	
-	propertyFieldList[linenColourDisplayProp.name].updateColour(linenColour[linenType])
+	if selected:
+		propertyFieldList[linenColourDisplayProp.name].updateColour(linenColour[linenType])
 
 ## Changes the total number of chairs at the [Table]. Used by the [member chairsNumProp].
 ## [br] Updates the values of both [member totalChairs] and [member chairs], including adding [Chair] children to [member chairs].

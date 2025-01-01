@@ -76,7 +76,7 @@ var chairTypeHeaderProp = HeaderProperty.new("Chair Type")
 ##
 @export var chairType : chairStyle
 var chairOptions : Array = chairStyle.keys()
-var chairTypeProp = DropdownProperty.new("Type","changeType",chairOptions)
+var chairTypeProp = DropdownProperty.new("Type","changeTypeFromOptionsList",chairOptions)
 
 var chairTypeSep = SeperatorProperty.new()
 ##
@@ -91,9 +91,8 @@ func _init(style : chairStyle = chairStyle.WHITE_FOLDING):
 	changeType(style)
 	
 	# Generate the dimensional selection properties
-	var unit = "'"
-	l_dimensionalProp = DisplayTextProperty.new("Length",str(length) + unit)
-	w_dimensionalProp = DisplayTextProperty.new("Width", str(width) + unit)
+	l_dimensionalProp = DisplayTextProperty.new("Length",generateDimensionalText(length))
+	w_dimensionalProp = DisplayTextProperty.new("Width", generateDimensionalText(width))
 	#generate any properties first, so that they will be properly added by collectProperties() when super() is called
 	
 	super(self.typeName)
@@ -107,6 +106,11 @@ func collectProperties():
 	propertyList.append_array(sizeProps)
 	
 	propertyList.append_array(chairTypeProps)
+
+func generateDimensionalText(measure):
+	var unit = "'"
+	return str(measure) + unit
+	
 
 ## Sets the point the [DraggableObject] should rotate around. Defaults to the centre. See [method DraggableObject.setRorationPoint]
 ## [br] Used during [method _init].
@@ -133,15 +137,35 @@ func collectProperties():
 #endregion
 
 #region Properties Adjustment
-## Changes the [member chairType] to the selected [param newStyle]. Updates the rest of the chair to match the selected [chairStyle].
+## Changes the [member chairType] to the selected [param newStyle]. Updates the rest of the chair to match the selected [enum chairStyle].
+## [br] Uses the direct [enum chairStyle]
 func changeType(newStyle : chairStyle) :
 	chairType = newStyle
-	updateTypeName(chairNames[newStyle])
-	length = chairLengths[newStyle]
-	width = chairWidths[newStyle]
+	length = chairLengths[chairType]
+	width = chairWidths[chairType]
 	
 	#Update the image
-	set_texture(load(chairImages[newStyle]))
+	set_texture(load(chairImages[chairType]))
+	
+	#update the SelectionProperties
+	updateTypeName(chairNames[chairType])
+	DropdownPropertyField.putAtFrontOfArray(chairOptions,chairType)
+	if l_dimensionalProp != null:
+		l_dimensionalProp.text = generateDimensionalText(length)
+	if w_dimensionalProp != null:
+		w_dimensionalProp.text = generateDimensionalText(width)
+	
+	#update the SelectionPropertyFields, if applicable
+	if selected:
+		propertyFieldList.get(typeNameProp.name).updateText()
+		#propertyFieldList.get(chairTypeProp.name) #It feels like I should have to do something to update this, but I don't know what
+		propertyFieldList.get(l_dimensionalProp.name).updateText()
+		propertyFieldList.get(w_dimensionalProp.name).updateText()
+
+## Similar to [method changeType], but takes [param typeIndex] as an arbitrary index of [member chairOptions], and calls [method changeType] on the corresponding [enum chairStyle].
+##ALERT: This is not working as intended
+func changeTypeFromOptionsList(typeIndex) :
+	changeType(typeIndex)
 
 ## Updates the superclass [member DraggableObject.typeName] and [member DraggableObject.typeNameProp]'s text.
 ## [br] Done in the [Chair] class instead of [DraggableObject] because only [Chair] is likely to change [member DraggableObject.typeName].

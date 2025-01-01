@@ -30,3 +30,7 @@ func _init(obj : DraggableObject, property : DisplayTextProperty, style : Theme 
 	if (not property.includeName):
 		self.propertyName.queue_free()
 #endregion
+
+##Updates the text of the [member textbox] to match the value of [member DisplayTextProperty.text] in the [member SelectionPropertyField.definition] for this [DisplayTextPropertField]
+func updateText() :
+	textbox.text = definition.text
